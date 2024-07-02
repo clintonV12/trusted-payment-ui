@@ -2,8 +2,8 @@ cashoutTransaction = `
 					<div class="modal fade" id="cashoutModal" tabindex="-1" aria-hidden="true">
                           <div class="modal-dialog" role="document">
                             <div class="modal-content">
-                              <div class="modal-header" style="background-color:var(--mtn-yellow);">
-                                <h5 class="modal-title" style="color: #fff;">Cashout</h5>
+                              <div class="modal-header my-popup-header">
+                                <h5 class="modal-title my-popup-h5">Cashout</h5>
 								
                                 <button
                                   type="button"
@@ -72,8 +72,8 @@ cashoutStarted = `
 	<div class="modal fade" id="cashoutStarted" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <div class="modal-header" style="background-color:var(--mtn-yellow);">
-                    <h5 class="modal-title" style="color: #fff;">Cashout Initiated</h5>
+                <div class="modal-header my-popup-header">
+                    <h5 class="modal-title my-popup-h5">Cashout Initiated</h5>
                     <button
                     type="button"
                     class="btn-close"
@@ -100,8 +100,8 @@ daysLeftError = `
 	<div class="modal fade" id="daysLeftError" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <div class="modal-header" style="background-color:var(--mtn-yellow);">
-                    <h5 class="modal-title" style="color: #fff;">Validity Period Not Over</h5>
+                <div class="modal-header my-popup-header">
+                    <h5 class="modal-title my-popup-h5">Validity Period Not Over</h5>
                     <button
                     type="button"
                     class="btn-close"
@@ -128,8 +128,8 @@ inputError = `
 	<div class="modal fade" id="inputError" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <div class="modal-header" style="background-color:var(--mtn-yellow);">
-                    <h5 class="modal-title" style="color: #fff;">Invalid PIN</h5>
+                <div class="modal-header my-popup-header">
+                    <h5 class="modal-title my-popup-h5">Invalid PIN</h5>
                     <button
                     type="button"
                     class="btn-close"

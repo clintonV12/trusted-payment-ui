@@ -2,8 +2,8 @@ scanQR = `
 	<div class="modal fade" id="scanQR" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <div class="modal-header" style="background-color:var(--mtn-yellow);">
-                    <h5 class="modal-title" style="color: #fff;">Coming Soon</h5>
+                <div class="modal-header my-popup-header">
+                    <h5 class="modal-title my-popup-h5">Coming Soon</h5>
                     <button
                     type="button"
                     class="btn-close"
@@ -30,8 +30,8 @@ vStarted = `
 	<div class="modal fade" id="vStarted" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <div class="modal-header" style="background-color:var(--mtn-yellow);">
-                    <h5 class="modal-title" style="color: #fff;">Verification Initiated</h5>
+                <div class="modal-header my-popup-header">
+                    <h5 class="modal-title my-popup-h5">Verification Initiated</h5>
                     <button
                     type="button"
                     class="btn-close"
@@ -59,8 +59,8 @@ voucherC = `
 	<div class="modal fade" id="voucherC" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <div class="modal-header" style="background-color:var(--mtn-yellow);">
-                    <h5 class="modal-title" style="color: #fff;">Verify Voucher Code</h5>
+                <div class="modal-header my-popup-header">
+                    <h5 class="modal-title my-popup-h5">Verify Voucher Code</h5>
                     <button
                     type="button"
                     class="btn-close"
@@ -101,8 +101,8 @@ inputError = `
 	<div class="modal fade" id="inputError" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <div class="modal-header" style="background-color:var(--mtn-yellow);">
-                    <h5 class="modal-title" style="color: #fff;">Invalid Voucher Code</h5>
+                <div class="modal-header my-popup-header">
+                    <h5 class="modal-title my-popup-h5">Invalid Voucher Code</h5>
                     <button
                     type="button"
                     class="btn-close"

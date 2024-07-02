@@ -20,8 +20,8 @@ popUp1 = `
   <div class="modal fade" id="modalToggle" aria-labelledby="modalToggleLabel" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
       <form class="modal-content">
-        <div class="modal-header" style="background-color:var(--mtn-yellow);">
-          <h5 class="modal-title" id="backDropModalTitle" style="color: #fff;">Recipient Details</h5>
+        <div class="modal-header my-popup-header">
+          <h5 class="modal-title my-popup-h5" id="backDropModalTitle">Recipient Details</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
@@ -48,8 +48,8 @@ popUp2 = `
   <div class="modal fade" id="modalToggle2" aria-labelledby="modalToggleLabel2" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
       <form class="modal-content">
-        <div class="modal-header" style="background-color:var(--mtn-yellow);">
-          <h5 class="modal-title" id="backDropModalTitle" style="color: #fff;">Payment Details</h5>
+        <div class="modal-header my-popup-header">
+          <h5 class="modal-title my-popup-h5" >Payment Details</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
@@ -75,8 +75,8 @@ popUp3 = `
   <div class="modal fade" id="modalToggle3" aria-labelledby="modalToggleLabel3" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
       <form class="modal-content">
-        <div class="modal-header" style="background-color:var(--mtn-yellow);">
-          <h5 class="modal-title" id="backDropModalTitle" style="color: #fff;">Payment Details</h5>
+        <div class="modal-header my-popup-header">
+          <h5 class="modal-title my-popup-h5">Payment Details</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
@@ -101,8 +101,8 @@ popUp4 = `
   <div class="modal fade" id="modalToggle4" aria-labelledby="modalToggleLabel4" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
       <form class="modal-content">
-        <div class="modal-header" style="background-color:var(--mtn-yellow);">
-          <h5 class="modal-title" id="backDropModalTitle" style="color: #fff;">Confirm Details</h5>
+        <div class="modal-header my-popup-header">
+          <h5 class="modal-title my-popup-h5">Confirm Details</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
@@ -152,8 +152,8 @@ tStarted = `
 	<div class="modal fade" id="tStarted" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <div class="modal-header" style="background-color:var(--mtn-yellow);">
-                    <h5 class="modal-title" style="color: #fff;">Transaction Initiated</h5>
+                <div class="modal-header my-popup-header">
+                    <h5 class="modal-title my-popup-h5">Transaction Initiated</h5>
                     <button
                     type="button"
                     class="btn-close"

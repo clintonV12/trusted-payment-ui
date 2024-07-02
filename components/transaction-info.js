@@ -2,8 +2,8 @@ transactionInfo = `
 					<div class="modal fade" id="tInfoModal" tabindex="-1" aria-hidden="true">
                           <div class="modal-dialog" role="document">
                             <div class="modal-content">
-                              <div class="modal-header" style="background-color:var(--mtn-yellow);">
-                                <h5 class="modal-title" id="exampleModalLabel1" style="color: #fff;">Sent Transaction Details</h5>
+                              <div class="modal-header my-popup-header">
+                                <h5 class="modal-title my-popup-h5">Sent Transaction Details</h5>
                                 <button
                                   type="button"
                                   class="btn-close"
@@ -70,8 +70,8 @@ transactionInfo = `
 					<div class="modal fade" id="tInfoModal2" tabindex="-1" aria-hidden="true">
                           <div class="modal-dialog" role="document">
                             <div class="modal-content">
-                              <div class="modal-header" style="background-color:var(--mtn-yellow);">
-                                <h5 class="modal-title" style="color: #fff;">Received Transaction Details</h5>
+                              <div class="modal-header my-popup-header">
+                                <h5 class="modal-title my-popup-h5">Received Transaction Details</h5>
                                 <button
                                   type="button"
                                   class="btn-close"

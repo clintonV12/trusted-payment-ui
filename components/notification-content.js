@@ -1,13 +1,13 @@
 notificationContent = `
 <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Account /</span> Notifications</h4>
 			<div class="card mb-4">
-                <h5 class="card-header" style="background-color:var(--mtn-yellow); color: #fff;">New Notifications</h5>
+                <h5 class="card-header my-popup-header my-popup-h5">New Notifications</h5>
                 <div class="row g-0">
                   <div class="col-12 p-4">
                     <div class="toast-container">
 					  
 					  <div
-                        class="bs-toast toast fade show bg-warning"
+                        class="bs-toast toast fade show"
                         role="alert"
                         aria-live="assertive"
                         aria-atomic="true"

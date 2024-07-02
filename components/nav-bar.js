@@ -35,13 +35,13 @@ userDropdownHtml = `
                             </div>
                         </div>
                         <div class="flex-grow-1">
-                            <span class="fw-semibold d-block">Clinton Vilakati</span>
+                            <span class="fw-semibold d-block">${LOGGED_IN_PHONE}</span>
                             <small class="text-muted">Online</small>
                         </div>
                     </div>
                 </a>
             </li>
-            <li><div class="dropdown-divider" style="border-color:var(--mtn-yellow)"></div></li>
+            <li><div class="dropdown-divider my-divider"></div></li>
             <li>
 				<a class="dropdown-item" href="#" onclick="setCurrentPage('profile')">
 					<i class="bx bx-user me-2"></i><span class="align-middle">My Profile</span>
@@ -56,7 +56,7 @@ userDropdownHtml = `
                     </span>
                 </a>
             </li>
-            <li><div class="dropdown-divider" style="border-color:var(--mtn-yellow)"></div></li>
+            <li><div class="dropdown-divider my-divider"></div></li>
             <li>
 				<a class="dropdown-item" href="#" onclick="setCurrentPage('login')">
 					<i class="bx bx-power-off me-2"></i>

@@ -4,7 +4,7 @@ profileContent = `
               <div class="row">
                 <div class="col-md-12">
                   <div class="card mb-4">
-                    <h5 class="card-header" style="background-color:var(--mtn-yellow); color: #fff;">Profile Details</h5>
+                    <h5 class="card-header my-popup-header my-popup-h5">Profile Details</h5>
                     <!-- Account -->
                     <hr class="my-0" />
                     <div class="card-body">

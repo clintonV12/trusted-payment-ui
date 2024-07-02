@@ -1,10 +1,10 @@
 pricingCard = `
 	<div class="col-md-8 col-lg-8 order-2 mb-4" id="pricing">
                   <div class="card h-100">
-                    <div class="card-header d-flex align-items-center justify-content-between">
-                      <h5 class="card-title m-0 me-2 home-title">Pricing Structure</h5>
+                    <div class="card-header d-flex align-items-center justify-content-between my-popup-header">
+                      <h5 class="card-title m-0 me-2 my-popup-h5">Pricing Structure</h5>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body"><br>
                         <div class="table-responsive text-nowrap">
 						  <table class="table table-striped table-hover">
 							<thead>
@@ -43,7 +43,7 @@ descriptionCard = `
                     <div class="d-flex align-items-end row">
                       <div class="col-sm-7">
                         <div class="card-body">
-                          <h5 class="card-title text-primary">About <span class="text-warning">TrustedPay</span> <i class="bx bx-info-circle"></i></h5>
+                          <h5 class="card-title text-primary">About <span class="text-primary">TrustedPay</span> <i class="bx bx-info-circle"></i></h5>
                           <p class="mb-4">
                             Trusted pay lets you carry out high value transactions without the risk of being de-frauded.
                           </p>
@@ -70,9 +70,9 @@ infoCard1 = `
 	<div class="col-lg-12 col-md-12 col-12 mb-4" id="createNew">
         <div class="card text-center mb-3">
             <div class="card-body">
-                <h5 class="card-title">Try it now</h5>
+                <h5 class="card-title fw-bold">Try it now</h5>
                 <p class="card-text">Click below to make a transaction with TrustedPay.</p>
-                <button type="button" class="btn btn-primary fw-bold" data-bs-toggle="modal" data-bs-target="#modalToggle">
+                <button type="button" class="btn btn-lg btn-primary fw-bold" data-bs-toggle="modal" data-bs-target="#modalToggle">
 				<span class="tf-icons bx bx-receipt"></span>&nbsp; Initiate New Transaction
 				</button>
             </div>
@@ -105,7 +105,7 @@ infoCard3 = `
                             </div>
                           </div>
                           <span class="fw-semibold d-block mb-1">Sent</span>
-                          <h3 class="card-title text-nowrap mb-2">E <small id="totalS"></small> </h3>
+                          <h5 class="card-title text-nowrap mb-2">E <small id="totalS"></small> </h5>
                         </div>
                       </div>
                     </div>`;
@@ -134,7 +134,7 @@ infoCard4 = `
                             </div>
                           </div>
                           <span class="fw-semibold d-block mb-1">Received</span>
-                          <h3 class="card-title mb-2">E <small id="totalR"></small> </h3>
+                          <h5 class="card-title mb-2">E <small id="totalR"></small> </h5>
                         </div>
                       </div>
                     </div>`;

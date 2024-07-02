@@ -1,0 +1,16 @@
+.my-popup-header {
+  background-color: var(--mtn-yellow);
+}
+
+.my-popup-h5 {
+  color: #fff;
+}
+
+.my-divider {
+	border-color: var(--mtn-yellow);
+}
+
+.my-logo-txt {
+	color: var(--mtn-yellow);
+}
+

@@ -1,0 +1,19 @@
+.my-popup-header {
+  /*background-color: var(--mtn-yellow);*/
+  background-color: #696cff;
+}
+
+.my-popup-h5 {
+  color: #fff;
+}
+
+.my-divider {
+	/*border-color: var(--mtn-yellow);*/
+	border-color: #696cff;
+}
+
+.my-logo-txt {
+	/*color: var(--mtn-yellow);*/
+	color: #696cff;
+}
+
