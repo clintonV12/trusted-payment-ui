@@ -26,22 +26,10 @@ document.getElementById("content").innerHTML = transactionTab;
 getReceivedTransactions();
 
 function getReceivedTransactions(){
-	$.ajax({
-		"url":"http:mydomain.com/api",
-		"type":"get",
-		"dataType":"jsonp",
-		
-	}).done(function(results){
-		console.log(results);
-		
-	}).fail(function(){
-		console.log(arguments);
-		
-	}).always(function(){
-		//should be moved to done()
-		let parsed = JSON.parse(transactionJson);
-		showReceivedTransactions(parsed["transactions"]);
-	});
+	
+	let parsed = JSON.parse(transactionJson);
+	showReceivedTransactions(parsed["transactions"]);
+	
 }
 
 /*

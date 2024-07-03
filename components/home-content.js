@@ -188,25 +188,10 @@ function showUserJourney(){
 }
 
 function getTransactions(){
-	$.ajax({
-		"url":"http:mydomain.com/api",
-		"type":"get",
-		"dataType":"jsonp",
-		
-	}).done(function(results){
-		console.log(results);
-		
-	}).fail(function(){
-		console.log(arguments);
-		
-	}).always(function(){
-		//should be moved to done()
-		let parsed = JSON.parse(transactionJson);
-		
-		calcTotalSentTransactions(parsed["transactions"]);
-		document.getElementById("totalR").innerText = calcTotalReceivedTransactions(parsed["transactions"]);
-		document.getElementById("totalS").innerText = calcTotalSentTransactions(parsed["transactions"]);
-	});
+	let parsed = JSON.parse(transactionJson);
+	calcTotalSentTransactions(parsed["transactions"]);
+	document.getElementById("totalR").innerText = calcTotalReceivedTransactions(parsed["transactions"]);
+	document.getElementById("totalS").innerText = calcTotalSentTransactions(parsed["transactions"]);
 }
 
 function calcTotalReceivedTransactions(arrayObject) {
