@@ -79,13 +79,10 @@ voucherC = `
                                 class="form-control"
                                 placeholder="Enter Voucher Code"
                             />
-							<div class="form-text" style="color:red;">
-								Enter your 8 digit voucher code.
-							</div>
                         </div>
                     </div>
                 </div>
-				<div class="modal-footer">
+				<div class="modal-footer row">
 					<div class="d-grid gap-2 col-lg-12 mx-auto">
 						<button type="button" class="btn btn-primary btn-lg fw-bold" onclick="initiateVerification()">
 							Verify

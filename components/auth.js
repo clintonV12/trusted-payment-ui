@@ -54,39 +54,38 @@ authLogo = `
 </div>
 `;
 
-	function changeAuthContent(page) {
-		let scriptSrc = "";
+function changeAuthContent(page) {
+	let scriptSrc = "";
 
-		switch (page) {
-			case '':
-			case 'login':
-				scriptSrc = "components/login.js";
-				break;
-			case 'register':
-				scriptSrc = "components/register.js";
-				break;
-			default:
-				console.error("Unsupported page:", page);
-				return; // Exit function if page is unsupported
-		}
+	switch (page) {
+		case '':
+		case 'login':
+			scriptSrc = "components/login.js";
+			break;
+		case 'otp':
+			scriptSrc = "components/otp.js";
+			break;
+		default:
+			console.error("Unsupported page:", page);
+			return; // Exit function if page is unsupported
+	}
 
-		// Remove existing script element if any
-		const existingScript = document.getElementById("dynamic-auth-script");
-		if (existingScript) {
-			existingScript.remove();
-		}
+	// Remove existing script element if any
+	const existingScript = document.getElementById("dynamic-auth-script");
+	if (existingScript) {
+		existingScript.remove();
+	}
 
-		// Create new script element
-		const script = document.createElement("script");
-		script.src = scriptSrc;
-		script.async = true;
-		script.id = "dynamic-auth-script";
+	// Create new script element
+	const script = document.createElement("script");
+	script.src = scriptSrc;
+	script.async = true;
+	script.id = "dynamic-auth-script";
 
-		// Append script element to the document body
-		document.body.appendChild(script);
-		loadMainScript();//defined in ui-helpers.js
-	
-	}      
+	// Append script element to the document body
+	document.body.appendChild(script);
+	loadMainScript();//defined in ui-helpers.js
+}   
 
 changeAuthContent(currentPage);
 removeTransactionButton();

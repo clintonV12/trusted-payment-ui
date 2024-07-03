@@ -1,52 +1,53 @@
 //global variable to keep track which page is opened
 var currentPage = "";
+setCurrentPage(currentPage);
 
 function createAndAppendScript(id, scriptSource){
-// Remove existing script element if any
-		const existingScript = document.getElementById(id);
-		if (existingScript) {
-			existingScript.remove();
-		}
+	// Remove existing script element if any
+	const existingScript = document.getElementById(id);
+	if (existingScript) {
+		existingScript.remove();
+	}
 
-		// Create new script element
-		const script = document.createElement("script");
-		script.src = scriptSource;
-		script.async = true;
-		script.id = id;
+	// Create new script element
+	const script = document.createElement("script");
+	script.src = scriptSource;
+	script.async = true;
+	script.id = id;
 
-		// Append script element to the document body
-		document.body.appendChild(script);
+	// Append script element to the document body
+	document.body.appendChild(script);
 }
 
 function changeContent(page) {
-		let scriptSrc = "";
+	let scriptSrc = "";
 
-		switch (page) {
-			case '':
-			case 'login':
-			case 'register':
-				scriptSrc = "components/auth.js";
-				break;
-			case 'home':
-			case 'profile':
-			case 'cashout':
-			case 'verify':
-			case 'transactions':
-			case 'notifications':
-				scriptSrc = "components/main-body.js";
-				break;
-			default:
-				console.error("Unsupported page:", page);
-				return; // Exit function if page is unsupported
-		}
-		createAndAppendScript("dynamic-script", scriptSrc);
+	switch (page) {
+		case '':
+		case 'login':
+		case 'otp':
+			scriptSrc = "components/auth.js";
+			break;
+		case 'home':
+		case 'profile':
+		case 'cashout':
+		case 'verify':
+		case 'transactions':
+		case 'notifications':
+			scriptSrc = "components/main-body.js";
+			break;
+		default:
+			console.error("Unsupported page:", page);
+			return; // Exit function if page is unsupported
 	}
+	createAndAppendScript("dynamic-script", scriptSrc);
+}
 	
-	function setCurrentPage(page){
-		currentPage = page;
-		changeContent(currentPage);
-		console.log("Current Page:" + currentPage);
-	}
+function setCurrentPage(page){
+	currentPage = page;
+	changeContent(currentPage);
+	console.log("Current Page:" + currentPage);
+}
 	
 // Function to create the transaction button HTML
 function createTransactionButton() {

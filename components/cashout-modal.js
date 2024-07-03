@@ -1,72 +1,70 @@
 cashoutTransaction = `
-					<div class="modal fade" id="cashoutModal" tabindex="-1" aria-hidden="true">
-                          <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                              <div class="modal-header my-popup-header">
-                                <h5 class="modal-title my-popup-h5">Cashout</h5>
-								
-                                <button
-                                  type="button"
-                                  class="btn-close"
-                                  data-bs-dismiss="modal"
-                                  aria-label="Close"
-                                ></button>
-                              </div>
-                              <div class="modal-body" id="tt">
-							  
-								<div class="row">
-                                  <div class="col mb-3" id="cStatus">
-                                    
-                                  </div>
-                                </div>
-                                <div class="row">
-                                  <div class="col mb-3">
-                                    <label for="vCode" class="form-label">Voucher Code</label>
-                                    <input type="text" id="vCode" class="form-control" readonly/>
-                                  </div>
-                                </div>
-								<div class="row">
-                                  <div class="col mb-3">
-                                    <label for="sPhone" class="form-label">Sender Phone Number</label>
-                                    <input type="text" id="sPhone" class="form-control" readonly/>
-                                  </div>
-                                </div>
-								<div class="row">
-                                  <div class="col mb-3">
-                                    <label for="cashoutAmount" class="form-label">Amount Payable (E)</label>
-                                    <input type="text" id="cashoutAmount" class="form-control" readonly/>
-                                  </div>
-                                </div>
-								<div class="row">
-                                  <div class="col mb-3">
-                                    <label for="cDaysLeft" class="form-label">Day Remaining</label>
-                                    <input type="text" id="cDaysLeft" class="form-control" readonly/>
-                                  </div>
-                                </div>
-								<div class="row">
-                                  <div class="col mb-3">
-                                    <label for="transaction-pin" class="form-label">PIN</label>
-                                    <input type="text" maxlength="5" id="transaction-pin" placeholder="00000" class="form-control"/>
-									<div class="form-text" style="color:red;">
-										Enter the PIN your got from sender.
-									</div>
-                                  </div>
-                                </div>
-                                
-                              </div>
-                              <div class="modal-footer row">
-							    <div class="d-grid gap-2 col-lg-12 mx-auto">
-									<button type="button" class="btn btn-primary btn-lg fw-bold" onclick="initiateCashout()">
-										Cashout
-									</button>
-								</div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-	`;
+	<div class="modal fade" id="cashoutModal" tabindex="-1" aria-hidden="true">
+		  <div class="modal-dialog" role="document">
+			<div class="modal-content">
+			  <div class="modal-header my-popup-header">
+				<h5 class="modal-title my-popup-h5">Cashout</h5>
+				
+				<button
+				  type="button"
+				  class="btn-close"
+				  data-bs-dismiss="modal"
+				  aria-label="Close"
+				></button>
+			  </div>
+			  <div class="modal-body" id="tt">
+			  
+				<div class="row">
+				  <div class="col mb-3" id="cStatus">
+					
+				  </div>
+				</div>
+				<div class="row">
+				  <div class="col mb-3">
+					<label for="vCode" class="form-label">Voucher Code</label>
+					<input type="text" id="vCode" class="form-control" readonly/>
+				  </div>
+				</div>
+				<div class="row">
+				  <div class="col mb-3">
+					<label for="sPhone" class="form-label">Sender Phone Number</label>
+					<input type="text" id="sPhone" class="form-control" readonly/>
+				  </div>
+				</div>
+				<div class="row">
+				  <div class="col mb-3">
+					<label for="cashoutAmount" class="form-label">Amount Payable (E)</label>
+					<input type="text" id="cashoutAmount" class="form-control" readonly/>
+				  </div>
+				</div>
+				<div class="row">
+				  <div class="col mb-3">
+					<label for="cDaysLeft" class="form-label">Day Remaining</label>
+					<input type="text" id="cDaysLeft" class="form-control" readonly/>
+				  </div>
+				</div>
+				<div class="row">
+				  <div class="col mb-3">
+					<label for="transaction-pin" class="form-label">PIN</label>
+					<input type="text" maxlength="5" id="transaction-pin" placeholder="Enter the PIN your got from sender." class="form-control"/>
+					
+				  </div>
+				</div>
+				
+			  </div>
+			  <div class="modal-footer row">
+				<div class="d-grid gap-2 col-lg-12 mx-auto">
+					<button type="button" class="btn btn-primary btn-lg fw-bold" onclick="initiateCashout()">
+						Cashout
+					</button>
+				</div>
+			  </div>
+			</div>
+		  </div>
+		</div>
+	  </div>
+	</div>
+`;
 	
 cashoutStarted = `
 	<div class="modal fade" id="cashoutStarted" tabindex="-1" aria-hidden="true">
@@ -181,7 +179,7 @@ function displayClickedCashoutTransaction() {
 		if (dayRemaining < 0){
 			document.getElementById("cStatus").innerHTML = `<span class="badge rounded-pill bg-success">Cashout Available</span>`;
 		}else{
-			document.getElementById("cStatus").innerHTML = `<span class="badge rounded-pill bg-danger">Cashout Not Available Yet</span>`;
+			document.getElementById("cStatus").innerHTML = `<span class="badge rounded-pill bg-secondary">Cashout Not Available Yet</span>`;
 		}
 	});
 }

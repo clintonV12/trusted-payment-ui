@@ -1,9 +1,36 @@
+loginError = `
+	<div class="modal fade" id="loginError" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header my-popup-header">
+                    <h5 class="modal-title my-popup-h5">Error</h5>
+                    <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                    ></button>
+                </div>
+				<div class="modal-body">
+					<p>
+						Please enter a valid phone number.
+                    </p>
+                </div>
+				<div class="modal-footer">
+                    <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">
+                        OK
+                    </button>
+                </div>
+			</div>
+		</div>
+	</div>`;
+
 login = `
 <div class="container-xxl">
       <div class="authentication-wrapper authentication-basic container-p-y">
         <div class="authentication-inner">
           <!-- Register -->
-          <div class="card">
+          <div class="card my-auth-card" style="border-radius: 20px">
             <div class="card-body">
               <!-- Logo -->
 				${authLogo}
@@ -11,7 +38,7 @@ login = `
               <h4 class="mb-2">Welcome to TrustedPay! <i class="bx bx-home-smile"></i></h4>
               <p class="mb-4">Please sign-in to your account and continue with business</p>
 
-              <form id="formAuthentication" class="mb-3">
+              <form id="loginForm" class="mb-3">
                 <div class="mb-3">
                   <label for="phoneNum" class="form-label">Phone Number</label>
 				  <div class="input-group input-group-merge">
@@ -25,35 +52,12 @@ login = `
 						autofocus />
 				  </div>
                 </div>
-                <div class="mb-3 form-password-toggle">
-                  <div class="d-flex justify-content-between">
-                    <label class="form-label" for="password">One Time Password</label>
-                  </div>
-                  <div class="input-group input-group-merge">
-                    <input
-                      type="password"
-                      id="password"
-                      class="form-control"
-					  maxlength="5"
-                      placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
-                      aria-describedby="password"
-                    />
-                    <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
-                  </div>
-                </div>
-                
+                <br>
                 <div class="mb-3">
-                  <button class="btn btn-primary d-grid w-100 fw-bold" onclick="getLoginInput()">Sign in</button>
+                  <a href="#" class="btn btn-primary d-grid w-100 fw-bold" onclick="getLoginInput()">Request OTP</a>
                 </div>
               </form>
 
-              <p class="text-center">
-                <span>Optionally you can?</span>
-                <a href="#" onclick="setCurrentPage('register')" class="fw-bold">
-                  <span>Create an account</span>
-                </a>
-              </p>
-			  
             </div>
           </div>
           <!-- /Register -->
@@ -62,8 +66,7 @@ login = `
     </div>
 `;
 
-document.getElementById("app").innerHTML = login;
-var loginObj = new Object();
+document.getElementById("app").innerHTML = `${login}${loginError}`;
 
 //phone number of logged in user
 var LOGGED_IN_PHONE = 0;
@@ -78,19 +81,15 @@ var transactionJson = `{
 }`;
 
 function getLoginInput(){
-	loginObj.phone    = document.getElementById("phoneNum").value;
-	loginObj.password = document.getElementById("password").value;
+	let phone = document.getElementById("phoneNum").value;
+	console.log(phone);
 
-	console.log(loginObj.phone);
-	console.log(loginObj.password);
-	
-	//call function to do login
-	let loginCorrect = true;
-
-	if (loginCorrect){
-		LOGGED_IN_PHONE = 78679654;
-		setCurrentPage('home');
+	if (phone.length == 8){
+		LOGGED_IN_PHONE = phone;
+		setCurrentPage('otp');
 	} else {
 		//show alert
+		const modal = new bootstrap.Modal('#loginError');
+		modal.show();
 	}
 }
