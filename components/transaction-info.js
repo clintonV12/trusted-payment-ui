@@ -137,15 +137,6 @@ displayClickedSentTransaction();
 displayClickedReceivedTransaction();
 
 function displayClickedSentTransaction() {
-	/*
-	//Open modal programmatically
-	const modal = new bootstrap.Modal('#modalID');
-	modal.show();
-	//runs when modal is hidden
-	$('#modalID').on('hidden.bs.modal', function() {
-		$('#tInfoModal').modal('hide');
-		console.log(clickedRow);
-	});*/
 	
 	//runs when modal is shown
 	//Use show.bs.modal to run code before modal is displayed
@@ -201,6 +192,8 @@ function displayClickedReceivedTransaction() {
 		var dayRemaining = transactionInfo.validityPeriod - elapsedDays
 		
 		//document.getElementById("Tremaining").value = dayRemaining;
+
+    document.getElementById("qrcode-gen").innerHTML = "";
 		new QRCode(document.getElementById("qrcode-gen"), {
 			text: transactionInfo.voucherCode,
 			width: 128,
