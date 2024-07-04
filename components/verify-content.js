@@ -34,6 +34,9 @@ verifyTab = `
 `;
 
 document.getElementById("content").innerHTML = verifyTab;
+var resultContainer = document.getElementById('qr-reader-results');
+var lastResult, countResults = 0;
+
 
 // Remove existing script element if any
 existingTScript = document.getElementById("verify-script");

@@ -114,7 +114,7 @@ transactionInfo2 = `
         <!-- QR Code -->
         <div class="row" style="margin-bottom: 10px;">
           <div class="col-12" style="text-align: center;">
-            <img src="assets/img/qr-code.jpg" alt="QR Code" style="max-width: 100px; padding: 5px; background: white; border: 1px solid #ced4da;" class="img-fluid" />
+            <div id="qrcode-gen" style="max-width: 134px; padding: 5px; background: white; border: 1px solid #ced4da;" class="img-fluid" > </div>
           </div>
         </div>
       </div>
@@ -201,22 +201,46 @@ function displayClickedReceivedTransaction() {
 		var dayRemaining = transactionInfo.validityPeriod - elapsedDays
 		
 		//document.getElementById("Tremaining").value = dayRemaining;
+		new QRCode(document.getElementById("qrcode-gen"), {
+			text: transactionInfo.voucherCode,
+			width: 128,
+			height: 128,
+			colorDark : "#000000",
+			colorLight : "#ffffff",
+			correctLevel : QRCode.CorrectLevel.H
+		});
+		
 	});
 }
-	
-function downloadTransaction(){
-console.log();
-	var element = document.getElementById('chequeBody');
-	
-	var opt = {
-	  margin:       1,
-	  filename:     'myfile.pdf',
-	  image:        { type: 'jpeg', quality: 0.98 },
-	  html2canvas:  { scale: 2 },
-	  jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
-	};
 
-	// New Promise-based usage:
-	html2pdf().set(opt).from(element).save();
+function downloadTransaction() {
+  // Ensure jsPDF is loaded
+  if (typeof window.jspdf === 'undefined') {
+    console.error('jsPDF is not loaded.');
+    return;
+  }
 
+  // Extract jsPDF from the jspdf object
+  const { jsPDF } = window.jspdf;
+
+  // Get the element to download
+  const element = document.getElementById('chequeBody');
+  if (!element) {
+    console.error('Element with ID "chequeBody" not found.');
+    return;
+  }
+
+  // Create a new jsPDF instance
+  const doc = new jsPDF();
+
+  // Convert the HTML content to PDF
+  doc.html(element, {
+    callback: function (doc) {
+      // Save the PDF with a specified filename
+      doc.save('cheque.pdf');
+    },
+    x: 10,
+    y: 10,
+    width: 170 // Adjust width as needed
+  });
 }

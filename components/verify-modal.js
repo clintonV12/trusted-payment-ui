@@ -12,9 +12,8 @@ scanQR = `
                     ></button>
                 </div>
 				<div class="modal-body">
-					<p>
-						Sorry, this feature is not available at the moment. Try the voucher code verification instead.
-                    </p>
+					<div id="qr-reader" style="width:500px"></div>
+					<div id="qr-reader-results"></div>
                 </div>
 				<div class="modal-footer">
                     <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">
@@ -25,6 +24,7 @@ scanQR = `
 		</div>
 	</div>
 	`;
+	
 
 vStarted = `
 	<div class="modal fade" id="vStarted" tabindex="-1" aria-hidden="true">
@@ -124,6 +124,20 @@ inputError = `
 
 	
 document.getElementById("vModals").innerHTML = `${scanQR}${voucherC}${vStarted}${inputError}`;
+
+
+function onScanSuccess(decodedText, decodedResult) {
+    if (decodedText !== lastResult) {
+        ++countResults;
+        lastResult = decodedText;
+        // Handle on success condition with the decoded message.
+        console.log(`Scan result ${decodedText}`, decodedResult);
+    }
+}
+
+var html5QrcodeScanner = new Html5QrcodeScanner(
+    "qr-reader", { fps: 10, qrbox: 250 });
+html5QrcodeScanner.render(onScanSuccess);
 
 function initiateVerification(){
 	let code = document.getElementById("code").value;
