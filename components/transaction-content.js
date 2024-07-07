@@ -1,39 +1,37 @@
 buyerTransactions = `
-                <div class="table-responsive text-nowrap">
-                  <table class="table table-striped table-hover">
-                    <thead>
-                      <tr>
-                        <th>Recepient</th>
-						<th>Phone</th>
-                      </tr>
-                    </thead>
-                    <tbody class="table-border-bottom-0" id="sentTableBody">
-                      
-                    </tbody>
-                  </table>
-                </div>
-              
-			<div id="transactionInfo"></div>
-	`;
+    <div class="table-responsive text-nowrap">
+      <table class="table table-striped table-hover">
+        <thead>
+          <tr>
+            <th>Recepient</th>
+			<th>Phone</th>
+          </tr>
+        </thead>
+        <tbody class="table-border-bottom-0" id="sentTableBody"></tbody>
+      </table>
+    </div>
+  
+	<div id="transactionInfo"></div>
+`;
 	
 sellerTransactions = `
-                <div class="table-responsive text-nowrap">
-                  <table class="table table-striped table-hover">
-                    <thead>
-                      <tr>
-                        <th>Sender Phone</th>
-						<th>Amount Payable (SZL)</th>
-                      </tr>
-                    </thead>
-                    <tbody class="table-border-bottom-0" id="receivedTableBody">
-                      
-                    </tbody>
-                  </table>
-                </div>
-			  
-			<div id="transactionInfo"></div>
-			<div id="transactionInfo2"></div>
-	`;
+    <div class="table-responsive text-nowrap">
+      <table class="table table-striped table-hover">
+        <thead>
+          <tr>
+            <th>Sender Phone</th>
+			<th>Amount (SZL)</th>
+          </tr>
+        </thead>
+        <tbody class="table-border-bottom-0" id="receivedTableBody">
+          
+        </tbody>
+      </table>
+    </div>
+  
+	<div id="transactionInfo"></div>
+	<div id="transactionInfo2"></div>
+`;
 
 transactionTab = `
 <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Account /</span> Transactions</h4>

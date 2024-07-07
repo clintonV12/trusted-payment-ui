@@ -25,3 +25,5 @@ let config = {
     borderColor: '#eceef1'
   }
 };
+
+const SERVER_URL = "http://localhost/trustedpay/index.php/";

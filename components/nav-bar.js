@@ -2,17 +2,16 @@
 layoutMenuToggleHtml = `
     <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
         <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
-            <i class="bx bx-menu bx-sm"></i>
+            <i class="bx bx-menu bx-sm my-menu-toggle"></i>
         </a>
     </div>
 `;
 
 // Define the HTML for the search bar
 searchBarHtml = `
-    <div class="navbar-nav align-items-center">
+    <div class="navbar-nav align-items-center" onclick="setCurrentPage('${currentPage}')">
         <div class="nav-item d-flex align-items-center">
-            <i class="bx bx-lock-open fs-4 lh-0"></i>
-			
+            <i class="bx bx-refresh fs-4 lh-0"></i>
         </div>
     </div>
 `;
@@ -52,7 +51,6 @@ userDropdownHtml = `
                     <span class="d-flex align-items-center align-middle">
                         <i class="flex-shrink-0 bx bx-bell me-2"></i>
                         <span class="flex-grow-1 align-middle">Notifications</span>
-                        <span class="flex-shrink-0 badge badge-center rounded-pill bg-danger w-px-20 h-px-20">1</span>
                     </span>
                 </a>
             </li>

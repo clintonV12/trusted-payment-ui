@@ -1,30 +1,3 @@
-loginError = `
-	<div class="modal fade" id="loginError" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-sm" role="document">
-            <div class="modal-content">
-                <div class="modal-header my-popup-header">
-                    <h5 class="modal-title my-popup-h5">Error</h5>
-                    <button
-                    type="button"
-                    class="btn-close"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"
-                    ></button>
-                </div>
-				<div class="modal-body">
-					<p>
-						Please enter a valid phone number.
-                    </p>
-                </div>
-				<div class="modal-footer">
-                    <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">
-                        OK
-                    </button>
-                </div>
-			</div>
-		</div>
-	</div>`;
-
 login = `
 <div class="container-xxl">
       <div class="authentication-wrapper authentication-basic container-p-y">
@@ -33,7 +6,7 @@ login = `
           <div class="card my-auth-card" style="border-radius: 20px">
             <div class="card-body">
               <!-- Logo -->
-				${authLogo}
+				      ${authLogo}
               <!-- /Logo -->
               <h4 class="mb-2">Welcome to TrustedPay! <i class="bx bx-home-smile"></i></h4>
               <p class="mb-4">Please sign-in to your account and continue with business</p>
@@ -66,7 +39,7 @@ login = `
     </div>
 `;
 
-document.getElementById("app").innerHTML = `${login}${loginError}`;
+document.getElementById("app").innerHTML = `${login}${errorPopUp}`;
 
 //phone number of logged in user
 var LOGGED_IN_PHONE = 0;
@@ -86,10 +59,29 @@ function getLoginInput(){
 
 	if (phone.length == 8){
 		LOGGED_IN_PHONE = phone;
+    //requestOTP(LOGGED_IN_PHONE);
 		setCurrentPage('otp');
 	} else {
-		//show alert
-		const modal = new bootstrap.Modal('#loginError');
-		modal.show();
+    var errorMsg = '<p>Please enter a valid phone number.</p>'
+    showErrorMsgToast(errorMsg);
 	}
+}
+
+function requestOTP(phone) {
+  var settings = {
+    "url": SERVER_URL + "login",
+    "method": "GET",
+    "dataType": "json",
+    "timeout": 0,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "data": JSON.stringify({
+      "phone_number": phone
+    }),
+  };
+
+  $.ajax(settings).done(function (response) {
+    console.log(response);
+  });
 }

@@ -53,8 +53,8 @@ function setCurrentPage(page){
 function createTransactionButton() {
   return `
     <div class="buy-now">
-      <a href="#" class="btn btn-primary btn-buy-now fw-bold" data-bs-toggle="modal" data-bs-target="#modalToggle">
-		New Transaction
+      <a href="#" class="btn rounded-pill btn-icon btn-primary btn-buy-now fw-bolder" data-bs-toggle="modal" data-bs-target="#modalToggle">
+		<span class="tf-icons bx bx-plus"></span>
 	  </a>
     </div>
     <div id="newTransaction"></div>
@@ -110,5 +110,51 @@ var clickedRow = 0;
 //used by transaction-content.js & cashout-content.js
 function setClickedRow(clickedID){
 	clickedRow = clickedID;
+}
+
+errorPopUp = `
+	<div
+    class="bs-toast toast toast-placement-ex m-2"
+    role="alert"
+    aria-live="assertive"
+    aria-atomic="true"
+    data-delay="2000"
+		id = "errorT1"
+	>
+    <div class="toast-header">
+      <i class="bx bx-bell me-2"></i>
+      <div class="me-auto fw-semibold">Error</div>
+      <small>Error message</small>
+      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div class="toast-body" id="toast-msg"></div>
+  </div>`;
+
+function showErrorMsgToast(message){
+	document.getElementById("toast-msg").innerHTML = message;
+	const toastPlacementEx = document.querySelector('.toast-placement-ex');
+	let selectedType, selectedPlacement, toastPlacement;
+		
+	selectedType = "bg-danger";
+	selectedPlacement = "top-0 start-50 translate-middle-x".split(' ');
+
+	toastPlacementEx.classList.add(selectedType);
+	DOMTokenList.prototype.add.apply(toastPlacementEx.classList, selectedPlacement);
+	toastPlacement = new bootstrap.Toast(toastPlacementEx);
+	toastPlacement.show();
+}
+
+function showSuccessMsgToast(message){
+	document.getElementById("toast-msg").innerHTML = message;
+	const toastPlacementEx = document.querySelector('.toast-placement-ex');
+	let selectedType, selectedPlacement, toastPlacement;
+		
+	selectedType = "bg-success";
+	selectedPlacement = "top-0 start-50 translate-middle-x".split(' ');
+
+	toastPlacementEx.classList.add(selectedType);
+	DOMTokenList.prototype.add.apply(toastPlacementEx.classList, selectedPlacement);
+	toastPlacement = new bootstrap.Toast(toastPlacementEx);
+	toastPlacement.show();
 }
 

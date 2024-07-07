@@ -1,57 +1,3 @@
-otpVerificationError = `
-	<div class="modal fade" id="otpVerificationError" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-sm" role="document">
-            <div class="modal-content">
-                <div class="modal-header my-popup-header">
-                    <h5 class="modal-title my-popup-h5">Verification Error</h5>
-                    <button
-                    type="button"
-                    class="btn-close"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"
-                    ></button>
-                </div>
-				<div class="modal-body">
-					<p>
-						OTP Verification failed. Please make sure you entered the OTP correctly or request a new OTP.
-                    </p>
-                </div>
-				<div class="modal-footer">
-                    <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">
-                        OK
-                    </button>
-                </div>
-			</div>
-		</div>
-	</div>`;
-
-otpError = `
-	<div class="modal fade" id="otpError" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-sm" role="document">
-            <div class="modal-content">
-                <div class="modal-header my-popup-header">
-                    <h5 class="modal-title my-popup-h5">Error</h5>
-                    <button
-                    type="button"
-                    class="btn-close"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"
-                    ></button>
-                </div>
-				<div class="modal-body">
-					<p>
-						Please enter a valid OTP.
-                    </p>
-                </div>
-				<div class="modal-footer">
-                    <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">
-                        OK
-                    </button>
-                </div>
-			</div>
-		</div>
-	</div>`;
-
 otp = `
 <div class="container-xxl">
       <div class="authentication-wrapper authentication-basic container-p-y">
@@ -90,7 +36,7 @@ otp = `
     </div>
 `;
 
-document.getElementById("app").innerHTML = `${otp}${otpError}${otpVerificationError}`;
+document.getElementById("app").innerHTML = `${otp}${errorPopUp}`;
 
 function getOTPInput(){
 	let otp = document.getElementById("otp-code").value;
@@ -102,12 +48,11 @@ function getOTPInput(){
 		if (isVerified){
 			setCurrentPage('home');
 		} else {
-			const modal = new bootstrap.Modal('#otpVerificationError');
-			modal.show();
+            var errorMsg = '<p>OTP Verification failed. Please make sure you entered the OTP correctly or request a new OTP.</p>';
+            showErrorMsgToast(errorMsg);
 		}
 	} else {
-		//show alert
-		const modal = new bootstrap.Modal('#otpError');
-		modal.show();
+        var errorMsg = '<p>Please enter a valid OTP.</p>';
+        showErrorMsgToast(errorMsg);
 	}
 }

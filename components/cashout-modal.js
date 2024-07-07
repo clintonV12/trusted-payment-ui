@@ -1,63 +1,56 @@
 cashoutTransaction = `
 	<div class="modal fade" id="cashoutModal" tabindex="-1" aria-hidden="true">
-		  <div class="modal-dialog" role="document">
-			<div class="modal-content">
-			  <div class="modal-header my-popup-header">
-				<h5 class="modal-title my-popup-h5">Cashout</h5>
-				
-				<button
-				  type="button"
-				  class="btn-close"
-				  data-bs-dismiss="modal"
-				  aria-label="Close"
-				></button>
-			  </div>
-			  <div class="modal-body" id="tt">
+		  <div class="modal-dialog transaction-modal-dialog" role="document">
+			<div class="modal-content transaction-modal-content">
 			  
-				<div class="row">
-				  <div class="col mb-3" id="cStatus">
-					
-				  </div>
+			  <div class="modal-body transaction-modal-body" id="tt">
+			  	<div class="transaction-modal-header">
+		          <h5 class="modal-title transaction-modal-title">CASHOUT</h5>
+		        </div><br>
+			  
+				<div class="row transaction-modal-row">
+				  <div class="col mb-3" id="cStatus"></div>
 				</div>
-				<div class="row">
+				<div class="row transaction-modal-row">
 				  <div class="col mb-3">
-					<label for="vCode" class="form-label">Voucher Code</label>
+					<label for="vCode" class="form-label transaction-modal-label">Voucher Code</label>
 					<input type="text" id="vCode" class="form-control" readonly/>
 				  </div>
 				</div>
-				<div class="row">
+				<div class="row transaction-modal-row">
 				  <div class="col mb-3">
-					<label for="sPhone" class="form-label">Sender Phone Number</label>
+					<label for="sPhone" class="form-label transaction-modal-label">Sender Phone Number</label>
 					<input type="text" id="sPhone" class="form-control" readonly/>
 				  </div>
 				</div>
-				<div class="row">
+				<div class="row transaction-modal-row">
 				  <div class="col mb-3">
-					<label for="cashoutAmount" class="form-label">Amount Payable (E)</label>
+					<label for="cashoutAmount" class="form-label transaction-modal-label">Amount Payable (E)</label>
 					<input type="text" id="cashoutAmount" class="form-control" readonly/>
 				  </div>
 				</div>
-				<div class="row">
+				<div class="row transaction-modal-row">
 				  <div class="col mb-3">
-					<label for="cDaysLeft" class="form-label">Day Remaining</label>
+					<label for="cDaysLeft" class="form-label transaction-modal-label">Day Remaining</label>
 					<input type="text" id="cDaysLeft" class="form-control" readonly/>
 				  </div>
 				</div>
-				<div class="row">
+				<div class="row transaction-modal-row">
 				  <div class="col mb-3">
-					<label for="transaction-pin" class="form-label">PIN</label>
-					<input type="text" maxlength="5" id="transaction-pin" placeholder="Enter the PIN your got from sender." class="form-control"/>
+					<label for="transaction-pin" class="form-label transaction-modal-label">PIN</label>
+					<input type="number" maxlength="5" id="transaction-pin" placeholder="Enter the PIN your got from sender." class="form-control"/>
 					
 				  </div>
 				</div>
 				
 			  </div>
-			  <div class="modal-footer row">
-				<div class="d-grid gap-2 col-lg-12 mx-auto">
-					<button type="button" class="btn btn-primary btn-lg fw-bold" onclick="initiateCashout()">
-						Cashout
-					</button>
-				</div>
+			  <div class="modal-footer transaction-modal-footer">
+				<button type="button" class="btn btn-danger transaction-modal-btn" data-bs-dismiss="modal">
+		          <span class="tf-icons bx bx-x-circle"></span>&nbsp; Cancel
+		        </button>
+		        <button type="button" class="btn btn-primary transaction-modal-btn" onclick="initiateCashout()">
+		          <span class="tf-icons bx bx-check-double"></span>&nbsp; Proceed
+		        </button>
 			  </div>
 			</div>
 		  </div>
@@ -65,92 +58,8 @@ cashoutTransaction = `
 	  </div>
 	</div>
 `;
-	
-cashoutStarted = `
-	<div class="modal fade" id="cashoutStarted" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header my-popup-header">
-                    <h5 class="modal-title my-popup-h5">Cashout Initiated</h5>
-                    <button
-                    type="button"
-                    class="btn-close"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"
-                    ></button>
-                </div>
-				<div class="modal-body">
-					<p>
-						The cashout process has been initiated. You will received an SMS if cashout was completed successfully.
-                    </p>
-                </div>
-				<div class="modal-footer">
-                    <button type="button" class="btn btn-outline-success" data-bs-dismiss="modal">
-                        Close
-                    </button>
-                </div>
-			</div>
-		</div>
-	</div>
-	`;
-	
-daysLeftError = `
-	<div class="modal fade" id="daysLeftError" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header my-popup-header">
-                    <h5 class="modal-title my-popup-h5">Validity Period Not Over</h5>
-                    <button
-                    type="button"
-                    class="btn-close"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"
-                    ></button>
-                </div>
-				<div class="modal-body">
-					<p>
-						Cashout not available at the moment.
-                    </p>
-                </div>
-				<div class="modal-footer">
-                    <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">
-                        OK
-                    </button>
-                </div>
-			</div>
-		</div>
-	</div>
-	`;
 
-inputError = `
-	<div class="modal fade" id="inputError" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header my-popup-header">
-                    <h5 class="modal-title my-popup-h5">Invalid PIN</h5>
-                    <button
-                    type="button"
-                    class="btn-close"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"
-                    ></button>
-                </div>
-				<div class="modal-body">
-					<p>
-						Please enter a 5 digit PIN.
-                    </p>
-                </div>
-				<div class="modal-footer">
-                    <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">
-                        OK
-                    </button>
-                </div>
-			</div>
-		</div>
-	</div>
-	`;
-
-document.getElementById("cashoutTransaction").innerHTML = `${cashoutTransaction}${cashoutStarted}${inputError}${daysLeftError}`;
+document.getElementById("cashoutTransaction").innerHTML = `${cashoutTransaction}${errorPopUp}`;
 displayClickedCashoutTransaction();
 
 function displayClickedCashoutTransaction() {
@@ -177,9 +86,9 @@ function displayClickedCashoutTransaction() {
 		
 		document.getElementById("cDaysLeft").value = dayRemaining;
 		if (dayRemaining < 0){
-			document.getElementById("cStatus").innerHTML = `<span class="badge rounded-pill bg-success">Cashout Available</span>`;
+			document.getElementById("cStatus").innerHTML = `<span class="badge bg-success">Cashout Available</span>`;
 		}else{
-			document.getElementById("cStatus").innerHTML = `<span class="badge rounded-pill bg-secondary">Cashout Not Available Yet</span>`;
+			document.getElementById("cStatus").innerHTML = `<span class="badge bg-secondary">Cashout Not Available Yet</span>`;
 		}
 	});
 }
@@ -187,18 +96,18 @@ function displayClickedCashoutTransaction() {
 function initiateCashout(){
 	let pin = document.getElementById("transaction-pin").value;
 	
-	if (pin.length < 5){
-		const errorModal = new bootstrap.Modal('#inputError');
-		errorModal.show();
+	if (pin.length != 5){
+		var errorMsg = '<p>Please enter a 5 digit PIN.</p>';
+        showErrorMsgToast(errorMsg);
 	}else{
 		if (document.getElementById("cDaysLeft").value > 0) {
-			const modal = new bootstrap.Modal('#daysLeftError');
-			modal.show();
+			var errorMsg = '<p>Cashout not available at the moment.</p>';
+        	showErrorMsgToast(errorMsg);
 		}else{
 			$("#cashoutModal").modal("hide");
 			
-			const modal = new bootstrap.Modal('#cashoutStarted');
-			modal.show();
+			var successMsg = '<p>The cashout process has been initiated. You will received an SMS if cashout was completed successfully.</p>';
+			showSuccessMsgToast(successMsg);
 		}
 	}
 }

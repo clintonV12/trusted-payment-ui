@@ -1,5 +1,4 @@
 .my-popup-header {
-  /*background-color: var(--mtn-yellow);*/
   background-color: #696cff;
 }
 
@@ -8,12 +7,18 @@
 }
 
 .my-divider {
-	/*border-color: var(--mtn-yellow);*/
 	border-color: #696cff;
 }
 
 .my-logo-txt {
-	/*color: var(--mtn-yellow);*/
 	color: #696cff;
 }
 
+.layout-navbar {
+  background-color: #696cff !important;
+  color: #fff;
+}
+
+.my-menu-toggle {
+	color: #fff;
+}

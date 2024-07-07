@@ -32,6 +32,11 @@ function generateSliderFooter() {
   `;
 }
 
-// Insert the generated footer HTML into the element with the ID 'footer'
-document.getElementById("footer").innerHTML = generateFooter();
-document.getElementById("slider-footer").innerHTML = generateSliderFooter();
+try {
+  // Insert the generated footer HTML into the element with the ID 'footer'
+  document.getElementById("footer").innerHTML        = generateFooter();
+  document.getElementById("slider-footer").innerHTML = generateSliderFooter();
+} catch (error) {
+  console.log(error);
+  setCurrentPage(currentPage);
+}

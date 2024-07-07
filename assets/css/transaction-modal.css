@@ -1,0 +1,63 @@
+.transaction-modal-dialog {
+	max-width: 700px; 
+	margin: 30px auto;
+}
+
+.transaction-modal-content {
+	border: 5px solid #dee2e6;
+	border-radius: 0;
+	background: #ffffff;
+	padding: 15px;
+}
+
+.transaction-modal-body {
+	padding: 20px;
+}
+
+.transaction-modal-header {
+	border-bottom: 1px solid #dee2e6;
+	background: #f8f9fa;
+	padding: 10px;
+}
+
+.transaction-modal-title {
+	font-family: 'Courier New', Courier, monospace;
+	font-size: 1.5em;
+	font-weight: bold;
+}
+
+.transaction-modal-row {
+	margin-bottom: 10px;
+}
+
+.transaction-modal-label {
+	font-family: 'Courier New', Courier, monospace;
+	font-weight: bold;
+	color: #495057;
+}
+
+.transaction-modal-input {
+	border: none;
+	border-bottom: 1px solid #ced4da;
+	background: transparent;
+	font-family: 'Courier New', Courier, monospace;
+}
+
+.transaction-modal-qrcode {
+	max-width: 140px; 
+	padding: 5px; 
+	background: white; 
+	border: 1px solid #ced4da;
+}
+
+.transaction-modal-footer {
+	border-top: 1px solid #dee2e6;
+	background: #f8f9fa;
+	padding: 10px;
+	display: flex;
+	justify-content: space-between;
+}
+
+.transaction-modal-btn {
+	font-family: 'Courier New', Courier, monospace;
+}

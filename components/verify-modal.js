@@ -24,106 +24,54 @@ scanQR = `
 		</div>
 	</div>
 	`;
-	
-
-vStarted = `
-	<div class="modal fade" id="vStarted" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header my-popup-header">
-                    <h5 class="modal-title my-popup-h5">Verification Initiated</h5>
-                    <button
-                    type="button"
-                    class="btn-close"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"
-                    ></button>
-                </div>
-				<div class="modal-body">
-					<p>
-						Verification process started. Please wait for SMS confirming verification status.
-                    </p>
-                </div>
-				<div class="modal-footer">
-                    <button type="button" class="btn btn-outline-success" data-bs-dismiss="modal">
-                        OK
-                    </button>
-                </div>
-			</div>
-		</div>
-	</div>
-	`;
-
 
 voucherC = `
 	<div class="modal fade" id="voucherC" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header my-popup-header">
-                    <h5 class="modal-title my-popup-h5">Verify Voucher Code</h5>
-                    <button
-                    type="button"
-                    class="btn-close"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"
-                    ></button>
-                </div>
-				<div class="modal-body">
-					<div class="row">
+        <div class="modal-dialog transaction-modal-dialog" role="document">
+            <div class="modal-content transaction-modal-content">
+                
+				<div class="modal-body transaction-modal-body">
+                    <div class="transaction-modal-header">
+                        <h5 class="modal-title transaction-modal-title">VERIFY VOUCHER CODE</h5>
+                    </div><br>
+
+					<div class="row transaction-modal-row">
                         <div class="col mb-3">
-                            <label for="code" class="form-label">Voucher Code</label>
+                            <label for="code" class="form-label transaction-modal-label">Transaction Number</label>
                             <input
 								type="text"
-								id="code"
-								maxlength="8"
+								id="transactionNum"
+								maxlength="11"
                                 class="form-control"
-                                placeholder="Enter Voucher Code"
+                                placeholder="Transaction Number"
+                            />
+                        </div>
+                        <div class="col mb-3">
+                            <label for="code" class="form-label transaction-modal-label">Voucher Code</label>
+                            <input
+                                type="text"
+                                id="code"
+                                maxlength="8"
+                                class="form-control"
+                                placeholder="Voucher Code"
                             />
                         </div>
                     </div>
                 </div>
-				<div class="modal-footer row">
-					<div class="d-grid gap-2 col-lg-12 mx-auto">
-						<button type="button" class="btn btn-primary btn-lg fw-bold" onclick="initiateVerification()">
-							Verify
-						</button>
-					</div>
-                </div>
-			</div>
-		</div>
-	</div>
-	`;
-
-inputError = `
-	<div class="modal fade" id="inputError" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header my-popup-header">
-                    <h5 class="modal-title my-popup-h5">Invalid Voucher Code</h5>
-                    <button
-                    type="button"
-                    class="btn-close"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"
-                    ></button>
-                </div>
-				<div class="modal-body">
-					<p>
-						Please enter an 8 digit Voucher Code.
-                    </p>
-                </div>
-				<div class="modal-footer">
-                    <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">
-                        OK
+				<div class="modal-footer transaction-modal-footer">
+                    <button type="button" class="btn btn-danger transaction-modal-btn" data-bs-dismiss="modal">
+                        <span class="tf-icons bx bx-x-circle"></span>&nbsp; Close
+                    </button>
+                    <button type="button" onclick="initiateVerification()" class="btn btn-info transaction-modal-btn">
+                        <span class="tf-icons bx bx-badge-check"></span>&nbsp; Verify
                     </button>
                 </div>
 			</div>
 		</div>
 	</div>
 	`;
-
 	
-document.getElementById("vModals").innerHTML = `${scanQR}${voucherC}${vStarted}${inputError}`;
+document.getElementById("vModals").innerHTML = `${scanQR}${voucherC}${errorPopUp}`;
 
 
 function onScanSuccess(decodedText, decodedResult) {
@@ -140,16 +88,18 @@ var html5QrcodeScanner = new Html5QrcodeScanner(
 html5QrcodeScanner.render(onScanSuccess);
 
 function initiateVerification(){
-	let code = document.getElementById("code").value;
+	let voucherCode    = document.getElementById("code").value;
+    let transactionNum = document.getElementById("transactionNum").value;
 	
-	if (code.length < 8){
-		const errorModal = new bootstrap.Modal('#inputError');
-		errorModal.show();
-	}else{
+	if (voucherCode.length != 8 || transactionNum.length != 11){
+		var errorMsg = '<p>Please enter an 8 digit Voucher Code & 11 digit Transaction Number.</p>';
+        showErrorMsgToast(errorMsg);
+	} else {
 		
 		$("#voucherC").modal("hide");
-			
-		const modal = new bootstrap.Modal('#vStarted');
-		modal.show();	
+        var successMsg = 'Verification process started. Please wait for SMS confirming verification status.';
+        showSuccessMsgToast(successMsg);
 	}
 }
+
+function makeVerificationRequest(voucherCode, transactionNum) {}

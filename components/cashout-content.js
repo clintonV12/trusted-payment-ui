@@ -1,26 +1,26 @@
 sellerTransactions = `
-			<div class="card">
-                <h5 class="card-header">My Transactions</h5>
-                <div class="table-responsive text-nowrap">
-                  <table class="table table-striped table-hover">
-                    <thead>
-                      <tr>
-                        <th>Voucher Code</th>
+	<div class="card">
+    <h5 class="card-header">My Transactions</h5>
+    <div class="table-responsive text-nowrap">
+      <table class="table table-striped table-hover">
+        <thead>
+          <tr>
+            <th>Voucher Code</th>
 						<th>Amount (SZL)</th>
-                      </tr>
-                    </thead>
-                    <tbody class="table-border-bottom-0" id="cashoutTableBody">
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-			  
-			<div id="cashoutTransaction"></div>
-	`;
+          </tr>
+        </thead>
+        <tbody class="table-border-bottom-0" id="cashoutTableBody">
+        </tbody>
+      </table>
+    </div>
+  </div>
+`;
 
 transactionTab = `
 <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Account /</span> Cashout</h4>
-${sellerTransactions} `;
+${sellerTransactions} 
+<div id="cashoutTransaction"></div>
+`;
 	
 document.getElementById("content").innerHTML = transactionTab;
 getReceivedTransactions();

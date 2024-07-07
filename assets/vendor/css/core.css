@@ -14722,7 +14722,7 @@ body {
   bottom: 3rem;
   right: 1.625rem;
   z-index: 999999;
-  box-shadow: 0 1px 20px 1px var(--mtn-yellow);
+  box-shadow: 0 1px 20px 1px var(--bs-secondary);
 }
 .buy-now .btn-buy-now:hover {
   box-shadow: none;

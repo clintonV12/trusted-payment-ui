@@ -1,41 +1,27 @@
-errorPopUp = `
-	<div
-    class="bs-toast toast toast-placement-ex m-2"
-    role="alert"
-    aria-live="assertive"
-    aria-atomic="true"
-    data-delay="2000"
-	id = "errorT1">
-                <div class="toast-header">
-                  <i class="bx bx-bell me-2"></i>
-                  <div class="me-auto fw-semibold">Error</div>
-                  <small>Error message</small>
-                  <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-                </div>
-                <div class="toast-body">You have to accept terms & conditions and confirm the information you gave.</div>
-    </div>`;
+
 
 // Define the HTML for Modal 1
 popUp1 = `
   <div class="modal fade" id="modalToggle" aria-labelledby="modalToggleLabel" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog">
-      <form class="modal-content">
-        <div class="modal-header my-popup-header">
-          <h5 class="modal-title my-popup-h5" id="backDropModalTitle">Recipient Details</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-		  ${generateSelectField("payFrom", "Pay From", ["MoMo", "Unayo", "Emali"])}
+    <div class="modal-dialog transaction-modal-dialog">
+      <form class="modal-content transaction-modal-content">
+        
+        <div class="modal-body transaction-modal-body">
+        	<div class="transaction-modal-header">
+            <h5 class="modal-title transaction-modal-title">PAYMENT DETAILS</h5>
+          </div><br>
+
+		  		${generateSelectField("payFrom", "Pay From", ["MoMo", "Unayo", "Emali"])}
           ${generateSelectField("payTo", "Pay Into", ["MoMo", "Unayo", "Emali"])}
           ${generateInputField("fname", "First Name", "Enter First Name", "text")}
           ${generateInputField("lname", "Last Name", "Enter Last Name", "text")}
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-danger fw-bold" data-bs-dismiss="modal">
-				<span class="tf-icons bx bx-x-circle"></span>&nbsp; Close
-		  </button>
-          <button type="button" class="btn btn-primary fw-bold" data-bs-target="#modalToggle2" data-bs-toggle="modal" data-bs-dismiss="modal">
-            <span class="tf-icons bx bx-chevron-right"></span>&nbsp; Next
+        <div class="modal-footer transaction-modal-footer">
+          <button type="button" class="btn btn-danger fw-bold transaction-modal-btn" data-bs-dismiss="modal">
+						<span class="tf-icons bx bx-x-circle"></span>&nbsp; Close
+				  </button>
+          <button type="button" class="btn btn-primary fw-bold transaction-modal-btn" data-bs-target="#modalToggle2" data-bs-toggle="modal" data-bs-dismiss="modal">
+            Next <span class="tf-icons bx bx-chevron-right"></span>&nbsp;
           </button>
         </div>
       </form>
@@ -46,23 +32,24 @@ popUp1 = `
 // Define the HTML for Modal 2
 popUp2 = `
   <div class="modal fade" id="modalToggle2" aria-labelledby="modalToggleLabel2" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog">
-      <form class="modal-content">
-        <div class="modal-header my-popup-header">
-          <h5 class="modal-title my-popup-h5" >Payment Details</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-		  ${generatePhoneInputField("phone", "Phone Number", "Enter Phone Number", "number")}
+    <div class="modal-dialog transaction-modal-dialog">
+      <form class="modal-content transaction-modal-content">
+        
+        <div class="modal-body transaction-modal-body">
+        	<div class="transaction-modal-header">
+            <h5 class="modal-title transaction-modal-title">PAYMENT DETAILS</h5>
+          </div><br>
+
+		  		${generatePhoneInputField("phone", "Phone Number", "Enter Phone Number", "number")}
           ${generateInputField("pin", "National ID", "Optional", "number")}
           ${generateInputField("ref", "Reference", "Reference", "text")}
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-danger fw-bold" data-bs-target="#modalToggle" data-bs-toggle="modal" data-bs-dismiss="modal">
+        <div class="modal-footer transaction-modal-footer">
+          <button type="button" class="btn btn-danger fw-bold transaction-modal-btn" data-bs-target="#modalToggle" data-bs-toggle="modal" data-bs-dismiss="modal">
             <span class="tf-icons bx bx-chevron-left"></span>&nbsp; Back
           </button>
-          <button type="button" class="btn btn-primary fw-bold" data-bs-target="#modalToggle3" data-bs-toggle="modal" data-bs-dismiss="modal">
-            <span class="tf-icons bx bx-chevron-right"></span>&nbsp; Next
+          <button type="button" class="btn btn-primary fw-bold transaction-modal-btn" data-bs-target="#modalToggle3" data-bs-toggle="modal" data-bs-dismiss="modal">
+            Next <span class="tf-icons bx bx-chevron-right"></span>&nbsp;
           </button>
         </div>
       </form>
@@ -73,21 +60,21 @@ popUp2 = `
 // Define the HTML for Modal 3
 popUp3 = `
   <div class="modal fade" id="modalToggle3" aria-labelledby="modalToggleLabel3" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog">
-      <form class="modal-content">
-        <div class="modal-header my-popup-header">
-          <h5 class="modal-title my-popup-h5">Payment Details</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    <div class="modal-dialog transaction-modal-dialog">
+      <form class="modal-content transaction-modal-content">
+        
+        <div class="modal-body transaction-modal-body">
+        	<div class="transaction-modal-header">
+            <h5 class="modal-title transaction-modal-title">PAYMENT DETAILS</h5>
+          </div><br>
+		  		${generateSelectField("validity", "Validity Period (Days)", [10,15,30,45,60,90,180])}
+		  		${generateInputField("amount", "Amount Payable", "Amount Payable (SZL)", "number")}
         </div>
-        <div class="modal-body">
-		  ${generateSelectField("validity", "Validity Period (Days)", [10,15,30,45,60,90,180])}
-		  ${generateInputField("amount", "Amount Payable", "Amount Payable (SZL)", "number")}
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-danger fw-bold" data-bs-target="#modalToggle2" data-bs-toggle="modal" data-bs-dismiss="modal">
+        <div class="modal-footer transaction-modal-footer">
+          <button type="button" class="btn btn-danger fw-bold transaction-modal-btn" data-bs-target="#modalToggle2" data-bs-toggle="modal" data-bs-dismiss="modal">
             <span class="tf-icons bx bx-chevron-left"></span>&nbsp; Back
           </button>
-          <button onclick="getUserInput()" type="button" class="btn btn-primary fw-bold" data-bs-target="#modalToggle4" data-bs-toggle="modal" data-bs-dismiss="modal">
+          <button onclick="getUserInput()" type="button" class="btn btn-primary fw-bold transaction-modal-btn" data-bs-target="#modalToggle4" data-bs-toggle="modal" data-bs-dismiss="modal">
             <span class="tf-icons bx bx-check-double"></span>&nbsp; Confirm
           </button>
         </div>
@@ -99,26 +86,28 @@ popUp3 = `
 // Define the HTML for Modal 4
 popUp4 = `
   <div class="modal fade" id="modalToggle4" aria-labelledby="modalToggleLabel4" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog">
-      <form class="modal-content">
-        <div class="modal-header my-popup-header">
-          <h5 class="modal-title my-popup-h5">Confirm Details</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
+    <div class="modal-dialog transaction-modal-dialog">
+      <form class="modal-content transaction-modal-content">
+        
+        <div class="modal-body transaction-modal-body">
+        	<div class="transaction-modal-header">
+            <h5 class="modal-title transaction-modal-title">CONFIRM PAYEE DETAILS</h5>
+          </div><br>
+
 		   <ul class="list-group list-group-flush">
-                <li class="list-group-item">Full Name: <strong id="fullname"></strong></li>
-				<li class="list-group-item">Phone Number: <strong id="phoneC"></strong></li>
-				<li class="list-group-item">ID: <strong id="nationalID"></strong></li>
-				<li class="list-group-item">Pay From: <strong id="pFrom"></strong></li>
-				<li class="list-group-item">Pay Into: <strong id="pTo"></strong></li>
-				<li class="list-group-item">Reference: <strong id="refer"></strong></li>
-				<li class="list-group-item">Amount Payable: <strong id="amountP"></strong></li>
-				<li class="list-group-item">Service Charge: <strong id="charge"></strong></li>
-				<li class="list-group-item">Total: <strong id="sum"></strong></li>
-				<li class="list-group-item">Validity Period (Days): <strong id="validityP"></strong></li>
+        <li class="list-group-item transaction-modal-label">FULL NAME: <strong style="color:red;" id="fullname"></strong></li>
+				<li class="list-group-item transaction-modal-label">PHONE NUMBER: <strong style="color:red;" id="phoneC"></strong></li>
+				<li class="list-group-item transaction-modal-label">ID: <strong style="color:red;" id="nationalID"></strong></li>
+				<li class="list-group-item transaction-modal-label">PAY FROM: <strong style="color:red;" id="pFrom"></strong></li>
+				<li class="list-group-item transaction-modal-label">PAY INTO: <strong style="color:red;" id="pTo"></strong></li>
+				<li class="list-group-item transaction-modal-label">REFERENCE: <strong style="color:red;" id="refer"></strong></li>
+				<li class="list-group-item transaction-modal-label">AMOUNT PAYABLE: E <strong style="color:red;" id="amountP"></strong></li>
+				<li class="list-group-item transaction-modal-label">SERVICE CHARGE: E <strong style="color:red;" id="charge"></strong></li>
+				<li class="list-group-item transaction-modal-label">TOTAL: E <strong style="color:red;" id="sum"></strong></li>
+				<li class="list-group-item transaction-modal-label">VALIDITY PERIOD (DAYS): <strong style="color:red;" id="validityP"></strong></li>
 				<li class="list-group-item"></li>
-            </ul>
+       </ul>
+
 			<div class="form-check">
                 <input class="form-check-input" type="checkbox" id="terms-conditions"/>
                 <label class="form-check-label" for="terms-conditions">
@@ -133,15 +122,14 @@ popUp4 = `
                 </label>
             </div>
         </div>
-        <div class="modal-footer row mt-3">
-			<div class="d-grid gap-2 col-lg-12 mx-auto">
-			  <button type="button" class="btn btn-info btn-lg fw-bold" data-bs-target="#modalToggle3" data-bs-toggle="modal" data-bs-dismiss="modal">
-				Edit Transaction
-			  </button>
-			  <button onclick="initiateTransaction()" type="button" class="btn btn-primary btn-lg fw-bold">
-				Initiate Transaction
-			  </button>
-			</div>
+        <div class="modal-footer transaction-modal-footer">
+			
+				  <button type="button" class="btn btn-danger fw-bold transaction-modal-btn" data-bs-target="#modalToggle3" data-bs-toggle="modal" data-bs-dismiss="modal">
+						<span class="tf-icons bx bx-caret-left"></span>&nbsp; Edit
+				  </button>
+				  <button onclick="initiateTransaction()" type="button" class="btn btn-primary fw-bold transaction-modal-btn">
+						Proceed <span class="tf-icons bx bx-caret-right"></span>&nbsp;
+				  </button>
         </div>
       </form>
     </div>
@@ -150,27 +138,24 @@ popUp4 = `
 
 tStarted = `
 	<div class="modal fade" id="tStarted" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header my-popup-header">
-                    <h5 class="modal-title my-popup-h5">Transaction Initiated</h5>
-                    <button
-                    type="button"
-                    class="btn-close"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"
-                    ></button>
-                </div>
-				<div class="modal-body">
+    <div class="modal-dialog transaction-modal-dialog" role="document">
+      <div class="modal-content transaction-modal-content">
+
+				<div class="modal-body transaction-modal-body">
+					<div class="transaction-modal-header">
+            <h5 class="modal-title transaction-modal-title">TRANSACTION INITIATED</h5>
+          </div><br>
+
 					<p>
 						The transaction has been initiated. You will received a notification prompting further steps.
-                    </p>
-                </div>
-				<div class="modal-footer">
-                    <button type="button" class="btn btn-outline-success" data-bs-dismiss="modal">
-                        Close
-                    </button>
-                </div>
+          </p>
+        </div>
+
+				<div class="modal-footer transaction-modal-footer" style="text-align: end;">
+          <button type="button" class="btn btn-success transaction-modal-btn" data-bs-dismiss="modal">
+            Finish
+          </button>
+        </div>
 			</div>
 		</div>
 	</div>
@@ -179,9 +164,9 @@ tStarted = `
 // Function to generate input fields
 function generateInputField(id, label, placeholder, type) {
   return `
-    <div class="row">
+    <div class="row transaction-modal-row">
       <div class="col mb-3">
-        <label for="${id}" class="form-label">${label}</label>
+        <label for="${id}" class="form-label transaction-modal-label">${label}</label>
         <input type="${type}" id="${id}" class="form-control" placeholder="${placeholder}"/>
       </div>
     </div>
@@ -191,13 +176,13 @@ function generateInputField(id, label, placeholder, type) {
 // Function to generate phone input fields
 function generatePhoneInputField(id, label, placeholder, type) {
   return `
-    <div class="row">
+    <div class="row transaction-modal-row">
       <div class="col mb-3">
-        <label for="${id}" class="form-label">${label}</label>
-		<div class="input-group input-group-merge">
-		<span class="input-group-text">SZ (+268)</span>
-        <input type="${type}" id="${id}" class="form-control" placeholder="${placeholder}" />
-		</div>
+        <label for="${id}" class="form-label transaction-modal-label">${label}</label>
+				<div class="input-group input-group-merge">
+					<span class="input-group-text">SZ (+268)</span>
+		      <input type="${type}" id="${id}" class="form-control" placeholder="${placeholder}" />
+				</div>
       </div>
     </div>
   `;
@@ -207,9 +192,9 @@ function generatePhoneInputField(id, label, placeholder, type) {
 function generateSelectField(id, label, options) {
   const optionsHtml = options.map(option => `<option value="${option}">${option}</option>`).join('');
   return `
-    <div class="row">
+    <div class="row transaction-modal-row">
       <div class="col mb-3">
-        <label for="${id}" class="form-label">${label}</label>
+        <label for="${id}" class="form-label transaction-modal-label">${label}</label>
         <select id="${id}" class="form-select form-control">
           ${optionsHtml}
         </select>
@@ -253,6 +238,39 @@ function showUserInput(){
 	document.getElementById("sum").innerText        = userInputObj.totalAmount;
 }
 
+function validateInput(){
+	var valid       = true;
+	var emptyFields = [];
+
+	if (userInputObj.fName == ''){
+		valid = false;
+		emptyFields.push(" First name");
+	}
+	if (userInputObj.lName == ''){
+		valid = false;
+		emptyFields.push(" Last name");
+	}
+	if (userInputObj.phone == '' || userInputObj.phone.length != 8){
+		valid = false;
+		emptyFields.push(" Phone number");
+	}
+	if (userInputObj.reference == ''){
+		valid = false;
+		emptyFields.push(" Reference");
+	}
+	if (userInputObj.amount == ''){
+		valid = false;
+		emptyFields.push(" Amount payable");
+	}
+
+	if (!valid) {
+		var errorMsg = `<p>Please enter the following required fields:${emptyFields.toString()}</p>`;
+		showErrorMsgToast(errorMsg);
+	}
+	
+	return valid;
+}
+
 //Function to determine pricing
 function calcServiceCharge(amount){
 	var charge = 0.0;
@@ -276,42 +294,34 @@ function initiateTransaction(){
 	var terms          = document.getElementById("terms-conditions").checked;
 	var confirm        = document.getElementById("confirm").checked;
 	
-	if (!terms || !confirm){
-		showErrorMsg();
-	}else{
-		$.ajax({
-		method: "POST",
-		url: "http://domain.com/api/",
-		data: JSON.stringify(userInputObj),
-		dataType: "jsonp"
-		}).done(function(data){
-			//if the call is successful
-			console.log(data);
-		}).fail(function(jqXHR, textStatus, errorThrown){
-			//if the call is not successful
-		}).always(function(){
-			//runs all the time
-			console.log(JSON.stringify(userInputObj));
-			$("#modalToggle4").modal("hide");
-			
-			const modal = new bootstrap.Modal('#tStarted');
-			modal.show();
-		});
+	if (validateInput()){
+		if (!terms || !confirm) {
+			var errorMsg = '<p>You have to accept terms & conditions and confirm the information you gave.</p>'
+			showErrorMsgToast(errorMsg);
+		} else {
+			$.ajax({
+			method: "POST",
+			url: "http://domain.com/api/",
+			data: JSON.stringify(userInputObj),
+			dataType: "jsonp"
+			}).done(function(data){
+				//if the call is successful
+				console.log(data);
+			}).fail(function(jqXHR, textStatus, errorThrown){
+				//if the call is not successful
+			}).always(function(){
+				//runs all the time
+				console.log(JSON.stringify(userInputObj));
+				
+				$("#modalToggle4").modal("hide");
+				const modal = new bootstrap.Modal('#tStarted');
+				modal.show();
+			});
+		}
 	}
 }
 
-function showErrorMsg(){
-	const toastPlacementExample = document.querySelector('.toast-placement-ex');
-	let selectedType, selectedPlacement, toastPlacement;
-		
-	selectedType = "bg-danger";
-	selectedPlacement = "top-0 start-50 translate-middle-x".split(' ');
 
-	toastPlacementExample.classList.add(selectedType);
-	DOMTokenList.prototype.add.apply(toastPlacementExample.classList, selectedPlacement);
-	toastPlacement = new bootstrap.Toast(toastPlacementExample);
-	toastPlacement.show();
-}
 
 // Inject the modals into the DOM element with the ID 'newTransaction'
 document.getElementById("newTransaction").innerHTML = `${popUp1}${popUp2}${popUp3}${popUp4}${errorPopUp}${tStarted}`;
