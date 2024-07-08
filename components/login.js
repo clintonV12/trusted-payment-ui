@@ -68,20 +68,23 @@ function getLoginInput(){
 }
 
 function requestOTP(phone) {
-  var settings = {
-    "url": SERVER_URL + "login",
-    "method": "GET",
-    "dataType": "json",
-    "timeout": 0,
-    "headers": {
-      "Content-Type": "application/json"
-    },
-    "data": JSON.stringify({
-      "phone_number": phone
-    }),
+  const myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
+
+  const raw = JSON.stringify({
+    "phone_number": phone
+  });
+
+  const requestOptions = {
+    method: "POST",
+    headers: myHeaders,
+    body: raw,
+    redirect: "follow"
   };
 
-  $.ajax(settings).done(function (response) {
-    console.log(response);
-  });
+  fetch(SERVER_URL + "login", requestOptions)
+    .then((response) => response.text())
+    .then((result) => console.log(result))
+    .catch((error) => console.error(error));
+
 }

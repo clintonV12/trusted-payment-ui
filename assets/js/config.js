@@ -26,4 +26,4 @@ let config = {
   }
 };
 
-const SERVER_URL = "http://localhost/trustedpay/index.php/";
+const SERVER_URL = "http://localhost/trusted-payment-api/index.php/";
