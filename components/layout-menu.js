@@ -18,9 +18,9 @@ appMenu = `
     ${createMenuItem("Dashboard", "#", "bx bx-home", "home", true)}
     ${createMenuItem("Transactions", "#", "bx bx-wallet", "transactions")}
     ${createMenuItem("Cashout", "#", "bx bx-dollar-circle", "cashout")}
-	${createMenuItem("Verify Transaction", "#", "bx bx-badge-check", "verify")}
-	${createMenuItem("Notifications", "#", "bx bx-bell", "notifications")}
-	${createMenuItem("Profile", "#", "bx bx-user", "profile")}
+  	${createMenuItem("Verification", "#", "bx bx-badge-check", "verify")}
+  	${createMenuItem("Notifications", "#", "bx bx-bell", "notifications")}
+  	${createMenuItem("Profile", "#", "bx bx-user", "profile")}
     ${createMenuItem("Log Out", "#", "bx bx-power-off", "login")}
   </ul>
   <footer id="slider-footer" class="content-footer footer bg-footer-theme"></footer>

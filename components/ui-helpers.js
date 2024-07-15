@@ -103,15 +103,6 @@ function removeTransactionButton() {
   }
 }
 
-// Variable to track which table row was clicked
-var clickedRow = 0;
-
-//Set clickedRow to ID of clicked table row
-//used by transaction-content.js & cashout-content.js
-function setClickedRow(clickedID){
-	clickedRow = clickedID;
-}
-
 errorPopUp = `
 	<div
     class="bs-toast toast toast-placement-ex m-2"
@@ -123,7 +114,7 @@ errorPopUp = `
 	>
     <div class="toast-header">
       <i class="bx bx-bell me-2"></i>
-      <div class="me-auto fw-semibold">Error</div>
+      <div class="me-auto fw-semibold">Message</div>
       <small>Error message</small>
       <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
     </div>
@@ -135,7 +126,7 @@ function showErrorMsgToast(message){
 	const toastPlacementEx = document.querySelector('.toast-placement-ex');
 	let selectedType, selectedPlacement, toastPlacement;
 		
-	selectedType = "bg-danger";
+	selectedType = "bg-secondary";
 	selectedPlacement = "top-0 start-50 translate-middle-x".split(' ');
 
 	toastPlacementEx.classList.add(selectedType);
@@ -144,17 +135,14 @@ function showErrorMsgToast(message){
 	toastPlacement.show();
 }
 
-function showSuccessMsgToast(message){
-	document.getElementById("toast-msg").innerHTML = message;
-	const toastPlacementEx = document.querySelector('.toast-placement-ex');
-	let selectedType, selectedPlacement, toastPlacement;
-		
-	selectedType = "bg-success";
-	selectedPlacement = "top-0 start-50 translate-middle-x".split(' ');
-
-	toastPlacementEx.classList.add(selectedType);
-	DOMTokenList.prototype.add.apply(toastPlacementEx.classList, selectedPlacement);
-	toastPlacement = new bootstrap.Toast(toastPlacementEx);
-	toastPlacement.show();
+function createLoginLoader() {
+	var loader = document.getElementById("loader");
+  loader.innerHTML = `<div class="spinner-grow text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                      </div>`;
 }
 
+function hideLoginLoader() {
+	var loader = document.getElementById("loader");
+  loader.innerHTML = ``;
+}

@@ -45,7 +45,6 @@ appElement = document.getElementById("app");
 if (appElement) {
 	
 	appElement.innerHTML = mainBody;
-	console.log(getBodyScript(currentPage));
 	
 	createAndAppendScript(1, "components/layout-menu.js");
 	createAndAppendScript(2, getBodyScript(currentPage));

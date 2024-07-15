@@ -18,8 +18,10 @@ otp = `
                   <input type="text" maxlength="6" class="form-control" id="otp-code" placeholder="Enter your OTP" />
                 </div>
 				
-				<br>
+				      <br>
                 <a href="#" class="btn btn-primary d-grid w-100 fw-bold" onclick="getOTPInput()">Verify OTP</a>
+                <br>
+                <div id="loader" class="mb-3" style="text-align:center"></div>
               </form>
 
               <p class="text-center">
@@ -37,22 +39,50 @@ otp = `
 `;
 
 document.getElementById("app").innerHTML = `${otp}${errorPopUp}`;
+var errorMsg = `<p>Your OTP is ${OTP}.</p>`;
+showErrorMsgToast(errorMsg);
 
 function getOTPInput(){
 	let otp = document.getElementById("otp-code").value;
 
 	if (otp.length == 6){
 		//verify otp in server
-		isVerified = true;
+    verifyOTP(LOGGED_IN_PHONE, otp);
 		
-		if (isVerified){
-			setCurrentPage('home');
-		} else {
-            var errorMsg = '<p>OTP Verification failed. Please make sure you entered the OTP correctly or request a new OTP.</p>';
-            showErrorMsgToast(errorMsg);
-		}
 	} else {
         var errorMsg = '<p>Please enter a valid OTP.</p>';
         showErrorMsgToast(errorMsg);
 	}
+}
+
+function verifyOTP(phone, otp_code) {
+  const raw = JSON.stringify({
+    "phone_number": phone, "otp_code": otp_code
+  });
+  createLoginLoader();
+
+  var req = $.ajax({
+    "url": SERVER_URL + "login",
+    "method": "POST",
+    "data": raw,
+    "headers": {"Content-Type": "application/json"}
+    });
+
+  req.done(function(data){
+      //if the call is successful
+      hideLoginLoader();
+      if (data.token) {
+        TOKEN = data.token;
+        setCurrentPage('home');
+      } else {
+        showErrorMsgToast(data.error);
+      }
+    });
+
+  req.fail(function(jqXHR, textStatus, errorThrown){
+      //if the call is not successful
+      hideLoginLoader();
+      console.log(jqXHR);
+      showErrorMsgToast(textStatus.toString());
+    });
 }

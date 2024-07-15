@@ -38,5 +38,4 @@ try {
   document.getElementById("slider-footer").innerHTML = generateSliderFooter();
 } catch (error) {
   console.log(error);
-  setCurrentPage(currentPage);
 }

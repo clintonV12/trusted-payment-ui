@@ -11,7 +11,7 @@ var menu, animate;
 
   let layoutMenuEl = document.querySelectorAll('#layout-menu');
   layoutMenuEl.forEach(function (element) {
-    try {
+    /*try {
       menu = new Menu(element, {
         orientation: 'vertical',
         closeChildren: false
@@ -21,8 +21,7 @@ var menu, animate;
       window.Helpers.mainMenu = menu;
     } catch (error){
       console.log(error);
-      setCurrentPage(currentPage);
-    }
+    }*/
     
   });
 

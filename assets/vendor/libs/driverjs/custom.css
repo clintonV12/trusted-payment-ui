@@ -1,3 +1,4 @@
+
 .driver-popover.driverjs-theme {
   background-color: #fde047;
   color: #000;
@@ -26,7 +27,7 @@
 }
 
 .driver-popover.driverjs-theme button:hover {
-  background-color: #000;
+  background-color: #696cff;
   color: #ffffff;
 }
 
@@ -57,4 +58,9 @@
 
 .driver-popover.driverjs-theme .driver-popover-arrow-side-bottom.driver-popover-arrow {
   border-bottom-color: #fde047;
+}
+
+.driver-popover-footer {
+  border-top: 1px solid lightgray;
+  padding-top: 10px;
 }

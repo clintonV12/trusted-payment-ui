@@ -165,34 +165,27 @@ function showUserJourney(){
 	const driver = window.driver.js.driver;
 	
 	const driverObj = driver({
-	  popoverClass: 'bg-primary',
+	  //popoverClass: 'driverjs-theme',
 	  showProgress: true,
 	  steps: [
-	  { popover: { title: 'About TrustedPay', description: 'In the realm of commerce and service provision, a trust gap often exists between customers and service providers/sellers.', side: "left", align: 'start' }},
-		{ popover: { title: 'About TrustedPay', description: '. Buyers are hesitant to pay upfront due to the fear of non-delivery, while service providers fear non-payment despite delivering goods or services.', side: "left", align: 'start' }},
+	  { popover: { title: 'About TrustedPay', description: 'In the realm of commerce and service provision, a trust gap often exists between customers and service providers/sellers.'}},
+		{ popover: { title: 'About TrustedPay', description: 'Buyers are hesitant to pay upfront due to the fear of non-delivery, while service providers fear non-payment despite delivering goods or services.'}},
 		{ popover: { title: 'About TrustedPay', description: 'To bridge this gap, a trusted payment solution is essential.', side: "left", align: 'start' }},
-		{ popover: { title: 'About TrustedPay', description: 'This solution acts as a middle player, holding funds in escrow until certain conditions are met, ensuring both parties\’ interests are protected.', side: "left", align: 'start' }},
-		{ popover: { title: 'Site Tour', description: 'Here is a short tutorial on how to use the TrustedPay web app. Let\'s walk you through it.', side: "left", align: 'start' }},
-		{ element: '#desc', popover: { title: 'Get Started', description: 'Learn more about TrustedPay and why you should consider it for your next high value transaction', side: "left", align: 'start' }},
-		{ element: '#createNew', popover: { title: 'Create New Transaction', description: 'Start new transactions by clicking the button and following the given prompts.', side: "bottom", align: 'start' }},
-		{ element: '#pricing', popover: { title: 'Pricing', description: 'Get precise service charge information from our pricing table.', side: "bottom", align: 'start' }},
-		{ element: '#c4', popover: { title: 'Total Received', description: 'Keep track of how much you have used TrustedPay to receive funds.', side: "top", align: 'start' }},
-		{ element: '#c3', popover: { title: 'Total Sent', description: 'Keep track of how much you have used TrustedPay to send funds.', side: "right", align: 'start' }},
-		{ element: '#transactions', popover: { title: 'All Transactions', description: 'Visit the transactions page to manage all you transactions in a single location.', side: "right", align: 'start' }},
-		{ element: '#cashout', popover: { title: 'Cashout', description: 'Cashout your received funds directly to your MoMo account.', side: "right", align: 'start' }},
-		{ element: '#verify', popover: { title: 'Verification', description: 'Verify if a given voucher code is valid', side: "right", align: 'start' }},
+		{ popover: { title: 'About TrustedPay', description: 'This solution acts as a middle player, holding funds in escrow until certain conditions are met, ensuring both parties’ interests are protected.'}},
+		{ popover: { title: 'Site Tour', description: 'Here is a short tutorial on how to use the TrustedPay web app. Let\'s walk you through it.'}},
+		{ element: '#desc', popover: { title: 'Get Started', description: 'Learn more about TrustedPay and why you should consider it for your next high value transaction'}},
+		{ element: '#createNew', popover: { title: 'Create New Transaction', description: 'Start new transactions by clicking the button and following the given prompts.'}},
+		{ element: '#pricing', popover: { title: 'Pricing', description: 'Get precise service charge information from our pricing table.'}},
+		{ element: '#c4', popover: { title: 'Total Received', description: 'Keep track of how much you have used TrustedPay to receive funds.'}},
+		{ element: '#c3', popover: { title: 'Total Sent', description: 'Keep track of how much you have used TrustedPay to send funds.'}},
+		{ element: '#transactions', popover: { title: 'All Transactions', description: 'Visit the transactions page to manage all you transactions in a single location.'}},
+		{ element: '#cashout', popover: { title: 'Cashout', description: 'Cashout your received funds directly to your MoMo account.'}},
+		{ element: '#verify', popover: { title: 'Verification', description: 'Verify if a given voucher code is valid'}},
 		{ popover: { title: 'Get Started', description: 'And that is all, go ahead and start transacting with trust assured.' } }
 	  ]
 	});
 
 	driverObj.drive();
-}
-
-function getTransactions(){
-	let parsed = JSON.parse(transactionJson);
-	calcTotalSentTransactions(parsed["transactions"]);
-	document.getElementById("totalR").innerText = calcTotalReceivedTransactions(parsed["transactions"]);
-	document.getElementById("totalS").innerText = calcTotalSentTransactions(parsed["transactions"]);
 }
 
 function calcTotalReceivedTransactions(arrayObject) {
@@ -213,7 +206,7 @@ function calcTotalSentTransactions(arrayObject) {
 	let sum = 0;
 	
 	for (let i = 0; i < arrayObject.length; i++) {
-		if (arrayObject[i].senderPhone == LOGGED_IN_PHONE){
+		if (arrayObject[i].sender_phone == LOGGED_IN_PHONE){
 			sum = Number(sum) + Number(arrayObject[i].amount);
 		}else{
 			continue;
@@ -223,9 +216,60 @@ function calcTotalSentTransactions(arrayObject) {
 	return Number(sum).toFixed(2);
 }
 
+function requestSentTransactions(phone) {
+  const raw = JSON.stringify({
+    "sender_phone": phone
+  });
+
+  var req = $.ajax({
+    "url": SERVER_URL + "transaction",
+    "method": "POST",
+    "data": raw,
+    "headers": {"Authorization": `Bearer ${TOKEN}`,
+                "Content-Type": "application/json"
+               }
+    });
+
+  req.done(function(data){
+      //if the call is successful
+      console.log(data);
+      document.getElementById("totalS").innerText = calcTotalSentTransactions(data);
+    });
+
+  req.fail(function(jqXHR, textStatus, errorThrown){
+      console.log(jqXHR);
+      showErrorMsgToast(textStatus.toString());
+    });
+}
+
+function requestReceivedTransactions(phone) {
+  const raw = JSON.stringify({
+    "receipient_phone": phone
+  });
+
+  var req = $.ajax({
+    "url": SERVER_URL + "transaction",
+    "method": "POST",
+    "data": raw,
+    "headers": {"Authorization": `Bearer ${TOKEN}`,
+                "Content-Type": "application/json"
+               }
+    });
+
+  req.done(function(data){
+      //if the call is successful
+      console.log(data);
+      document.getElementById("totalR").innerText = calcTotalReceivedTransactions(data);
+    });
+
+  req.fail(function(jqXHR, textStatus, errorThrown){
+      console.log(textStatus);
+      showErrorMsgToast(textStatus.toString());
+    });
+}
+
 //defined in ui-helpers.js
 loadTransactionScript();
-
 document.getElementById("content").innerHTML = homeContent;
-
-getTransactions();
+requestSentTransactions(LOGGED_IN_PHONE);
+requestReceivedTransactions(LOGGED_IN_PHONE);

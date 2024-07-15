@@ -1,36 +1,17 @@
 buyerTransactions = `
-    <div class="table-responsive text-nowrap">
-      <table class="table table-striped table-hover">
-        <thead>
-          <tr>
-            <th>Recepient</th>
-			<th>Phone</th>
-          </tr>
-        </thead>
-        <tbody class="table-border-bottom-0" id="sentTableBody"></tbody>
-      </table>
+    <div class="table-responsive text-nowrap" id="tbl1">
+      <table class="table table-striped table-hover" id="sentTable"></table>
     </div>
   
-	<div id="transactionInfo"></div>
+	<div id="modalGroup"></div>
 `;
 	
 sellerTransactions = `
-    <div class="table-responsive text-nowrap">
-      <table class="table table-striped table-hover">
-        <thead>
-          <tr>
-            <th>Sender Phone</th>
-			<th>Amount (SZL)</th>
-          </tr>
-        </thead>
-        <tbody class="table-border-bottom-0" id="receivedTableBody">
-          
-        </tbody>
-      </table>
+    <div class="table-responsive text-nowrap" id="tbl2">
+      <table class="table table-striped table-hover" id="receivedTable"></table>
     </div>
   
 	<div id="transactionInfo"></div>
-	<div id="transactionInfo2"></div>
 `;
 
 transactionTab = `
@@ -77,56 +58,23 @@ transactionTab = `
     </div>
 	`;
 	
-document.getElementById("content").innerHTML = transactionTab;
-getTransactions();
+document.getElementById("content").innerHTML = `${transactionTab}${errorPopUp}`;
+var isInitialised            = false;
+var clickedTransactionNumber = 0;
+var tempClickedID            = 0; //temporally store id of clicked transaction for use in edit
+var currentValidityPeriod    = 0;//temporally store validity period of clicked transaction for use in edit
 
-function getTransactions(){
-	
-	let parsed = JSON.parse(transactionJson);
-	displaySentTransactions(parsed["transactions"]);
-	displayReceivedTransactions(parsed["transactions"]);
-	
-}
+getSentTransactions(LOGGED_IN_PHONE);
 
-/*
-* LOGGED_IN_PHONE - is defined in login.js
-* setClickedRow(this.id) - is defined in ui-helpers.js
-*/
-function displaySentTransactions(arrayObject) {
-	let tb = document.getElementById("sentTableBody");
-	
-	for (let i = 0; i < arrayObject.length; i++) {
-		if (arrayObject[i].senderPhone == LOGGED_IN_PHONE){
-			let row = `
-			<tr id="${arrayObject[i].id}" onclick="setClickedRow(this.id)" data-bs-toggle="modal" data-bs-target="#tInfoModal">
-				<td><strong>${arrayObject[i].fname} ${arrayObject[i].lname}</strong></td>
-				<td>${arrayObject[i].phone}</td>
-			</tr>`;
-			
-			tb.insertAdjacentHTML('beforeend', row);
-		}else{
-			continue;
-		}
-	}
-}
+document.querySelectorAll('button[data-bs-toggle="tab"]').forEach((el) => {
+    el.addEventListener('shown.bs.tab', () => {
+        if (!isInitialised) {
+            getReceivedTransactions(LOGGED_IN_PHONE);
+            isInitialised = true;
+        }
+    });
+});
 
-function displayReceivedTransactions(arrayObject) {
-	let tb = document.getElementById("receivedTableBody");
-	
-	for (let i = 0; i < arrayObject.length; i++) {
-		if (arrayObject[i].phone == LOGGED_IN_PHONE){
-			let row = `
-			<tr id="${arrayObject[i].id}" onclick="setClickedRow(this.id)" data-bs-toggle="modal" data-bs-target="#tInfoModal2">
-				<td><strong> ${arrayObject[i].senderPhone} </strong></td>
-				<td>${arrayObject[i].amount}</td>
-			</tr>`;
-			
-			tb.insertAdjacentHTML('beforeend', row);
-		}else{
-			continue;
-		}
-	}
-}
 
 // Remove existing script element if any
 existingTScript = document.getElementById("transaction-info-script");
@@ -142,3 +90,215 @@ tscript.id = "transaction-info-script";
 
 // Append script element to the document body
 document.body.appendChild(tscript);
+
+function getSentTransactions(phone) {
+  let raw = new Object();
+  raw.sender_phone = phone;
+  
+  var table = $('#sentTable').DataTable({
+    processing: true,
+    serverSide: false,
+    pageLength: 5,
+    responsive: true,
+    bLengthChange: false,
+    bFilter: false,
+    ajax: {
+      method: "POST",
+      url: SERVER_URL + "transaction",
+      data: function(d) {
+        return JSON.stringify(raw);
+      },
+      dataSrc: "",
+      headers: {
+        "Authorization": `Bearer ${TOKEN}`,
+        "Content-Type": "application/json"
+      },
+      error: function(xhr, error, code) {
+        console.error("AJAX Error: ", error, code);
+        if (code == "Unauthorized"){
+            setCurrentPage('login');
+        }
+      }
+    },
+
+    columns: [
+      {
+        title: "Sender",
+        data: "sender_phone"
+      },
+      {
+        title: "Transaction ID",
+        data: "transaction_number"
+      },
+      {
+        title: "Status",
+        data: "status"
+      },
+      {
+        title: "Recepient Name",
+        data: "first_name",
+      },
+      {
+        title: "Recepient Surname",
+        data: "last_name",
+      },
+      {
+        title: "Recepient Phone",
+        data: "phone",
+      },
+      {
+        title: "National ID",
+        data: "national_id",
+      },
+      {
+        title: "Amount (SZL)",
+        data: "amount",
+      },
+      {
+        title: "Service Charge",
+        data: "service_charge",
+      },
+      {
+        title: "Total Amount",
+        data: "total_amount",
+      },
+      {
+        title: "Pay From",
+        data: "pay_from",
+      },
+      {
+        title: "Pay Into",
+        data: "pay_to",
+      },
+      {
+        title: "Validity Period",
+        data: "validity_period",
+      },
+      {
+        title: "Created At",
+        data: "created_at",
+      },
+      {
+        title: "Reference",
+        data: "reference",
+      },
+      {
+        data: null,
+        defaultContent: `
+                <div class="btn-group" role="group" style="text-align:start">
+                    <button
+                      id="downloadBtnGroup"
+                      type="button"
+                      class="btn btn-primary transaction-modal-btn dropdown-toggle"
+                      data-bs-toggle="dropdown"
+                      aria-haspopup="true"
+                      aria-expanded="false">
+                      <span class="tf-icons bx bx-edit"></span>&nbsp; Edit
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="downloadBtnGroup">
+                      <a class="dropdown-item" href="javascript:void(0);" data-bs-target="#extendValidity" data-bs-toggle="modal" data-bs-dismiss="modal">Extend Validity Period</a>
+                      <a class="dropdown-item" href="javascript:void(0);" data-bs-target="#newPin" data-bs-toggle="modal" data-bs-dismiss="modal">Request New PIN</a>
+                      <a class="dropdown-item" href="javascript:void(0);" data-bs-target="#cancelTransaction" data-bs-toggle="modal" data-bs-dismiss="modal">Cancel Transaction</a>
+                    </div>
+                </div>`,
+        targets: -1
+      }
+
+    ],
+
+  });
+
+  $("#sentTable tbody").on("click", "tr", function() {
+    let data = table.row(this).data();
+    //console.log(data);
+  });
+
+  table.on("click", "button", function(e) {
+    let data = table.row(e.target.closest('tr')).data();
+    console.log(data);
+    tempClickedID = data.id;
+    currentValidityPeriod = data.validity_period;
+    clickedTransactionNumber = data.transaction_number;
+  });
+
+  // Debugging: Check if DataTable initialization is successful
+  console.log("DataTable initialized: ", table);
+}
+
+function getReceivedTransactions(phone) {
+  let raw = new Object();
+  raw.receipient_phone = phone;
+  
+  var table2 = $('#receivedTable').DataTable({
+    processing: true,
+    serverSide: false,
+    pageLength: 5,
+    responsive: true,
+    bLengthChange: false,
+    bFilter: false,
+    ajax: {
+      method: "POST",
+      url: SERVER_URL + "transaction",
+      data: function(d) {
+        return JSON.stringify(raw);
+      },
+      dataSrc: "",
+      headers: {
+        "Authorization": `Bearer ${TOKEN}`,
+        "Content-Type": "application/json"
+      },
+      error: function(xhr, error, code) {
+        console.error("AJAX Error: ", error, code);
+        if (code == "Unauthorized"){
+            setCurrentPage('login');
+        }
+      }
+    },
+
+    columns: [
+      {
+        title: "Sender",
+        data: "sender_phone"
+      },
+      {
+        title: "Transaction ID",
+        data: "transaction_number"
+      },
+      {
+        title: "Status",
+        data: "status"
+      },
+      {
+        title: "Amount (SZL)",
+        data: "amount",
+      },
+      {
+        title: "Pay Into",
+        data: "pay_to",
+      },
+      {
+        title: "Validity Period",
+        data: "validity_period",
+      },
+      {
+        title: "Created At",
+        data: "created_at",
+      },
+      {
+        title: "Reference",
+        data: "reference",
+      }
+
+    ],
+
+  });
+
+  $("#receivedTable tbody").on("click", "tr", function() {
+    let data = table2.row(this).data();
+    console.log(data);
+    displayClickedReceivedTransaction(data);
+  });
+
+  // Debugging: Check if DataTable initialization is successful
+  console.log("DataTable initialized: ", table2);
+}

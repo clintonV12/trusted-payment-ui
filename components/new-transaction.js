@@ -95,16 +95,16 @@ popUp4 = `
           </div><br>
 
 		   <ul class="list-group list-group-flush">
-        <li class="list-group-item transaction-modal-label">FULL NAME: <strong style="color:red;" id="fullname"></strong></li>
-				<li class="list-group-item transaction-modal-label">PHONE NUMBER: <strong style="color:red;" id="phoneC"></strong></li>
-				<li class="list-group-item transaction-modal-label">ID: <strong style="color:red;" id="nationalID"></strong></li>
-				<li class="list-group-item transaction-modal-label">PAY FROM: <strong style="color:red;" id="pFrom"></strong></li>
-				<li class="list-group-item transaction-modal-label">PAY INTO: <strong style="color:red;" id="pTo"></strong></li>
-				<li class="list-group-item transaction-modal-label">REFERENCE: <strong style="color:red;" id="refer"></strong></li>
-				<li class="list-group-item transaction-modal-label">AMOUNT PAYABLE: E <strong style="color:red;" id="amountP"></strong></li>
-				<li class="list-group-item transaction-modal-label">SERVICE CHARGE: E <strong style="color:red;" id="charge"></strong></li>
-				<li class="list-group-item transaction-modal-label">TOTAL: E <strong style="color:red;" id="sum"></strong></li>
-				<li class="list-group-item transaction-modal-label">VALIDITY PERIOD (DAYS): <strong style="color:red;" id="validityP"></strong></li>
+        <li class="list-group-item transaction-modal-label">FULL NAME: <strong style="color:blue;" id="fullname"></strong></li>
+				<li class="list-group-item transaction-modal-label">PHONE NUMBER: <strong style="color:blue;" id="phoneC"></strong></li>
+				<li class="list-group-item transaction-modal-label">ID: <strong style="color:blue;" id="nationalID"></strong></li>
+				<li class="list-group-item transaction-modal-label">PAY FROM: <strong style="color:blue;" id="pFrom"></strong></li>
+				<li class="list-group-item transaction-modal-label">PAY INTO: <strong style="color:blue;" id="pTo"></strong></li>
+				<li class="list-group-item transaction-modal-label">REFERENCE: <strong style="color:blue;" id="refer"></strong></li>
+				<li class="list-group-item transaction-modal-label">AMOUNT PAYABLE: E <strong style="color:blue;" id="amountP"></strong></li>
+				<li class="list-group-item transaction-modal-label">SERVICE CHARGE: E <strong style="color:blue;" id="charge"></strong></li>
+				<li class="list-group-item transaction-modal-label">TOTAL: E <strong style="color:blue;" id="sum"></strong></li>
+				<li class="list-group-item transaction-modal-label">VALIDITY PERIOD (DAYS): <strong style="color:blue;" id="validityP"></strong></li>
 				<li class="list-group-item"></li>
        </ul>
 
@@ -208,45 +208,45 @@ var userInputObj = new Object();
 
 //Function to get input
 function getUserInput(){
-	userInputObj.payFrom        = document.getElementById("payFrom").value;
-	userInputObj.payTo          = document.getElementById("payTo").value;
-	userInputObj.fName          = document.getElementById("fname").value;
-	userInputObj.lName          = document.getElementById("lname").value;
-	userInputObj.phone          = document.getElementById("phone").value;
-	userInputObj.nationalId     = document.getElementById("pin").value;
-	userInputObj.reference      = document.getElementById("ref").value;
-	userInputObj.validityPeriod = document.getElementById("validity").value;
-	userInputObj.amount         = document.getElementById("amount").value;
+	userInputObj.pay_from        = document.getElementById("payFrom").value;
+	userInputObj.pay_to          = document.getElementById("payTo").value;
+	userInputObj.first_name      = document.getElementById("fname").value;
+	userInputObj.last_name       = document.getElementById("lname").value;
+	userInputObj.phone           = document.getElementById("phone").value;
+	userInputObj.national_id     = document.getElementById("pin").value;
+	userInputObj.reference       = document.getElementById("ref").value;
+	userInputObj.validity_period = document.getElementById("validity").value;
+	userInputObj.amount          = document.getElementById("amount").value;
 	//to generated based on amount
-	userInputObj.serviceCharge  = calcServiceCharge(userInputObj.amount);
-	userInputObj.totalAmount    = (Number(userInputObj.amount) + Number(userInputObj.serviceCharge)).toFixed(2);
+	userInputObj.service_charge  = calcServiceCharge(userInputObj.amount);
+	userInputObj.total_amount    = (Number(userInputObj.amount) + Number(userInputObj.service_charge)).toFixed(2);
 	
 	showUserInput();
 }
 
 //Function to display user input
 function showUserInput(){
-	document.getElementById("fullname").innerText   = userInputObj.fName + ' ' + userInputObj.lName;
+	document.getElementById("fullname").innerText   = userInputObj.first_name + ' ' + userInputObj.last_name;
 	document.getElementById("phoneC").innerText     = userInputObj.phone;
-	document.getElementById("pFrom").innerText      = userInputObj.payFrom;
-	document.getElementById("pTo").innerText        = userInputObj.payTo;
-	document.getElementById("nationalID").innerText = userInputObj.nationalId;
+	document.getElementById("pFrom").innerText      = userInputObj.pay_from;
+	document.getElementById("pTo").innerText        = userInputObj.pay_to;
+	document.getElementById("nationalID").innerText = userInputObj.national_id;
 	document.getElementById("refer").innerText      = userInputObj.reference;
-	document.getElementById("validityP").innerText  = userInputObj.validityPeriod;
+	document.getElementById("validityP").innerText  = userInputObj.validity_period;
 	document.getElementById("amountP").innerText    = userInputObj.amount;
-	document.getElementById("charge").innerText     = userInputObj.serviceCharge;
-	document.getElementById("sum").innerText        = userInputObj.totalAmount;
+	document.getElementById("charge").innerText     = userInputObj.service_charge;
+	document.getElementById("sum").innerText        = userInputObj.total_amount;
 }
 
 function validateInput(){
 	var valid       = true;
 	var emptyFields = [];
 
-	if (userInputObj.fName == ''){
+	if (userInputObj.first_name == ''){
 		valid = false;
 		emptyFields.push(" First name");
 	}
-	if (userInputObj.lName == ''){
+	if (userInputObj.last_name == ''){
 		valid = false;
 		emptyFields.push(" Last name");
 	}
@@ -299,26 +299,50 @@ function initiateTransaction(){
 			var errorMsg = '<p>You have to accept terms & conditions and confirm the information you gave.</p>'
 			showErrorMsgToast(errorMsg);
 		} else {
-			$.ajax({
-			method: "POST",
-			url: "http://domain.com/api/",
-			data: JSON.stringify(userInputObj),
-			dataType: "jsonp"
-			}).done(function(data){
-				//if the call is successful
-				console.log(data);
-			}).fail(function(jqXHR, textStatus, errorThrown){
-				//if the call is not successful
-			}).always(function(){
-				//runs all the time
-				console.log(JSON.stringify(userInputObj));
-				
-				$("#modalToggle4").modal("hide");
-				const modal = new bootstrap.Modal('#tStarted');
-				modal.show();
-			});
+
+			createNewTransaction(userInputObj);
 		}
 	}
+}
+
+function createNewTransaction(userInput) {
+  const raw = JSON.stringify({
+  	"new": 1,
+    "sender_phone": LOGGED_IN_PHONE,
+    "first_name": userInputObj.first_name,
+    "last_name": userInputObj.last_name,
+    "national_id": userInputObj.national_id,
+    "phone": userInputObj.phone,
+    "pay_from": userInputObj.pay_from,
+    "pay_to": userInputObj.pay_to,
+    "validity_period": userInputObj.validity_period,
+    "amount": userInputObj.amount,
+    "service_charge": userInputObj.service_charge,
+    "total_amount": userInputObj.total_amount,
+    "reference": userInputObj.reference,
+  });
+
+  var req = $.ajax({
+    "url": SERVER_URL + "transaction",
+    "method": "POST",
+    "data": raw,
+    "headers": {"Authorization": `Bearer ${TOKEN}`,
+                "Content-Type": "application/json"
+               }
+    });
+
+  req.done(function(data){
+      //if the call is successful
+  		console.log(data);
+      $("#modalToggle4").modal("hide");
+			const modal = new bootstrap.Modal('#tStarted');
+			modal.show();
+    });
+
+  req.fail(function(jqXHR, textStatus, errorThrown){
+  		console.log(jqXHR);
+      handleError(jqXHR.responseText);
+    });
 }
 
 

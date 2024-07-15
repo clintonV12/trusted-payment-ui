@@ -1,74 +1,11 @@
-transactionInfo = `
-					<div class="modal fade" id="tInfoModal" tabindex="-1" aria-hidden="true">
-            <div class="modal-dialog transaction-modal-dialog" role="document">
-              <div class="modal-content transaction-modal-content">
-
-                <div class="modal-body transaction-modal-body">
-                  <div class="transaction-modal-header">
-                    <h5 class="modal-title transaction-modal-title">SENT TRANSACTION</h5>
-                  </div><br>
-
-                  <div class="row transaction-modal-row">
-                    <div class="col mb-3">
-                      <label for="Tfname" class="form-label transaction-modal-label">Recepient Full Name</label>
-                      <input type="text" id="Tfname" class="form-control" style="border: none; border-bottom: 1px solid #ced4da; background: transparent; font-family: 'Courier New', Courier, monospace;" readonly/>
-                    </div>
-                  </div>
-	               <div class="row transaction-modal-row">
-                    <div class="col mb-3">
-                      <label for="Tphone" class="form-label transaction-modal-label">Phone Number</label>
-                      <input type="text" id="Tphone" class="form-control" style="border: none; border-bottom: 1px solid #ced4da; background: transparent; font-family: 'Courier New', Courier, monospace;" readonly/>
-                    </div>
-                  </div>
-	                <div class="row transaction-modal-row">
-                    <div class="col mb-3">
-                      <label for="Tamount" class="form-label transaction-modal-label">Amount Payable (E)</label>
-                      <input type="text" id="Tamount" class="form-control" style="border: none; border-bottom: 1px solid #ced4da; background: transparent; font-family: 'Courier New', Courier, monospace;" readonly/>
-                    </div>
-                  </div>
-	                <div class="row transaction-modal-row">
-                    <div class="col mb-3">
-                      <label for="Tref" class="form-label transaction-modal-label">Reference</label>
-                      <input type="text" id="Tref" class="form-control" style="border: none; border-bottom: 1px solid #ced4da; background: transparent; font-family: 'Courier New', Courier, monospace;" readonly/>
-                    </div>
-                  </div>
-	                <div class="row transaction-modal-row">
-                    <div class="col mb-3">
-                      <label for="Tvalidity" class="form-label transaction-modal-label">Validity Period</label>
-                      <input type="text" id="Tvalidity" class="form-control" style="border: none; border-bottom: 1px solid #ced4da; background: transparent; font-family: 'Courier New', Courier, monospace;" readonly/>
-                    </div>
-                  </div>
-	                <div class="row transaction-modal-row">
-                    <div class="col mb-3">
-                      <label for="Tremaining" class="form-label transaction-modal-label">Days Remaining</label>
-                      <input type="text" id="Tremaining" class="form-control" style="border: none; border-bottom: 1px solid #ced4da; background: transparent; font-family: 'Courier New', Courier, monospace;" readonly/>
-                    </div>
-                  </div>
-                  <div class="row transaction-modal-row">
-                    <div class="col mb-3" style="text-align: center;">
-                      <a href="#" style="text-align: center;" class="form-label">Cancel transaction</a>
-                    </div>
-                  </div>
-                  
-                </div>
-                <div class="modal-footer transaction-modal-footer">
-                  <button type="button" class="btn btn-danger transaction-modal-btn" data-bs-dismiss="modal">
-                    <span class="tf-icons bx bx-x-circle"></span>&nbsp; Close
-                  </button>
-                	<button type="button" class="btn btn-info transaction-modal-btn" data-bs-target="#extendValidity" data-bs-toggle="modal" data-bs-dismiss="modal">
-                		<span class="tf-icons bx bx-edit"></span>&nbsp; Edit
-                	</button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div id="validityExtension"></div>
+modalGroup = `
+    <div id="validityExtension"></div>
+    <div id="cancellation"></div>
+    <div id="cancelStarted"></div>
+    <div id="newPinModal"></div>
 	`;
 	
-transactionInfo2 = `
+transactionInfo = `
 	<div class="modal fade" id="tInfoModal2" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog transaction-modal-dialog" role="document">
     <div class="modal-content transaction-modal-content">
@@ -126,9 +63,21 @@ transactionInfo2 = `
         <button type="button" class="btn btn-danger transaction-modal-btn" data-bs-dismiss="modal">
           <span class="tf-icons bx bx-x-circle"></span>&nbsp; Close
         </button>
-        <button type="button" class="btn btn-primary transaction-modal-btn" onclick="downloadTransaction()">
-          <span class="tf-icons bx bx-download"></span>&nbsp; Download
-        </button>
+        <div class="btn-group" role="group">
+          <button
+            id="downloadBtnGroup"
+            type="button"
+            class="btn btn-primary transaction-modal-btn dropdown-toggle"
+            data-bs-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false">
+            <span class="tf-icons bx bx-download"></span>&nbsp; Download
+          </button>
+          <div class="dropdown-menu" aria-labelledby="downloadBtnGroup">
+            <a class="dropdown-item" id="qr-downloader" onclick="downloadQRCode()" href="javascript:void(0);">QR Code Only</a>
+            <a class="dropdown-item" onclick="downloadTransaction()" href="javascript:void(0);">Complete Document</a>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -146,6 +95,13 @@ extendValidity = `
             <h5 class="modal-title transaction-modal-title">EXTEND VALIDITY PERIOD</h5>
           </div><br>
 
+          <div class="mb-3 col-12 mb-0">
+            <div class="alert alert-warning">
+              <h6 class="alert-heading fw-bold mb-1">Are you sure you want to extend?</h6>
+              <p class="mb-0">This action will result in a service charge of E20.00. Please be certain.</p>
+            </div>
+          </div>
+
           <div class="row transaction-modal-row">
             <div class="col mb-3">
               <label for="add-validity" class="form-label transaction-modal-label">Additional Days</label>
@@ -160,11 +116,11 @@ extendValidity = `
           </div>
         </div>
         <div class="modal-footer transaction-modal-footer">
-          <button type="button" class="btn btn-danger fw-bold transaction-modal-btn" data-bs-target="#tInfoModal" data-bs-toggle="modal" data-bs-dismiss="modal">
-            <span class="tf-icons bx bx-undo"></span>&nbsp; Back
+          <button type="button" class="btn btn-danger fw-bold transaction-modal-btn" data-bs-dismiss="modal">
+            <span class="tf-icons bx bx-x-circle"></span>&nbsp; Cancel
           </button>
-          <button type="button" class="btn btn-primary fw-bold transaction-modal-btn">
-            <span class="tf-icons bx bx-check-double"></span>&nbsp; Confirm
+          <button type="button" class="btn btn-outline-primary fw-bold transaction-modal-btn" onclick="editTransactionPeriod()">
+            Proceed <span class="tf-icons bx bx-caret-right"></span>&nbsp;
           </button>
         </div>
       </form>
@@ -172,73 +128,145 @@ extendValidity = `
   </div>
 `;
 
+newPin = `
+  <div class="modal fade" id="newPin" aria-labelledby="newPin" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog transaction-modal-dialog">
+      <form class="modal-content transaction-modal-content">
+        
+        <div class="modal-body transaction-modal-body">
+          <div class="transaction-modal-header">
+            <h5 class="modal-title transaction-modal-title">RESET PIN</h5>
+          </div><br>
+
+          <div class="mb-3 col-12 mb-0">
+            <div class="alert alert-warning">
+              <h6 class="alert-heading fw-bold mb-1">Are you sure?</h6>
+              <p class="mb-0">Please confirm, this action is not reversable.</p>
+            </div>
+
+            <div class="form-check mb-3">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                id="pinReset"
+              />
+              <label class="form-check-label" for="pinReset">I confirm I want to reset my PIN</label>
+            </div>
+          </div>
+
+        </div>
+        <div class="modal-footer transaction-modal-footer">
+          <button type="button" class="btn btn-danger fw-bold transaction-modal-btn" data-bs-dismiss="modal">
+            <span class="tf-icons bx bx-x-circle"></span>&nbsp; Cancel
+          </button>
+          <button type="button" class="btn btn-outline-primary fw-bold transaction-modal-btn" onclick="makePinResetRequest()">
+            Proceed <span class="tf-icons bx bx-caret-right"></span>&nbsp;
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+`;
+
+cancelTransaction = `
+<div class="modal fade" id="cancelTransaction" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog transaction-modal-dialog" role="document">
+          <div class="modal-content transaction-modal-content">
+              
+            <div class="modal-body transaction-modal-body">
+                  <div class="transaction-modal-header">
+                      <h5 class="modal-title transaction-modal-title">CANCEL TRANSACTION</h5>
+                  </div><br>
+
+                  <div class="row transaction-modal-row">
+                      <div class="col-md-6 col-sm-6 mb-3">
+                          <label for="code" class="form-label transaction-modal-label">Voucher Code</label>
+                          <input
+                              type="text"
+                              id="code"
+                              maxlength="6"
+                              class="form-control"
+                              placeholder="Voucher Code"
+                          />
+                      </div>
+                      <div class="col-md-6 col-sm-6 mb-3">
+                          <label for="pin_code" class="form-label transaction-modal-label">PIN</label>
+                          <input
+                              type="text"
+                              id="pin_code"
+                              maxlength="5"
+                              class="form-control"
+                              placeholder="Enter your PIN"
+                          />
+                      </div>
+                    </div>
+                  </div>
+                    <div class="modal-footer transaction-modal-footer">
+                    <button type="button" class="btn btn-danger transaction-modal-btn" data-bs-dismiss="modal">
+                        <span class="tf-icons bx bx-x-circle"></span>&nbsp; Cancel
+                    </button>
+                    <button type="button" onclick="startTransactionCancel()" class="btn btn-outline-primary transaction-modal-btn">
+                      Proceed <span class="tf-icons bx bx-caret-right"></span>&nbsp;
+                    </button>
+                  </div>
+          </div>
+        </div>
+      </div>
+  `;
+
+cStarted = `
+  <div class="modal fade" id="cStarted" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog transaction-modal-dialog" role="document">
+      <div class="modal-content transaction-modal-content">
+
+        <div class="modal-body transaction-modal-body">
+          <div class="transaction-modal-header">
+            <h5 class="modal-title transaction-modal-title">CANCELLATION INITIATED</h5>
+          </div><br>
+
+          <p>
+            The transaction cancellation process has been initiated. You will received a notification advising progress.
+          </p>
+        </div>
+
+        <div class="modal-footer transaction-modal-footer" style="text-align: end;">
+          <button type="button" class="btn btn-success transaction-modal-btn" data-bs-dismiss="modal">
+            Finish
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  `;
+
+document.getElementById("modalGroup").innerHTML        = modalGroup;
 document.getElementById("transactionInfo").innerHTML   = transactionInfo;
-document.getElementById("transactionInfo2").innerHTML  = transactionInfo2;
 document.getElementById("validityExtension").innerHTML = extendValidity;
-	
-displayClickedSentTransaction();
-displayClickedReceivedTransaction();
+document.getElementById("cancellation").innerHTML      = cancelTransaction;
+document.getElementById("cancelStarted").innerHTML     = cStarted;
+document.getElementById("newPinModal").innerHTML            = newPin;
 
-function displayClickedSentTransaction() {
-	
-	//runs when modal is shown
-	//Use show.bs.modal to run code before modal is displayed
-	$('#tInfoModal').on('shown.bs.modal', function() {
-		let parsed          = JSON.parse(transactionJson);
-		let arrayObject     = parsed["transactions"];
-		let transactionInfo = [];
-		
-		for (let i = 0; i < arrayObject.length; i++) {
-			if (clickedRow == arrayObject[i].id){
-				transactionInfo = arrayObject[i];
-				break;
-			}
-		}
-		
-		document.getElementById("Tfname").value     = transactionInfo.fname + " " + transactionInfo.lname;
-		document.getElementById("Tphone").value     = transactionInfo.phone;
-		document.getElementById("Tamount").value    = transactionInfo.amount;
-		document.getElementById("Tref").value       = transactionInfo.ref;
-		document.getElementById("Tvalidity").value  = transactionInfo.validityPeriod;
-		
-		var now          = Date.now();
-		var elapsed      = now - transactionInfo.durationStart;
-		var elapsedDays  = Math.round(elapsed / (1000 * 3600 *24));
-		var dayRemaining = transactionInfo.validityPeriod - elapsedDays
-		
-		document.getElementById("Tremaining").value = dayRemaining;
-	});
-}
-
-function displayClickedReceivedTransaction() {
+function displayClickedReceivedTransaction(arrayObject) {
+  const modal = new bootstrap.Modal('#tInfoModal2');
+  modal.show();
+  console.log(arrayObject);
 	$('#tInfoModal2').on('shown.bs.modal', function() {
-		let parsed          = JSON.parse(transactionJson);
-		let arrayObject     = parsed["transactions"];
-		let transactionInfo = [];
+		transactionInfo = arrayObject;
 		
-		for (let i = 0; i < arrayObject.length; i++) {
-			if (clickedRow == arrayObject[i].id){
-				transactionInfo = arrayObject[i];
-				break;
-			}
-		}
-		
-		document.getElementById("rTfname").value  = transactionInfo.fname + " " + transactionInfo.lname;
+		document.getElementById("rTfname").value  = transactionInfo.first_name + " " + transactionInfo.last_name;
 		document.getElementById("rTPhone").value  = transactionInfo.phone;
 		document.getElementById("rTAmount").value = Number(transactionInfo.amount).toFixed(2);
-		document.getElementById("rVoucherCode").value = transactionInfo.voucherCode;
-		document.getElementById("rRef").value = transactionInfo.ref;
+		document.getElementById("rVoucherCode").value = transactionInfo.voucher_code;
+		document.getElementById("rRef").value = transactionInfo.reference;
 		
-		var now          = Date.now();
-		var elapsed      = now - transactionInfo.durationStart;
+		var now          = Date.now() / 1000;
+		var elapsed      = now - transactionInfo.duration_start;
 		var elapsedDays  = Math.round(elapsed / (1000 * 3600 *24));
-		var dayRemaining = transactionInfo.validityPeriod - elapsedDays
-		
-		//document.getElementById("Tremaining").value = dayRemaining;
+		var dayRemaining = transactionInfo.validity_period - elapsedDays
 
     document.getElementById("qrcode-gen").innerHTML = "";
 		new QRCode(document.getElementById("qrcode-gen"), {
-			text: transactionInfo.voucherCode,
+			text: "tNumber="+transactionInfo.transaction_number+"&vCode="+transactionInfo.voucher_code,
 			width: 128,
 			height: 128,
 			colorDark : "#000000",
@@ -249,6 +277,22 @@ function displayClickedReceivedTransaction() {
 	});
 }
 
+function downloadQRCode() {
+  // Get the element to download
+  const element = document.getElementById('qrcode-gen');
+  if (!element) {
+    console.error('Element with ID "qrcode-gen" not found.');
+    return;
+  }
+
+  html2canvas(element).then(canvas => {
+      const a = document.createElement("a");
+      a.href = canvas.toDataURL("image/jpeg");
+      a.download = "TrustedPay_QR_Code.jpeg";
+      a.click();
+  });
+
+}
 
 function downloadTransaction() {
   // Ensure jsPDF is loaded
@@ -279,4 +323,146 @@ function downloadTransaction() {
     x: 10,
     y: 10,
   });
+}
+
+function startTransactionCancel() {
+  let vCode = document.getElementById("code").value;
+  let pCode  = document.getElementById("pin_code").value;
+
+  if (pCode.length == 5 && vCode.length == 6){
+      $("#cancelTransaction").modal("hide");
+      makeCancelRequest(vCode, pCode);
+
+  } else {
+    var errorMsg = '<p>Please enter a valid Voucher Code and PIN.</p>';
+    showErrorMsgToast(errorMsg);
+  }
+}
+
+function getClickedTransaction(id, tType) {
+  const raw = JSON.stringify({
+    "id": id
+  });
+
+  var req = $.ajax({
+    "url": SERVER_URL + "transaction",
+    "method": "POST",
+    "data": raw,
+    "headers": {"Authorization": `Bearer ${TOKEN}`,
+                "Content-Type": "application/json"
+               }
+    });
+
+  req.done(function(data){
+      //if the call is successful
+      if (tType == 'SENT'){
+        tempClickedID = id;
+        displayClickedSentTransaction(data);
+      }
+      else if (tType == 'RECEIVED'){
+        displayClickedReceivedTransaction(data);
+      }
+    });
+
+  req.fail(function(jqXHR, textStatus, errorThrown){
+      handleError(textStatus.toString());
+    });
+}
+
+function editTransactionPeriod() {
+  let additionalDays = document.getElementById("add-validity").value;
+  let totalDays = Number(additionalDays) + Number(currentValidityPeriod);
+
+  const raw = JSON.stringify({
+    "transaction_id": tempClickedID,
+    "validity_period": totalDays
+  });
+
+  var req = $.ajax({
+    "url": SERVER_URL + "transaction",
+    "method": "PUT",
+    "data": raw,
+    "headers": {"Authorization": `Bearer ${TOKEN}`,
+                "Content-Type": "application/json"
+               }
+    });
+
+  req.done(function(data){
+      //if the call is successful
+      $("#extendValidity").modal("hide");
+      handleSuccess(data);
+    });
+
+  req.fail(function(jqXHR, textStatus, errorThrown){
+      console.log(jqXHR);
+      handleError(textStatus.toString());
+    });
+}
+
+function makeCancelRequest(vCode, pCode) {
+  const  raw = JSON.stringify({
+        "cancel": 1,
+        "vCode": vCode,
+        "pCode": pCode,
+        "transaction_id": tempClickedID,
+        "transaction_number": clickedTransactionNumber
+    });
+  
+  var req = $.ajax({
+    "url": SERVER_URL + "transaction",
+    "method": "POST",
+    "data": raw,
+    "headers": {"Authorization": `Bearer ${TOKEN}`,
+                "Content-Type": "application/json"
+               }
+    });
+
+  req.done(function(data){
+      //if the call is successful
+      console.log(data);
+      $("#cancelTransaction").modal("hide");
+      handleSuccess(data);
+    });
+
+  req.fail(function(jqXHR, textStatus, errorThrown){
+      console.log(jqXHR);
+      handleError(textStatus.toString());
+    });
+}
+
+function makePinResetRequest() {
+  const  raw = JSON.stringify({
+        "reset_pin": 1,
+        "phone_number": LOGGED_IN_PHONE,
+        "transaction_id": tempClickedID,
+        "transaction_number": clickedTransactionNumber
+    });
+
+  var pinReset = document.getElementById("pinReset").checked;
+  if (pinReset) {
+    var req = $.ajax({
+      "url": SERVER_URL + "transaction",
+      "method": "PUT",
+      "data": raw,
+      "headers": {"Authorization": `Bearer ${TOKEN}`,
+                  "Content-Type": "application/json"
+                 }
+      });
+
+    req.done(function(data){
+        //if the call is successful
+        console.log(data);
+        $("#newPin").modal("hide");
+        showErrorMsgToast(data.message);
+      });
+
+    req.fail(function(jqXHR, textStatus, errorThrown){
+        console.log(jqXHR);
+        showErrorMsgToast(textStatus.toString());
+      });
+
+  } else {
+    showErrorMsgToast("Please check the confirm box first.");
+  }
+
 }

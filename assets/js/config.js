@@ -27,3 +27,6 @@ let config = {
 };
 
 const SERVER_URL = "http://localhost/trusted-payment-api/index.php/";
+//phone number of logged in user
+var LOGGED_IN_PHONE = 0;
+var TOKEN = '';
