@@ -1,6 +1,6 @@
 sellerTransactions = `
-	<div class="card">
-    <h5 class="card-header">My Transactions</h5>
+	<div class="card" style="padding: 20px">
+    <h5 class="card-header">Received Trusted Payments</h5>
     <div class="table-responsive text-nowrap" id="tblBody">
       <table class="table table-striped table-hover" id="cashoutTableBody"></table>
     </div>
@@ -15,10 +15,6 @@ ${sellerTransactions}
 	
 document.getElementById("content").innerHTML = transactionTab;
 getReceivedTransactions(LOGGED_IN_PHONE);
-
-var cashoutVCode = 0;
-var cashoutTNum  = 0;
-var cashoutTID   = 0;
 
 // Remove existing script element if any
 existingTScript = document.getElementById("cashout-script");
@@ -65,10 +61,21 @@ function getReceivedTransactions(phone) {
       }
     },
 
+    columnDefs: [
+      {
+        targets: 0,
+        className: 'dt-body-left'
+      }
+    ],
+
     columns: [
       {
-        title: "Sender",
+        title: "Sender Phone",
         data: "sender_phone"
+      },
+      {
+        title: "Alt Sender Phone",
+        data: "alt_sender_phone"
       },
       {
         title: "Transaction ID",
@@ -98,18 +105,13 @@ function getReceivedTransactions(phone) {
         title: "Reference",
         data: "reference",
       }
-
     ],
 
   });
 
   $("#cashoutTableBody tbody").on("click", "tr", function() {
-    let data     = table2.row(this).data();
-    cashoutVCode = data.voucher_code;
-    cashoutTNum  = data.transaction_number;
-    cashoutTID   = data.id;
-
-    displayClickedCashoutTransaction(data);
+    let data = table2.row(this).data();
+    displayCashoutTransaction(data);
   });
 
   // Debugging: Check if DataTable initialization is successful

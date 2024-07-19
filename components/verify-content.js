@@ -2,11 +2,11 @@ voucherCode = `
 	<div class="col-lg-6 col-md-12 col-12 mb-4">
         <div class="card text-center mb-3">
             <div class="card-body">
-                <h5 class="card-title">With Voucher Code</h5>
-                <p class="card-text">You can use a voucher code to check the validity of the TrustedPay voucher and confirm if it has not expired.</p>
+                <h5 class="card-title">With Voucher Code or PIN</h5>
+                <p class="card-text">You can use a voucher code or PIN to check the validity of the TrustedPay voucher and confirm if it has not expired.</p>
                 
 				<button type="button" class="btn btn-primary fw-bold" data-bs-toggle="modal" data-bs-target="#voucherC">
-				<span class="tf-icons bx bx-calculator"></span>&nbsp; Enter Voucher Code
+				<span class="tf-icons bx bx-calculator"></span>&nbsp; Enter Voucher Code or PIN
 				</button>
             </div>
         </div>

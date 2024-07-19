@@ -1,7 +1,7 @@
 modalGroup = `
     <div id="validityExtension"></div>
     <div id="cancellation"></div>
-    <div id="cancelStarted"></div>
+    <div id="taskStarted"></div>
     <div id="newPinModal"></div>
 	`;
 	
@@ -60,24 +60,36 @@ transactionInfo = `
       </div>
 
       <div class="modal-footer transaction-modal-footer">
-        <button type="button" class="btn btn-danger transaction-modal-btn" data-bs-dismiss="modal">
-          <span class="tf-icons bx bx-x-circle"></span>&nbsp; Close
-        </button>
-        <div class="btn-group" role="group">
-          <button
-            id="downloadBtnGroup"
-            type="button"
-            class="btn btn-primary transaction-modal-btn dropdown-toggle"
-            data-bs-toggle="dropdown"
-            aria-haspopup="true"
-            aria-expanded="false">
-            <span class="tf-icons bx bx-download"></span>&nbsp; Download
-          </button>
-          <div class="dropdown-menu" aria-labelledby="downloadBtnGroup">
-            <a class="dropdown-item" id="qr-downloader" onclick="downloadQRCode()" href="javascript:void(0);">QR Code Only</a>
-            <a class="dropdown-item" onclick="downloadTransaction()" href="javascript:void(0);">Complete Document</a>
+
+        <div class="col">
+            <div class="d-flex mb-3">
+              <button style="white-space: nowrap;" type="button" class="btn btn-danger flex-fill fw-bold transaction-modal-btn" data-bs-dismiss="modal">
+                <span class="tf-icons bx bx-x-circle"></span>&nbsp; Close
+              </button>
+            </div>
           </div>
-        </div>
+          <div class="col">
+            <div class="d-flex mb-3">
+              <div class="btn-group flex-fill" role="group">
+                <button
+                  id="downloadBtnGroup"
+                  style="white-space: nowrap;"
+                  type="button"
+                  class="btn btn-info transaction-modal-btn dropdown-toggle flex-fill fw-bold"
+                  data-bs-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false">
+                  <span class="tf-icons bx bx-download"></span>&nbsp; Download
+                </button>
+                <div class="dropdown-menu" aria-labelledby="downloadBtnGroup">
+                  <a class="dropdown-item" id="qr-downloader" onclick="downloadQRCode()" href="javascript:void(0);">QR Code Only</a>
+                  <a class="dropdown-item" onclick="downloadTransaction()" href="javascript:void(0);">Complete Document</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
       </div>
     </div>
   </div>
@@ -116,12 +128,22 @@ extendValidity = `
           </div>
         </div>
         <div class="modal-footer transaction-modal-footer">
-          <button type="button" class="btn btn-danger fw-bold transaction-modal-btn" data-bs-dismiss="modal">
-            <span class="tf-icons bx bx-x-circle"></span>&nbsp; Cancel
-          </button>
-          <button type="button" class="btn btn-outline-primary fw-bold transaction-modal-btn" onclick="editTransactionPeriod()">
-            Proceed <span class="tf-icons bx bx-caret-right"></span>&nbsp;
-          </button>
+
+          <div class="col">
+            <div class="d-flex mb-3">
+              <button style="white-space: nowrap;" type="button" class="btn btn-danger flex-fill fw-bold transaction-modal-btn" data-bs-dismiss="modal">
+                <span class="tf-icons bx bx-x-circle"></span>&nbsp; Cancel
+              </button>
+            </div>
+          </div>
+          <div class="col">
+            <div class="d-flex mb-3">
+              <button style="white-space: nowrap;" type="button" class="btn btn-info flex-fill fw-bold transaction-modal-btn" onclick="editTransactionPeriod()">
+                Proceed <span class="tf-icons bx bx-caret-right"></span>&nbsp;
+              </button>
+            </div>
+          </div>
+
         </div>
       </form>
     </div>
@@ -156,12 +178,22 @@ newPin = `
 
         </div>
         <div class="modal-footer transaction-modal-footer">
-          <button type="button" class="btn btn-danger fw-bold transaction-modal-btn" data-bs-dismiss="modal">
-            <span class="tf-icons bx bx-x-circle"></span>&nbsp; Cancel
-          </button>
-          <button type="button" class="btn btn-outline-primary fw-bold transaction-modal-btn" onclick="makePinResetRequest()">
-            Proceed <span class="tf-icons bx bx-caret-right"></span>&nbsp;
-          </button>
+
+          <div class="col">
+            <div class="d-flex mb-3">
+              <button style="white-space: nowrap;" type="button" class="btn btn-danger flex-fill fw-bold transaction-modal-btn" data-bs-dismiss="modal">
+                <span class="tf-icons bx bx-x-circle"></span>&nbsp; Cancel
+              </button>
+            </div>
+          </div>
+          <div class="col">
+            <div class="d-flex mb-3">
+              <button style="white-space: nowrap;" type="button" class="btn btn-info flex-fill fw-bold transaction-modal-btn" onclick="makePinResetRequest()">
+                Proceed <span class="tf-icons bx bx-caret-right"></span>&nbsp;
+              </button>
+            </div>
+          </div>
+
         </div>
       </form>
     </div>
@@ -201,31 +233,41 @@ cancelTransaction = `
                       </div>
                     </div>
                   </div>
-                    <div class="modal-footer transaction-modal-footer">
-                    <button type="button" class="btn btn-danger transaction-modal-btn" data-bs-dismiss="modal">
-                        <span class="tf-icons bx bx-x-circle"></span>&nbsp; Cancel
-                    </button>
-                    <button type="button" onclick="startTransactionCancel()" class="btn btn-outline-primary transaction-modal-btn">
-                      Proceed <span class="tf-icons bx bx-caret-right"></span>&nbsp;
-                    </button>
+                  <div class="modal-footer transaction-modal-footer">
+
+                      <div class="col">
+                        <div class="d-flex mb-3">
+                          <button style="white-space: nowrap;" type="button" class="btn btn-danger flex-fill fw-bold transaction-modal-btn" data-bs-dismiss="modal">
+                            <span class="tf-icons bx bx-x-circle"></span>&nbsp; Cancel
+                          </button>
+                        </div>
+                      </div>
+                      <div class="col">
+                        <div class="d-flex mb-3">
+                          <button style="white-space: nowrap;" type="button" class="btn btn-info flex-fill fw-bold transaction-modal-btn" onclick="startTransactionCancel()">
+                            Proceed <span class="tf-icons bx bx-caret-right"></span>&nbsp;
+                          </button>
+                        </div>
+                      </div>
                   </div>
           </div>
         </div>
       </div>
   `;
 
-cStarted = `
-  <div class="modal fade" id="cStarted" tabindex="-1" aria-hidden="true">
+function taskStartedModal(title, message) {
+  let modal = `
+  <div class="modal fade" id="taskStartedModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog transaction-modal-dialog" role="document">
       <div class="modal-content transaction-modal-content">
 
         <div class="modal-body transaction-modal-body">
           <div class="transaction-modal-header">
-            <h5 class="modal-title transaction-modal-title">CANCELLATION INITIATED</h5>
+            <h5 class="modal-title transaction-modal-title">${title}</h5>
           </div><br>
 
           <p>
-            The transaction cancellation process has been initiated. You will received a notification advising progress.
+            ${message}
           </p>
         </div>
 
@@ -236,20 +278,23 @@ cStarted = `
         </div>
       </div>
     </div>
-  </div>
-  `;
+  </div>`;
+
+  document.getElementById("taskStarted").innerHTML = modal;
+  $("#taskStartedModal").modal("show");
+
+  return document.getElementById("taskStartedModal");  
+}
 
 document.getElementById("modalGroup").innerHTML        = modalGroup;
 document.getElementById("transactionInfo").innerHTML   = transactionInfo;
 document.getElementById("validityExtension").innerHTML = extendValidity;
 document.getElementById("cancellation").innerHTML      = cancelTransaction;
-document.getElementById("cancelStarted").innerHTML     = cStarted;
-document.getElementById("newPinModal").innerHTML            = newPin;
+document.getElementById("newPinModal").innerHTML       = newPin;
 
 function displayClickedReceivedTransaction(arrayObject) {
   const modal = new bootstrap.Modal('#tInfoModal2');
   modal.show();
-  console.log(arrayObject);
 	$('#tInfoModal2').on('shown.bs.modal', function() {
 		transactionInfo = arrayObject;
 		
@@ -375,7 +420,8 @@ function editTransactionPeriod() {
 
   const raw = JSON.stringify({
     "transaction_id": tempClickedID,
-    "validity_period": totalDays
+    "validity_period": totalDays,
+    "phone_number": LOGGED_IN_PHONE
   });
 
   var req = $.ajax({
@@ -390,12 +436,21 @@ function editTransactionPeriod() {
   req.done(function(data){
       //if the call is successful
       $("#extendValidity").modal("hide");
-      handleSuccess(data);
+
+      let title = "Process Started";
+      let body  = "The validity extension process has been initiated. You will receive a notification advising further steps.";
+      let elem  = taskStartedModal(title, body);
+      
+      elem.addEventListener('hidden.bs.modal', () => {
+        let msg = data.message != null ? data.message : data.error;
+        showErrorMsgToast(msg);
+      });
+
     });
 
   req.fail(function(jqXHR, textStatus, errorThrown){
       console.log(jqXHR);
-      handleError(textStatus.toString());
+      showErrorMsgToast(textStatus.toString());
     });
 }
 
@@ -419,14 +474,22 @@ function makeCancelRequest(vCode, pCode) {
 
   req.done(function(data){
       //if the call is successful
-      console.log(data);
       $("#cancelTransaction").modal("hide");
-      handleSuccess(data);
+      
+      let title = "Process Started";
+      let body  = "The transaction cancellation process has been initiated. You will received a notification advising progress.";
+      let elem = taskStartedModal(title, body);
+      
+      elem.addEventListener('hidden.bs.modal', () => {
+        let msg = data.message != null ? data.message : data.error;
+        showErrorMsgToast(msg);
+      });
+      
     });
 
   req.fail(function(jqXHR, textStatus, errorThrown){
       console.log(jqXHR);
-      handleError(textStatus.toString());
+      showErrorMsgToast(textStatus.toString());
     });
 }
 
@@ -453,7 +516,16 @@ function makePinResetRequest() {
         //if the call is successful
         console.log(data);
         $("#newPin").modal("hide");
-        showErrorMsgToast(data.message);
+
+        let title = "Process Started";
+        let body  = "The PIN reset process has been initiated.";
+        let elem = taskStartedModal(title, body);
+        
+        elem.addEventListener('hidden.bs.modal', () => {
+          let msg = data.message != null ? data.message : data.error;
+          showErrorMsgToast(msg);
+        });
+
       });
 
     req.fail(function(jqXHR, textStatus, errorThrown){

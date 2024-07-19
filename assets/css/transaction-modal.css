@@ -54,10 +54,11 @@
 	border-top: 1px solid #dee2e6;
 	background: #f8f9fa;
 	padding: 10px;
-	display: flex;
+	/*display: flex;*/
 	justify-content: space-between;
 }
 
 .transaction-modal-btn {
 	font-family: 'Courier New', Courier, monospace;
+	
 }

@@ -12,33 +12,23 @@ verifyInfo = `
                 </div><br>
               
                 <div class="row transaction-modal-row">
-                  <div class="col-6 mb-3">
-                    <label for="tNum" class="form-label transaction-modal-label">Transaction Number</label>
+                  <div class="col-md-6 col-sm-12 mb-3">
+                    <label for="tNum" class="form-label transaction-modal-label">Transaction ID</label>
                     <p id="tNum"></p>
                   </div>
-                  <div class="col-6 mb-3">
+                  <div class="col-md-6 col-sm-12 mb-3">
                     <label for="phone" class="form-label transaction-modal-label">PAYEE MSIDN</label>
                     <p id="phone"></p>
                   </div>
                 </div>
                 <div class="row transaction-modal-row">
-                  <div class="col-6 mb-3">
+                  <div class="col-md-6 col-sm-12 mb-3">
                     <label for="fName" class="form-label transaction-modal-label">PAYEE FULL NAME</label>
                     <p id="fName"></p>
                   </div>
-                  <div class="col-6 mb-3">
+                  <div class="col-md-6 col-sm-12 mb-3">
                     <label for="idNum" class="form-label transaction-modal-label">ID Number</label>
                     <p id="idNum"></p>
-                  </div>
-                </div>
-                <div class="row transaction-modal-row">
-                  <div class="col-6 mb-3">
-                    <label for="pay_from" class="form-label transaction-modal-label">PAY FUNDS FROM</label>
-                    <p id="pay_from"></p>
-                  </div>
-                  <div class="col-6 mb-3">
-                    <label for="pay_to" class="form-label transaction-modal-label">PAY FUNDS TO</label>
-                    <p id="pay_to"></p>
                   </div>
                 </div>
 
@@ -49,23 +39,28 @@ verifyInfo = `
                   </div>
                 </div>
                 <div class="row transaction-modal-row">
-                  <div class="col mb-3">
+                  <div class="col-md-6 col-sm-12 mb-3">
                     <label for="period" class="form-label transaction-modal-label">VALIDITY PERIOD (DAYS)</label>
                     <p id="period"></p>
                   </div>
-                  <div class="col mb-3">
+                  <div class="col-md-6 col-sm-12 mb-3">
                     <label for="start_date" class="form-label transaction-modal-label">STARTING FROM</label>
                     <p id="start_date"></p>
                   </div>
                 </div>
 
                 <div class="row transaction-modal-row">
-                  <div class="col mb-3">
+                  <div class="col-md-6 col-sm-12 mb-3">
                     <label for="amount" class="form-label transaction-modal-label">AMOUNT PAYABLE (SZL)</label>
                     <p id="amount"></p>
                   </div>
+
+                  <div class="col-md-6 col-sm-12 mb-3">
+                    <label for="status" class="form-label transaction-modal-label">STATUS</label>
+                    <p id="status"></p>
+                    <small>*Only ACTIVE transactions can allow withdrawal of funds.</small>
+                  </div>
                 </div>
-                
                 
               </div>
               <div class="modal-footer transaction-modal-footer">
@@ -91,7 +86,9 @@ scanQR = `
                     </div><br>
                     
 					<div id="qr-reader" style="width:500px"></div>
-					<div id="qr-reader-results"></div>
+					<div id="qr-reader-results">
+                        <div id="loader"></div>
+                    </div>
 
                     <div id="camError" class="row transaction-modal-row">
                         
@@ -109,7 +106,7 @@ scanQR = `
 
                     <div class="row transaction-modal-row">
                         <div class="input-group">
-                            <label class="input-group-text" for="qr-input-file">Scan</label>
+                            <label class="input-group-text" for="qr-input-file">Use local file</label>
                             <input type="file" class="form-control" id="qr-input-file" accept="image/*" capture/>
                         </div>
                     </div>
@@ -131,18 +128,18 @@ voucherC = `
                 
 				<div class="modal-body transaction-modal-body">
                     <div class="transaction-modal-header">
-                        <h5 class="modal-title transaction-modal-title">VERIFY VOUCHER CODE</h5>
+                        <h5 class="modal-title transaction-modal-title">VERIFY TRANSACTION</h5>
                     </div><br>
 
 					<div class="row transaction-modal-row">
                         <div class="col-md-6 col-sm-6 mb-3">
-                            <label for="code" class="form-label transaction-modal-label">Transaction Number</label>
+                            <label for="code" class="form-label transaction-modal-label">Transaction ID</label>
                             <input
 								type="text"
 								id="transactionNum"
 								maxlength="10"
                                 class="form-control"
-                                placeholder="Transaction Number"
+                                placeholder="Transaction ID"
                             />
                         </div>
                         <div class="col-md-6 col-sm-6 mb-3">
@@ -158,12 +155,22 @@ voucherC = `
                     </div>
                 </div>
 				<div class="modal-footer transaction-modal-footer">
-                    <button type="button" class="btn btn-danger transaction-modal-btn" data-bs-dismiss="modal">
-                        <span class="tf-icons bx bx-x-circle"></span>&nbsp; Close
-                    </button>
-                    <button type="button" onclick="initiateVerification()" class="btn btn-info transaction-modal-btn">
-                        <span class="tf-icons bx bx-badge-check"></span>&nbsp; Verify
-                    </button>
+
+                    <div class="col">
+                        <div class="d-flex mb-3">
+                          <button style="white-space: nowrap;" type="button" class="btn btn-danger flex-fill fw-bold transaction-modal-btn" data-bs-dismiss="modal">
+                            <span class="tf-icons bx bx-x-circle"></span>&nbsp; Close
+                          </button>
+                        </div>
+                      </div>
+                      <div class="col">
+                        <div class="d-flex mb-3">
+                          <button onclick="initiateVerification()" style="white-space: nowrap;" type="button" class="btn btn-info flex-fill fw-bold transaction-modal-btn">
+                            <span class="tf-icons bx bx-badge-check"></span>&nbsp; Verify
+                          </button>
+                        </div>
+                      </div>
+
                 </div>
 			</div>
 		</div>
@@ -200,6 +207,7 @@ vError = `
 `;
 	
 document.getElementById("vModals").innerHTML = `${scanQR}${voucherC}${errorPopUp}${verifyInfo}${vError}`;
+startLocalScan();
 
 function requestCameraPermission() {
     hideLoginLoader();
@@ -217,7 +225,6 @@ function requestCameraPermission() {
       }
     }).catch(err => {
       // handle err
-        console.log(err);
         hideLoginLoader();
         document.getElementById('camError').innerHTML = `
             <div class="mb-3 col-12 mb-0">
@@ -245,8 +252,6 @@ function startScan() {
     html5QrCode.start({ facingMode: { exact: "environment"} }, config, qrCodeSuccessCallback);
 }
 
-startLocalScan();
-
 function startLocalScan() {
     const html5QrCode = new Html5Qrcode(/* element id */ "qr-reader", true);
     // File based scanning
@@ -268,7 +273,7 @@ function startLocalScan() {
         let tNum  = decodedText.slice(8, 18);
         let vCode = decodedText.slice(25, 31);
 
-        scanResult.innerText = "Verification process has started";
+        createGenericLoader("loader");
         makeVerificationRequest(vCode, tNum);
       })
       .catch(err => {
@@ -283,12 +288,18 @@ function initiateVerification(){
 	let code           = document.getElementById("code").value;
     let transactionNum = document.getElementById("transactionNum").value;
 	
-	if ((code.length == 4 || code.length == 6) && transactionNum.length == 10){
-        $("#voucherC").modal("hide");
-        makeVerificationRequest(code, transactionNum);
+	if (code.length == 5 || code.length == 6){
+        if (transactionNum.length == 10) {
+            $("#voucherC").modal("hide");
+            makeVerificationRequest(code, transactionNum);
 
+        }else {
+            var errorMsg = '<p>Please enter a 10 digit Transaction Number.</p>';
+            showErrorMsgToast(errorMsg);
+        }
+        
 	} else {
-		var errorMsg = '<p>Please enter a 10 digit Transaction Number & Voucher Code or PIN.</p>';
+		var errorMsg = '<p>Please enter a valid Voucher Code or PIN.</p>';
         showErrorMsgToast(errorMsg);
 		
 	}
@@ -300,11 +311,10 @@ function showVerificationInfo(obj) {
     document.getElementById("start_date").innerText = obj.created_at;
     document.getElementById("phone").innerText      = obj.phone;
     document.getElementById("idNum").innerText      = obj.national_id;
-    document.getElementById("pay_from").innerText   = obj.pay_from;
-    document.getElementById("pay_to").innerText     = obj.pay_to;
     document.getElementById("period").innerText     = obj.validity_period;
     document.getElementById("amount").innerText     = obj.amount;
     document.getElementById("ref").innerText        = obj.reference;
+    document.getElementById("status").innerText     = obj.status;
 }
 
 function makeVerificationRequest(code, transactionNum) {
@@ -336,7 +346,6 @@ function makeVerificationRequest(code, transactionNum) {
 
   req.done(function(data){
       //if the call is successful
-      console.log(data);
       if (data == false)
       {
         $("#scanQR").modal("hide");
@@ -347,10 +356,11 @@ function makeVerificationRequest(code, transactionNum) {
           const modal = new bootstrap.Modal('#verifyInfoModal');
           showVerificationInfo(data);
           modal.show();
+          hideGenericLoader("loader");
       }
     });
 
   req.fail(function(jqXHR, textStatus, errorThrown){
-      handleError(textStatus.toString());
+      showErrorMsgToast(textStatus.toString());
     });
 }

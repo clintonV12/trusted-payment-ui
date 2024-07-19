@@ -114,6 +114,7 @@ function getSentTransactions(phone) {
         "Content-Type": "application/json"
       },
       error: function(xhr, error, code) {
+        console.log(xhr);
         console.error("AJAX Error: ", error, code);
         if (code == "Unauthorized"){
             setCurrentPage('login');
@@ -121,10 +122,25 @@ function getSentTransactions(phone) {
       }
     },
 
+    columnDefs: [
+      {
+        targets: 0,
+        className: 'dt-body-left'
+      }, 
+      {
+        targets: 0,
+        className: 'dt-head-left'
+      }
+    ],
+
     columns: [
       {
-        title: "Sender",
+        title: "Sender Phone",
         data: "sender_phone"
+      },
+      {
+        title: "Alt Sender Phone",
+        data: "alt_sender_phone"
       },
       {
         title: "Transaction ID",
@@ -209,7 +225,7 @@ function getSentTransactions(phone) {
   });
 
   $("#sentTable tbody").on("click", "tr", function() {
-    let data = table.row(this).data();
+    //let data = table.row(this).data();
     //console.log(data);
   });
 
@@ -255,10 +271,21 @@ function getReceivedTransactions(phone) {
       }
     },
 
+    columnDefs: [
+      {
+        targets: 0,
+        className: 'dt-body-left'
+      }
+    ],
+
     columns: [
       {
-        title: "Sender",
+        title: "Sender Phone",
         data: "sender_phone"
+      },
+      {
+        title: "Alt Sender Phone",
+        data: "alt_sender_phone"
       },
       {
         title: "Transaction ID",

@@ -15,7 +15,7 @@ otp = `
 			    
                 <div class="mb-3">
                   <label for="otp-code" class="form-label">One time password (OTP)</label>
-                  <input type="text" maxlength="6" class="form-control" id="otp-code" placeholder="Enter your OTP" />
+                  <input type="number" maxlength="6" class="form-control" id="otp-code" placeholder="Enter your OTP" />
                 </div>
 				
 				      <br>

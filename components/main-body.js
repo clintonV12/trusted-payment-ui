@@ -51,7 +51,7 @@ if (appElement) {
 	
 	if (currentPage === "transactions"){
 		injectTransactionButton();
-	}else{
+	} else {
 		removeTransactionButton();
 	}
 	

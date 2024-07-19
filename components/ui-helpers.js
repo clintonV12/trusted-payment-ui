@@ -114,8 +114,8 @@ errorPopUp = `
 	>
     <div class="toast-header">
       <i class="bx bx-bell me-2"></i>
-      <div class="me-auto fw-semibold">Message</div>
-      <small>Error message</small>
+      <div class="me-auto fw-semibold">Alert</div>
+      <small>Message</small>
       <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
     </div>
     <div class="toast-body" id="toast-msg"></div>
@@ -144,5 +144,19 @@ function createLoginLoader() {
 
 function hideLoginLoader() {
 	var loader = document.getElementById("loader");
+  loader.innerHTML = ``;
+}
+
+function createGenericLoader(id) {
+	var loader = document.getElementById(id);
+  loader.innerHTML = `
+    <div class="spinner-border spinner-border-sm text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  `;
+}
+
+function hideGenericLoader(id) {
+	var loader = document.getElementById(id);
   loader.innerHTML = ``;
 }

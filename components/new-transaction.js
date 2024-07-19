@@ -1,4 +1,32 @@
+numAccordion = `
+<div class="accordion mb-3 mt-3" id="numAccordion">
+	<div class="card accordion-item">
+    <h2 class="accordion-header" id="headingOne">
+      <button
+        type="button"
+        class="accordion-button collapsed transaction-modal-btn btn btn-xs"
+        data-bs-toggle="collapse"
+        data-bs-target="#accordionOne"
+        aria-expanded="true"
+        aria-controls="accordionOne"
+        style="color:blue"
+      >
+        Pay from a different phone number
+      </button>
+    </h2>
 
+    <div
+      id="accordionOne"
+      class="accordion-collapse collapse"
+      data-bs-parent="#numAccordion"
+    >
+      <div class="accordion-body">
+        ${generatePhoneInputField("alt-phone", "Alternative Phone Number", "Enter Phone Number", "number")}
+      </div>
+    </div>
+  </div>
+</div>
+`;
 
 // Define the HTML for Modal 1
 popUp1 = `
@@ -11,18 +39,29 @@ popUp1 = `
             <h5 class="modal-title transaction-modal-title">PAYMENT DETAILS</h5>
           </div><br>
 
-		  		${generateSelectField("payFrom", "Pay From", ["MoMo", "Unayo", "Emali"])}
-          ${generateSelectField("payTo", "Pay Into", ["MoMo", "Unayo", "Emali"])}
+		  		${generateSelectField("payFrom", "Pay From", ["MoMo", "Unayo", "Emali"], "disabled")}
+		  		${numAccordion}
+          ${generateSelectField("payTo", "Pay Into", ["MoMo", "Unayo", "Emali"], "disabled")}
           ${generateInputField("fname", "First Name", "Enter First Name", "text")}
           ${generateInputField("lname", "Last Name", "Enter Last Name", "text")}
         </div>
         <div class="modal-footer transaction-modal-footer">
-          <button type="button" class="btn btn-danger fw-bold transaction-modal-btn" data-bs-dismiss="modal">
-						<span class="tf-icons bx bx-x-circle"></span>&nbsp; Close
-				  </button>
-          <button type="button" class="btn btn-primary fw-bold transaction-modal-btn" data-bs-target="#modalToggle2" data-bs-toggle="modal" data-bs-dismiss="modal">
-            Next <span class="tf-icons bx bx-chevron-right"></span>&nbsp;
-          </button>
+
+	        <div class="col">
+		        <div class="d-flex mb-3">
+		          <button style="white-space: nowrap;" type="button" class="btn btn-danger flex-fill fw-bold transaction-modal-btn" data-bs-dismiss="modal">
+								<span class="tf-icons bx bx-x-circle"></span>&nbsp; Close
+						  </button>
+						</div>
+					</div>
+					<div class="col">
+						<div class="d-flex mb-3">
+		          <button style="white-space: nowrap;" type="button" class="btn btn-primary flex-fill fw-bold transaction-modal-btn" data-bs-target="#modalToggle2" data-bs-toggle="modal" data-bs-dismiss="modal">
+		            Next <span class="tf-icons bx bx-caret-right"></span>&nbsp;
+		          </button>
+		        </div>
+        	</div>
+        
         </div>
       </form>
     </div>
@@ -45,12 +84,22 @@ popUp2 = `
           ${generateInputField("ref", "Reference", "Reference", "text")}
         </div>
         <div class="modal-footer transaction-modal-footer">
-          <button type="button" class="btn btn-danger fw-bold transaction-modal-btn" data-bs-target="#modalToggle" data-bs-toggle="modal" data-bs-dismiss="modal">
-            <span class="tf-icons bx bx-chevron-left"></span>&nbsp; Back
-          </button>
-          <button type="button" class="btn btn-primary fw-bold transaction-modal-btn" data-bs-target="#modalToggle3" data-bs-toggle="modal" data-bs-dismiss="modal">
-            Next <span class="tf-icons bx bx-chevron-right"></span>&nbsp;
-          </button>
+
+          <div class="col">
+		        <div class="d-flex mb-3">
+		          <button style="white-space: nowrap;" type="button" class="btn btn-danger flex-fill fw-bold transaction-modal-btn" data-bs-target="#modalToggle" data-bs-toggle="modal" data-bs-dismiss="modal">
+								<span class="tf-icons bx bx-caret-left"></span>&nbsp; Back
+						  </button>
+						</div>
+					</div>
+					<div class="col">
+						<div class="d-flex mb-3">
+		          <button style="white-space: nowrap;" type="button" class="btn btn-primary flex-fill fw-bold transaction-modal-btn" data-bs-target="#modalToggle3" data-bs-toggle="modal" data-bs-dismiss="modal">
+		            Next <span class="tf-icons bx bx-caret-right"></span>&nbsp;
+		          </button>
+		        </div>
+        	</div>
+
         </div>
       </form>
     </div>
@@ -71,12 +120,22 @@ popUp3 = `
 		  		${generateInputField("amount", "Amount Payable", "Amount Payable (SZL)", "number")}
         </div>
         <div class="modal-footer transaction-modal-footer">
-          <button type="button" class="btn btn-danger fw-bold transaction-modal-btn" data-bs-target="#modalToggle2" data-bs-toggle="modal" data-bs-dismiss="modal">
-            <span class="tf-icons bx bx-chevron-left"></span>&nbsp; Back
-          </button>
-          <button onclick="getUserInput()" type="button" class="btn btn-primary fw-bold transaction-modal-btn" data-bs-target="#modalToggle4" data-bs-toggle="modal" data-bs-dismiss="modal">
-            <span class="tf-icons bx bx-check-double"></span>&nbsp; Confirm
-          </button>
+
+          <div class="col">
+		        <div class="d-flex mb-3">
+		          <button style="white-space: nowrap;" type="button" class="btn btn-danger flex-fill fw-bold transaction-modal-btn" data-bs-target="#modalToggle2" data-bs-toggle="modal" data-bs-dismiss="modal">
+								<span class="tf-icons bx bx-caret-left"></span>&nbsp; Back
+						  </button>
+						</div>
+					</div>
+					<div class="col">
+						<div class="d-flex mb-3">
+		          <button style="white-space: nowrap;" type="button" class="btn btn-primary flex-fill fw-bold transaction-modal-btn" data-bs-target="#modalToggle4" data-bs-toggle="modal" data-bs-dismiss="modal">
+		            <span class="tf-icons bx bx-check-double"></span>&nbsp; Confirm
+		          </button>
+		        </div>
+        	</div>
+
         </div>
       </form>
     </div>
@@ -99,6 +158,7 @@ popUp4 = `
 				<li class="list-group-item transaction-modal-label">PHONE NUMBER: <strong style="color:blue;" id="phoneC"></strong></li>
 				<li class="list-group-item transaction-modal-label">ID: <strong style="color:blue;" id="nationalID"></strong></li>
 				<li class="list-group-item transaction-modal-label">PAY FROM: <strong style="color:blue;" id="pFrom"></strong></li>
+				<li id="alt_sender" style="display: none;" class="list-group-item transaction-modal-label">PAY FROM NUMBER: <strong style="color:blue;" id="alt_sender_phone"></strong></li>
 				<li class="list-group-item transaction-modal-label">PAY INTO: <strong style="color:blue;" id="pTo"></strong></li>
 				<li class="list-group-item transaction-modal-label">REFERENCE: <strong style="color:blue;" id="refer"></strong></li>
 				<li class="list-group-item transaction-modal-label">AMOUNT PAYABLE: E <strong style="color:blue;" id="amountP"></strong></li>
@@ -124,12 +184,21 @@ popUp4 = `
         </div>
         <div class="modal-footer transaction-modal-footer">
 			
-				  <button type="button" class="btn btn-danger fw-bold transaction-modal-btn" data-bs-target="#modalToggle3" data-bs-toggle="modal" data-bs-dismiss="modal">
-						<span class="tf-icons bx bx-caret-left"></span>&nbsp; Edit
-				  </button>
-				  <button onclick="initiateTransaction()" type="button" class="btn btn-primary fw-bold transaction-modal-btn">
-						Proceed <span class="tf-icons bx bx-caret-right"></span>&nbsp;
-				  </button>
+				  <div class="col">
+		        <div class="d-flex mb-3">
+		          <button style="white-space: nowrap;" type="button" class="btn btn-danger flex-fill fw-bold transaction-modal-btn" data-bs-target="#modalToggle3" data-bs-toggle="modal" data-bs-dismiss="modal">
+								<span class="tf-icons bx bx-caret-left"></span>&nbsp; Edit
+						  </button>
+						</div>
+					</div>
+					<div class="col">
+						<div class="d-flex mb-3">
+		          <button onclick="initiateTransaction()" style="white-space: nowrap;" type="button" class="btn btn-primary flex-fill fw-bold transaction-modal-btn">
+		            Proceed <span class="tf-icons bx bx-caret-right"></span>&nbsp;
+		          </button>
+		        </div>
+        	</div>
+
         </div>
       </form>
     </div>
@@ -180,7 +249,7 @@ function generatePhoneInputField(id, label, placeholder, type) {
       <div class="col mb-3">
         <label for="${id}" class="form-label transaction-modal-label">${label}</label>
 				<div class="input-group input-group-merge">
-					<span class="input-group-text">SZ (+268)</span>
+					<span class="input-group-text">+268</span>
 		      <input type="${type}" id="${id}" class="form-control" placeholder="${placeholder}" />
 				</div>
       </div>
@@ -189,13 +258,13 @@ function generatePhoneInputField(id, label, placeholder, type) {
 }
 
 // Function to generate select fields
-function generateSelectField(id, label, options) {
+function generateSelectField(id, label, options, state=null) {
   const optionsHtml = options.map(option => `<option value="${option}">${option}</option>`).join('');
   return `
     <div class="row transaction-modal-row">
       <div class="col mb-3">
         <label for="${id}" class="form-label transaction-modal-label">${label}</label>
-        <select id="${id}" class="form-select form-control">
+        <select id="${id}" class="form-select form-control" ${state}>
           ${optionsHtml}
         </select>
       </div>
@@ -208,18 +277,19 @@ var userInputObj = new Object();
 
 //Function to get input
 function getUserInput(){
-	userInputObj.pay_from        = document.getElementById("payFrom").value;
-	userInputObj.pay_to          = document.getElementById("payTo").value;
-	userInputObj.first_name      = document.getElementById("fname").value;
-	userInputObj.last_name       = document.getElementById("lname").value;
-	userInputObj.phone           = document.getElementById("phone").value;
-	userInputObj.national_id     = document.getElementById("pin").value;
-	userInputObj.reference       = document.getElementById("ref").value;
-	userInputObj.validity_period = document.getElementById("validity").value;
-	userInputObj.amount          = document.getElementById("amount").value;
+	userInputObj.alt_sender_phone = document.getElementById("alt-phone").value;
+	userInputObj.pay_from         = document.getElementById("payFrom").value;
+	userInputObj.pay_to           = document.getElementById("payTo").value;
+	userInputObj.first_name       = document.getElementById("fname").value;
+	userInputObj.last_name        = document.getElementById("lname").value;
+	userInputObj.phone            = document.getElementById("phone").value;
+	userInputObj.national_id      = document.getElementById("pin").value;
+	userInputObj.reference        = document.getElementById("ref").value;
+	userInputObj.validity_period  = document.getElementById("validity").value;
+	userInputObj.amount           = document.getElementById("amount").value;
 	//to generated based on amount
-	userInputObj.service_charge  = calcServiceCharge(userInputObj.amount);
-	userInputObj.total_amount    = (Number(userInputObj.amount) + Number(userInputObj.service_charge)).toFixed(2);
+	userInputObj.service_charge   = calcServiceCharge(userInputObj.amount);
+	userInputObj.total_amount     = (Number(userInputObj.amount) + Number(userInputObj.service_charge)).toFixed(2);
 	
 	showUserInput();
 }
@@ -236,6 +306,12 @@ function showUserInput(){
 	document.getElementById("amountP").innerText    = userInputObj.amount;
 	document.getElementById("charge").innerText     = userInputObj.service_charge;
 	document.getElementById("sum").innerText        = userInputObj.total_amount;
+
+	if (userInputObj.alt_sender_phone.length == 8) {
+		let elem = document.getElementById("alt_sender");
+		$(elem).css("display", "block");
+		document.getElementById("alt_sender_phone").innerText = userInputObj.alt_sender_phone;
+	}
 }
 
 function validateInput(){
@@ -274,8 +350,9 @@ function validateInput(){
 //Function to determine pricing
 function calcServiceCharge(amount){
 	var charge = 0.0;
-	
-	if (amount > 0 && amount <= 500){
+	if (amount > 0 && amount <= 10){
+		charge = 1;
+	}else if (amount > 10 && amount <= 500){
 		charge = 20;
 	}else if (amount > 500 && amount <= 2000){
 		charge = 40;
@@ -309,6 +386,7 @@ function createNewTransaction(userInput) {
   const raw = JSON.stringify({
   	"new": 1,
     "sender_phone": LOGGED_IN_PHONE,
+    "alt_sender_phone": userInputObj.alt_sender_phone,
     "first_name": userInputObj.first_name,
     "last_name": userInputObj.last_name,
     "national_id": userInputObj.national_id,
@@ -341,7 +419,7 @@ function createNewTransaction(userInput) {
 
   req.fail(function(jqXHR, textStatus, errorThrown){
   		console.log(jqXHR);
-      handleError(jqXHR.responseText);
+      showErrorMsgToast(jqXHR.responseText);
     });
 }
 

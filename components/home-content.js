@@ -14,19 +14,23 @@ pricingCard = `
 						  </tr>
 						</thead>
 						<tbody class="table-border-bottom-0">
-						  <tr data-bs-toggle="modal" data-bs-target="#tInfoModal">
-							<td><strong>0.00 - 499</strong></td>
+              <tr>
+              <td><strong>1.00 - 10</strong></td>
+              <td>1.00</td>
+              </tr>
+						  <tr>
+							<td><strong>11.00 - 499</strong></td>
 							<td>20.00</td>
 						  </tr>
-						   <tr data-bs-toggle="modal" data-bs-target="#tInfoModal">
+						   <tr>
 							<td><strong>500 - 1999</strong></td>
 							<td>40.00</td>
 						  </tr>
-						  <tr data-bs-toggle="modal" data-bs-target="#tInfoModal">
+						  <tr>
 							<td><strong>2000 - 3999</strong></td>
 							<td>60.00</td>
 						  </tr>
-						  <tr data-bs-toggle="modal" data-bs-target="#tInfoModal">
+						  <tr>
 							<td><strong>4000 and Above</strong></td>
 							<td>80.00</td>
 						  </tr>

@@ -34,7 +34,7 @@ profileContent = `
                               id="email"
                               maxlength="50"
                               name="email"
-                              placeholder="name@example.com"
+                              placeholder="name@email.com"
                             />
                           </div>
                           <div class="mb-3 col-md-6">
@@ -50,7 +50,7 @@ profileContent = `
                           <div class="mb-3 col-md-6">
                             <label class="form-label" for="phoneNumber">Phone Number</label>
                             <div class="input-group input-group-merge">
-                              <span class="input-group-text">SZ (+268)</span>
+                              <span class="input-group-text">+268</span>
                               <input
                                 type="text"
                                 id="phoneNumber"
@@ -148,7 +148,7 @@ function cancelProfile() {
   document.getElementById("region").value      = '';
   document.getElementById("zipCode").value     = '';
 }
-//isset($headers['Authorization']) ? $headers['Authorization'] : ''
+
 function setProfile(obj) {
   document.getElementById("firstName").value   = obj.first_name != null ? obj.first_name : '';
   document.getElementById("lastName").value    = obj.last_name != null ? obj.last_name : '';
@@ -184,12 +184,18 @@ function createNewProfile(userInputObj) {
 
   req.done(function(data){
       //if the call is successful
-      handleSuccess(data);
-      setCurrentPage(currentPage);
+      if (data.message == 'User created successfully') {
+        showErrorMsgToast("Your account information has been successfully saved. Refresh to see the changes.");
+      } else if(data.message == 'User updated successfully') {
+        showErrorMsgToast("Your account information has been successfully updated. Refresh to see the changes.");
+      } else {
+        showErrorMsgToast("Unknown error occured while saving account details.");
+      }
+      
     });
 
   req.fail(function(jqXHR, textStatus, errorThrown){
-      handleError(textStatus.toString());
+      showErrorMsgToast(textStatus.toString());
     });
 }
 
@@ -214,7 +220,7 @@ function getProfile(phone) {
     });
 
   req.fail(function(jqXHR, textStatus, errorThrown){
-      handleError(textStatus.toString());
+      showErrorMsgToast(textStatus.toString());
     });
 }
 
@@ -237,14 +243,19 @@ function deleteProfile() {
 
     req.done(function(data){
         //if the call is successful
-        showErrorMsgToast(data.message);
-        setCurrentPage(currentPage);
+        if (data.message == 'This account is not registered') {
+          showErrorMsgToast(data.message);
+        }
+        else if (data.message == 'User deleted successfully'){
+          showErrorMsgToast("Account has been deleted. Refresh to see the changes.");
+        }
+        
       });
 
     req.fail(function(jqXHR, textStatus, errorThrown){
-        handleError(textStatus.toString());
+        showErrorMsgToast(textStatus.toString());
       });
   } else {
-    handleError("Please check the confirm box first.");
+    showErrorMsgToast("Please check the confirm box first.");
   }
 }

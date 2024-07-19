@@ -9,11 +9,11 @@ layoutMenuToggleHtml = `
 
 // Define the HTML for the search bar
 searchBarHtml = `
-    <div class="navbar-nav align-items-center" onclick="setCurrentPage('${currentPage}')">
+    <a href="#" style="color:#fff" class="navbar-nav align-items-center" onclick="setCurrentPage('${currentPage}')">
         <div class="nav-item d-flex align-items-center">
             <i class="bx bx-refresh fs-4 lh-0"></i>
         </div>
-    </div>
+    </a>
 `;
 
 // Define the HTML for the user dropdown

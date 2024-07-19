@@ -32,7 +32,7 @@ function displayNotifications(arrayObject) {
           <div class="toast-header">
             <i class="bx bx-bell me-2"></i>
             <div class="me-auto fw-semibold">${arrayObject[i].title}</div>
-            <small>${arrayObject[i].created_at}</small>
+            <small>${arrayObject[i].created_at.slice(0,10)}</small>
             <button type="button" id="${arrayObject[i].id}" onclick="deleteNotification(this.id)" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
           </div>
           <div class="toast-body">
@@ -61,12 +61,11 @@ function getNotifications(phone) {
 
   req.done(function(data){
       //if the call is successful
-      console.log(data.message);
       displayNotifications(data);
     });
 
   req.fail(function(jqXHR, textStatus, errorThrown){
-      handleError(textStatus.toString());
+      showErrorMsgToast(textStatus.toString());
     });
 }
 
@@ -90,6 +89,6 @@ function deleteNotification(id) {
     });
 
   req.fail(function(jqXHR, textStatus, errorThrown){
-      handleError(textStatus.toString());
+      showErrorMsgToast(textStatus.toString());
     });
 }

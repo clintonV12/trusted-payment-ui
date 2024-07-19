@@ -15,9 +15,9 @@ login = `
                 <div class="mb-3">
                   <label for="phoneNum" class="form-label">Phone Number</label>
 				          <div class="input-group input-group-merge">
-                    <span class="input-group-text">SZ (+268)</span>
+                    <span class="input-group-text">+268</span>
           					<input
-          						type="text"
+          						type="number"
           						class="form-control"
           						id="phoneNum"
           						maxlength="8"
@@ -72,7 +72,6 @@ function requestOTP(phone) {
 
   req.done(function(data){
       //if the call is successful
-      console.log(data);
       hideLoginLoader();
       if (data.message == 'OTP sent successfully') {
         console.log(data);
@@ -84,7 +83,6 @@ function requestOTP(phone) {
   req.fail(function(jqXHR, textStatus, errorThrown){
       //if the call is not successful
       hideLoginLoader();
-      console.log(jqXHR);
       showErrorMsgToast(textStatus.toString() + errorThrown);
     });
 }
