@@ -192,37 +192,10 @@ function showUserJourney(){
 	driverObj.drive();
 }
 
-function calcTotalReceivedTransactions(arrayObject) {
-	let sum = 0;
-	
-	for (let i = 0; i < arrayObject.length; i++) {
-		if (arrayObject[i].phone == LOGGED_IN_PHONE){
-			sum = Number(sum) + Number(arrayObject[i].amount);
-		}else{
-			continue;
-		}
-	}
-	
-	return Number(sum).toFixed(2);
-}
-
-function calcTotalSentTransactions(arrayObject) {
-	let sum = 0;
-	
-	for (let i = 0; i < arrayObject.length; i++) {
-		if (arrayObject[i].sender_phone == LOGGED_IN_PHONE){
-			sum = Number(sum) + Number(arrayObject[i].amount);
-		}else{
-			continue;
-		}
-	}
-	
-	return Number(sum).toFixed(2);
-}
-
-function requestSentTransactions(phone) {
+function getTransactionSums(phone) {
   const raw = JSON.stringify({
-    "sender_phone": phone
+    "user-sums": 1,
+    "phone": phone
   });
 
   var req = $.ajax({
@@ -236,38 +209,13 @@ function requestSentTransactions(phone) {
 
   req.done(function(data){
       //if the call is successful
-      console.log(data);
-      document.getElementById("totalS").innerText = calcTotalSentTransactions(data);
+      document.getElementById("totalS").innerText = data.total_sent != false ? Number(data.total_sent).toFixed(2):0;
+      document.getElementById("totalR").innerText = data.total_received != false ? Number(data.total_received).toFixed(2):0;
     });
 
   req.fail(function(jqXHR, textStatus, errorThrown){
       console.log(jqXHR);
-      showErrorMsgToast(textStatus.toString());
-    });
-}
-
-function requestReceivedTransactions(phone) {
-  const raw = JSON.stringify({
-    "receipient_phone": phone
-  });
-
-  var req = $.ajax({
-    "url": SERVER_URL + "transaction",
-    "method": "POST",
-    "data": raw,
-    "headers": {"Authorization": `Bearer ${TOKEN}`,
-                "Content-Type": "application/json"
-               }
-    });
-
-  req.done(function(data){
-      //if the call is successful
-      console.log(data);
-      document.getElementById("totalR").innerText = calcTotalReceivedTransactions(data);
-    });
-
-  req.fail(function(jqXHR, textStatus, errorThrown){
-      console.log(textStatus);
+      sessionTimedOut();
       showErrorMsgToast(textStatus.toString());
     });
 }
@@ -275,5 +223,4 @@ function requestReceivedTransactions(phone) {
 //defined in ui-helpers.js
 loadTransactionScript();
 document.getElementById("content").innerHTML = homeContent;
-requestSentTransactions(LOGGED_IN_PHONE);
-requestReceivedTransactions(LOGGED_IN_PHONE);
+getTransactionSums(LOGGED_IN_PHONE);

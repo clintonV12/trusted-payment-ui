@@ -255,37 +255,6 @@ cancelTransaction = `
       </div>
   `;
 
-function taskStartedModal(title, message) {
-  let modal = `
-  <div class="modal fade" id="taskStartedModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog transaction-modal-dialog" role="document">
-      <div class="modal-content transaction-modal-content">
-
-        <div class="modal-body transaction-modal-body">
-          <div class="transaction-modal-header">
-            <h5 class="modal-title transaction-modal-title">${title}</h5>
-          </div><br>
-
-          <p>
-            ${message}
-          </p>
-        </div>
-
-        <div class="modal-footer transaction-modal-footer" style="text-align: end;">
-          <button type="button" class="btn btn-success transaction-modal-btn" data-bs-dismiss="modal">
-            Finish
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>`;
-
-  document.getElementById("taskStarted").innerHTML = modal;
-  $("#taskStartedModal").modal("show");
-
-  return document.getElementById("taskStartedModal");  
-}
-
 document.getElementById("modalGroup").innerHTML        = modalGroup;
 document.getElementById("transactionInfo").innerHTML   = transactionInfo;
 document.getElementById("validityExtension").innerHTML = extendValidity;
@@ -384,36 +353,6 @@ function startTransactionCancel() {
   }
 }
 
-function getClickedTransaction(id, tType) {
-  const raw = JSON.stringify({
-    "id": id
-  });
-
-  var req = $.ajax({
-    "url": SERVER_URL + "transaction",
-    "method": "POST",
-    "data": raw,
-    "headers": {"Authorization": `Bearer ${TOKEN}`,
-                "Content-Type": "application/json"
-               }
-    });
-
-  req.done(function(data){
-      //if the call is successful
-      if (tType == 'SENT'){
-        tempClickedID = id;
-        displayClickedSentTransaction(data);
-      }
-      else if (tType == 'RECEIVED'){
-        displayClickedReceivedTransaction(data);
-      }
-    });
-
-  req.fail(function(jqXHR, textStatus, errorThrown){
-      handleError(textStatus.toString());
-    });
-}
-
 function editTransactionPeriod() {
   let additionalDays = document.getElementById("add-validity").value;
   let totalDays = Number(additionalDays) + Number(currentValidityPeriod);
@@ -450,6 +389,7 @@ function editTransactionPeriod() {
 
   req.fail(function(jqXHR, textStatus, errorThrown){
       console.log(jqXHR);
+      sessionTimedOut();
       showErrorMsgToast(textStatus.toString());
     });
 }
@@ -489,6 +429,7 @@ function makeCancelRequest(vCode, pCode) {
 
   req.fail(function(jqXHR, textStatus, errorThrown){
       console.log(jqXHR);
+      sessionTimedOut();
       showErrorMsgToast(textStatus.toString());
     });
 }
@@ -530,6 +471,7 @@ function makePinResetRequest() {
 
     req.fail(function(jqXHR, textStatus, errorThrown){
         console.log(jqXHR);
+        sessionTimedOut();
         showErrorMsgToast(textStatus.toString());
       });
 

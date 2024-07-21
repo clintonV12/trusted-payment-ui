@@ -195,6 +195,7 @@ function createNewProfile(userInputObj) {
     });
 
   req.fail(function(jqXHR, textStatus, errorThrown){
+      sessionTimedOut();
       showErrorMsgToast(textStatus.toString());
     });
 }
@@ -220,6 +221,7 @@ function getProfile(phone) {
     });
 
   req.fail(function(jqXHR, textStatus, errorThrown){
+      sessionTimedOut();
       showErrorMsgToast(textStatus.toString());
     });
 }
@@ -253,6 +255,7 @@ function deleteProfile() {
       });
 
     req.fail(function(jqXHR, textStatus, errorThrown){
+        sessionTimedOut();
         showErrorMsgToast(textStatus.toString());
       });
   } else {

@@ -65,6 +65,7 @@ function getNotifications(phone) {
     });
 
   req.fail(function(jqXHR, textStatus, errorThrown){
+      sessionTimedOut();
       showErrorMsgToast(textStatus.toString());
     });
 }
@@ -89,6 +90,7 @@ function deleteNotification(id) {
     });
 
   req.fail(function(jqXHR, textStatus, errorThrown){
+      sessionTimedOut();
       showErrorMsgToast(textStatus.toString());
     });
 }

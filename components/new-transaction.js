@@ -1,3 +1,5 @@
+modalGroup = `<div id="taskStarted"></div>`;
+
 numAccordion = `
 <div class="accordion mb-3 mt-3" id="numAccordion">
 	<div class="card accordion-item">
@@ -130,7 +132,7 @@ popUp3 = `
 					</div>
 					<div class="col">
 						<div class="d-flex mb-3">
-		          <button style="white-space: nowrap;" type="button" class="btn btn-primary flex-fill fw-bold transaction-modal-btn" data-bs-target="#modalToggle4" data-bs-toggle="modal" data-bs-dismiss="modal">
+		          <button style="white-space: nowrap;" onclick="getUserInput()" type="button" class="btn btn-primary flex-fill fw-bold transaction-modal-btn" data-bs-target="#modalToggle4" data-bs-toggle="modal" data-bs-dismiss="modal">
 		            <span class="tf-icons bx bx-check-double"></span>&nbsp; Confirm
 		          </button>
 		        </div>
@@ -204,31 +206,6 @@ popUp4 = `
     </div>
   </div>
 `;
-
-tStarted = `
-	<div class="modal fade" id="tStarted" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog transaction-modal-dialog" role="document">
-      <div class="modal-content transaction-modal-content">
-
-				<div class="modal-body transaction-modal-body">
-					<div class="transaction-modal-header">
-            <h5 class="modal-title transaction-modal-title">TRANSACTION INITIATED</h5>
-          </div><br>
-
-					<p>
-						The transaction has been initiated. You will received a notification prompting further steps.
-          </p>
-        </div>
-
-				<div class="modal-footer transaction-modal-footer" style="text-align: end;">
-          <button type="button" class="btn btn-success transaction-modal-btn" data-bs-dismiss="modal">
-            Finish
-          </button>
-        </div>
-			</div>
-		</div>
-	</div>
-	`;
 
 // Function to generate input fields
 function generateInputField(id, label, placeholder, type) {
@@ -318,23 +295,23 @@ function validateInput(){
 	var valid       = true;
 	var emptyFields = [];
 
-	if (userInputObj.first_name == ''){
+	if (!userInputObj.first_name){
 		valid = false;
 		emptyFields.push(" First name");
 	}
-	if (userInputObj.last_name == ''){
+	if (!userInputObj.last_name){
 		valid = false;
 		emptyFields.push(" Last name");
 	}
-	if (userInputObj.phone == '' || userInputObj.phone.length != 8){
+	if (!userInputObj.phone || userInputObj.phone.length !== 8){
 		valid = false;
 		emptyFields.push(" Phone number");
 	}
-	if (userInputObj.reference == ''){
+	if (!userInputObj.reference){
 		valid = false;
 		emptyFields.push(" Reference");
 	}
-	if (userInputObj.amount == ''){
+	if (!userInputObj.amount){
 		valid = false;
 		emptyFields.push(" Amount payable");
 	}
@@ -409,12 +386,23 @@ function createNewTransaction(userInput) {
                }
     });
 
+  	$("#modalToggle4").modal("hide");
+    let title = "Process Started";
+    let body  = "The transaction has been initiated. You will received a notification advising next steps.";
+    let elem = taskStartedModal(title, body);
+
   req.done(function(data){
       //if the call is successful
   		console.log(data);
-      $("#modalToggle4").modal("hide");
-			const modal = new bootstrap.Modal('#tStarted');
-			modal.show();
+      
+      elem.addEventListener('hidden.bs.modal', () => {
+        let msg = data.message != null ? data.message : data.error;
+
+        if (msg) {showErrorMsgToast(msg);}
+        else {showErrorMsgToast("Unknown error occured.");}
+        
+      });
+
     });
 
   req.fail(function(jqXHR, textStatus, errorThrown){
@@ -426,4 +414,4 @@ function createNewTransaction(userInput) {
 
 
 // Inject the modals into the DOM element with the ID 'newTransaction'
-document.getElementById("newTransaction").innerHTML = `${popUp1}${popUp2}${popUp3}${popUp4}${errorPopUp}${tStarted}`;
+document.getElementById("newTransaction").innerHTML = `${popUp1}${popUp2}${popUp3}${popUp4}${errorPopUp}${modalGroup}`;

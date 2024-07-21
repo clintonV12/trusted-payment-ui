@@ -1,3 +1,5 @@
+modalGroup = `<div id="taskStarted"></div>`;
+
 cashoutModal = `
 	<div class="modal fade" id="cashoutModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog transaction-modal-dialog" role="document">
@@ -58,7 +60,7 @@ cashoutModal = `
 	</div>
 	`;
 
-document.getElementById("cashoutTransaction").innerHTML = `${cashoutModal}${errorPopUp}`;
+document.getElementById("cashoutTransaction").innerHTML = `${cashoutModal}${errorPopUp}${modalGroup}`;
 
 var cashoutVCode = 0;
 var cashoutTNum  = 0;
@@ -110,15 +112,26 @@ function makeCashoutRequest(pin) {
                }
     });
 
+  $("#cashoutModal").modal("hide");
+  let title = "Process Started";
+  let body  = "The transaction has been initiated. You will received a notification advising next steps.";
+  let elem = taskStartedModal(title, body);
+
   req.done(function(data){
       //if the call is successful
       console.log(data);
-      $("#cashout").modal("hide");
-      showErrorMsgToast(data);
+      elem.addEventListener('hidden.bs.modal', () => {
+        let msg = data.message != null ? data.message : data.error;
+
+        if (msg) {showErrorMsgToast(msg);}
+        else {showErrorMsgToast("Unknown error occured.");}
+        
+      });
+
     });
 
   req.fail(function(jqXHR, textStatus, errorThrown){
+      sessionTimedOut();
       showErrorMsgToast(textStatus.toString());
     });
 }
-12861

@@ -160,3 +160,41 @@ function hideGenericLoader(id) {
 	var loader = document.getElementById(id);
   loader.innerHTML = ``;
 }
+
+function taskStartedModal(title, message) {
+  let modal = `
+  <div class="modal fade" id="taskStartedModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog transaction-modal-dialog" role="document">
+      <div class="modal-content transaction-modal-content">
+
+        <div class="modal-body transaction-modal-body">
+          <div class="transaction-modal-header">
+            <h5 class="modal-title transaction-modal-title">${title}</h5>
+          </div><br>
+
+          <p>
+            ${message}
+          </p>
+        </div>
+
+        <div class="modal-footer transaction-modal-footer" style="text-align: end;">
+          <button type="button" class="btn btn-success transaction-modal-btn" data-bs-dismiss="modal">
+            Finish
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>`;
+
+  document.getElementById("taskStarted").innerHTML = modal;
+  $("#taskStartedModal").modal("show");
+
+  return document.getElementById("taskStartedModal");  
+}
+
+function sessionTimedOut() {
+	if (jqXHR.responseJSON.error == "Unauthorized")
+  {
+    setCurrentPage('login');
+  }
+}
