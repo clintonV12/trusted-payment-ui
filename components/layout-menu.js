@@ -40,11 +40,19 @@ setActivePage();
  */
 function createMenuItem(text, href, iconClass, page, isActive = false) {
   const activeClass = isActive ? "active" : "";
+  let inbox = ``;
+  if (page == 'notifications') {
+    inbox = `
+    <i class="menu-icon tf-icons"></i>
+    <span class="flex-shrink-0 badge badge-center rounded-pill bg-primary w-px-20 h-px-20">${INBOX}</span>`;
+  }
+
   return `
     <li class="menu-item ${activeClass}" id="${page}">
       <a href="${href}" class="menu-link" onclick="setCurrentPage('${page}')">
         <i class="menu-icon tf-icons ${iconClass}"></i>
         <div data-i18n="${text}">${text}</div>
+        ${inbox}
       </a>
     </li>
   `;

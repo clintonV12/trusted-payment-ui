@@ -209,13 +209,15 @@ function getTransactionSums(phone) {
 
   req.done(function(data){
       //if the call is successful
+    console.log(data);
+      INBOX = data.total_inbox != false ? Number(data.total_inbox):0;
       document.getElementById("totalS").innerText = data.total_sent != false ? Number(data.total_sent).toFixed(2):0;
       document.getElementById("totalR").innerText = data.total_received != false ? Number(data.total_received).toFixed(2):0;
     });
 
   req.fail(function(jqXHR, textStatus, errorThrown){
       console.log(jqXHR);
-      sessionTimedOut();
+      sessionTimedOut(jqXHR);
       showErrorMsgToast(textStatus.toString());
     });
 }

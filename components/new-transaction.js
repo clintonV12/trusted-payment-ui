@@ -407,6 +407,7 @@ function createNewTransaction(userInput) {
 
   req.fail(function(jqXHR, textStatus, errorThrown){
   		console.log(jqXHR);
+  		sessionTimedOut(jqXHR);
       showErrorMsgToast(jqXHR.responseText);
     });
 }

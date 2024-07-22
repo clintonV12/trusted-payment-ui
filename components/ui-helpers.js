@@ -1,6 +1,7 @@
 //global variable to keep track which page is opened
 var currentPage = "";
 setCurrentPage(currentPage);
+var INBOX = 0;
 
 function createAndAppendScript(id, scriptSource){
 	// Remove existing script element if any
@@ -71,7 +72,7 @@ function loadMainScript() {
   
   const script = document.createElement('script');
   script.src = 'assets/js/main.js';
-  script.async = true;
+  script.defer = true;
   script.id = "main-script";
   document.body.appendChild(script);
 }
@@ -192,7 +193,7 @@ function taskStartedModal(title, message) {
   return document.getElementById("taskStartedModal");  
 }
 
-function sessionTimedOut() {
+function sessionTimedOut(jqXHR) {
 	if (jqXHR.responseJSON.error == "Unauthorized")
   {
     setCurrentPage('login');

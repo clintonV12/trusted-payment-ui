@@ -86,7 +86,7 @@ function changeAuthContent(page) {
 
 	// Append script element to the document body
 	document.body.appendChild(script);
-	loadMainScript();//defined in ui-helpers.js
+	//loadMainScript();//defined in ui-helpers.js
 }   
 
 changeAuthContent(currentPage);

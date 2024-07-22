@@ -2,8 +2,6 @@ buyerTransactions = `
     <div class="table-responsive text-nowrap" id="tbl1">
       <table class="table table-striped table-hover" id="sentTable"></table>
     </div>
-  
-	<div id="modalGroup"></div>
 `;
 	
 sellerTransactions = `
@@ -56,10 +54,14 @@ transactionTab = `
             </div>
         </div>
     </div>
+    <div id="modalGroup"></div>
 	`;
 	
 document.getElementById("content").innerHTML = `${transactionTab}${errorPopUp}`;
 var isInitialised            = false;
+var clickedRowData           = "";
+var clickedSenderPhone       = 0;
+var clickedRecepientPhone    = 0;
 var clickedTransactionNumber = 0;
 var tempClickedID            = 0; //temporally store id of clicked transaction for use in edit
 var currentValidityPeriod    = 0;//temporally store validity period of clicked transaction for use in edit
@@ -124,7 +126,7 @@ function getSentTransactions(phone) {
 
     columnDefs: [
       {
-        targets: 0,
+        targets: [0, 15],
         className: 'dt-body-left'
       }, 
       {
@@ -199,22 +201,18 @@ function getSentTransactions(phone) {
         data: "reference",
       },
       {
+        title: "Actions",
         data: null,
         defaultContent: `
-                <div class="btn-group" role="group" style="text-align:start">
-                    <button
-                      id="downloadBtnGroup"
-                      type="button"
-                      class="btn btn-primary transaction-modal-btn dropdown-toggle"
-                      data-bs-toggle="dropdown"
-                      aria-haspopup="true"
-                      aria-expanded="false">
-                      <span class="tf-icons bx bx-edit"></span>&nbsp; Edit
+                <div class="dropdown">
+                    <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                      <i class="bx bx-dots-vertical-rounded"></i>
                     </button>
-                    <div class="dropdown-menu" aria-labelledby="downloadBtnGroup">
+                    <div class="dropdown-menu">
                       <a class="dropdown-item" href="javascript:void(0);" data-bs-target="#extendValidity" data-bs-toggle="modal" data-bs-dismiss="modal">Extend Validity Period</a>
                       <a class="dropdown-item" href="javascript:void(0);" data-bs-target="#newPin" data-bs-toggle="modal" data-bs-dismiss="modal">Request New PIN</a>
                       <a class="dropdown-item" href="javascript:void(0);" data-bs-target="#cancelTransaction" data-bs-toggle="modal" data-bs-dismiss="modal">Cancel Transaction</a>
+                      <a class="dropdown-item" href="javascript:void(0);" data-bs-target="#reportModal" data-bs-toggle="modal" data-bs-dismiss="modal">Report Dispute</a>
                     </div>
                 </div>`,
         targets: -1
@@ -233,6 +231,8 @@ function getSentTransactions(phone) {
     let data = table.row(e.target.closest('tr')).data();
     console.log(data);
     tempClickedID = data.id;
+    clickedSenderPhone = data.sender_phone;
+    clickedRecepientPhone = data.phone;
     currentValidityPeriod = data.validity_period;
     clickedTransactionNumber = data.transaction_number;
   });
@@ -300,30 +300,27 @@ function getReceivedTransactions(phone) {
         data: "amount",
       },
       {
-        title: "Pay Into",
-        data: "pay_to",
-      },
-      {
-        title: "Validity Period",
-        data: "validity_period",
-      },
-      {
-        title: "Created At",
-        data: "created_at",
-      },
-      {
-        title: "Reference",
-        data: "reference",
+        title: "Actions",
+        data: null,
+        defaultContent: `
+                <div class="dropdown">
+                    <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                      <i class="bx bx-dots-vertical-rounded"></i>
+                    </button>
+                    <div class="dropdown-menu">
+                      <a class="dropdown-item" href="#" onclick="displayClickedReceivedTransaction()">Display Transaction</a>
+                      <a class="dropdown-item" href="#" data-bs-target="#reportModal" data-bs-toggle="modal" data-bs-dismiss="modal">Report Dispute</a>
+                    </div>
+                </div>`,
+        targets: -1
       }
-
     ],
 
   });
 
   $("#receivedTable tbody").on("click", "tr", function() {
     let data = table2.row(this).data();
-    console.log(data);
-    displayClickedReceivedTransaction(data);
+    clickedRowData = data;
   });
 
   // Debugging: Check if DataTable initialization is successful

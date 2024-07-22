@@ -61,11 +61,12 @@ function getNotifications(phone) {
 
   req.done(function(data){
       //if the call is successful
-      displayNotifications(data);
+      INBOX = data.num != false ? Number(data.num):0;
+      displayNotifications(data.msg);
     });
 
   req.fail(function(jqXHR, textStatus, errorThrown){
-      sessionTimedOut();
+      sessionTimedOut(jqXHR);
       showErrorMsgToast(textStatus.toString());
     });
 }
@@ -90,7 +91,7 @@ function deleteNotification(id) {
     });
 
   req.fail(function(jqXHR, textStatus, errorThrown){
-      sessionTimedOut();
+      sessionTimedOut(jqXHR);
       showErrorMsgToast(textStatus.toString());
     });
 }

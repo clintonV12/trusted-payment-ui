@@ -51,6 +51,7 @@ userDropdownHtml = `
                     <span class="d-flex align-items-center align-middle">
                         <i class="flex-shrink-0 bx bx-bell me-2"></i>
                         <span class="flex-grow-1 align-middle">Notifications</span>
+                        <span class="flex-shrink-0 badge badge-center rounded-pill bg-primary w-px-20 h-px-20">${INBOX}</span>
                     </span>
                 </a>
             </li>

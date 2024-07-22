@@ -3,6 +3,7 @@ modalGroup = `
     <div id="cancellation"></div>
     <div id="taskStarted"></div>
     <div id="newPinModal"></div>
+    <div id="reportIssueModal"></div>
 	`;
 	
 transactionInfo = `
@@ -35,13 +36,13 @@ transactionInfo = `
         </div>
         <!-- Phone and Date -->
         <div class="row transaction-modal-row">
-          <div class="col-8">
+          <div class="col-6">
             <label for="rTPhone" class="form-label transaction-modal-label">Phone Number</label>
             <input type="text" id="rTPhone" class="form-control" style="border: none; border-bottom: 1px solid #ced4da; background: transparent; font-family: 'Courier New', Courier, monospace;" readonly />
           </div>
-          <div class="col-4" style="text-align: end;">
+          <div class="col-6" style="text-align: end;">
             <label class="form-label transaction-modal-label">Date</label>
-            <input type="text" class="form-control" style="text-align: end; border: none; border-bottom: 1px solid #ced4da; background: transparent; font-family: 'Courier New', Courier, monospace;" value="July 3, 2024" readonly />
+            <input type="text" id="rDate" class="form-control" style="text-align: end; border: none; border-bottom: 1px solid #ced4da; background: transparent; font-family: 'Courier New', Courier, monospace;" readonly />
           </div>
         </div>
         <!-- Voucher Code -->
@@ -255,28 +256,94 @@ cancelTransaction = `
       </div>
   `;
 
+report = `
+  <div class="modal fade" id="reportModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog transaction-modal-dialog" role="document">
+      <div class="modal-content transaction-modal-content">
+
+        <div class="modal-body transaction-modal-body">
+          <div class="transaction-modal-header">
+            <h5 class="modal-title transaction-modal-title">REPORT ISSUE</h5>
+          </div><br>
+
+          <div class="row transaction-modal-row">
+            <div class="col mb-3">
+              <div class="alert alert-warning">
+                <h6 class="alert-heading fw-bold mb-1">Are you sure you want to report this transaction?</h6>
+                <p class="mb-0">Please confirm, this action might result in users being unable to access these funds.</p>
+              </div>
+
+              <div class="form-check mt-3">
+                <input
+                  name="issue-radio"
+                  class="form-check-input"
+                  type="radio"
+                  value="PIN-Withholding"
+                  id="pin-radio"
+                />
+                <label class="form-check-label transaction-modal-label" for="active-radio"> Buyer refuses to share PIN</label>
+              </div>
+              <div class="form-check">
+                <input
+                  name="issue-radio"
+                  class="form-check-input"
+                  type="radio"
+                  value="VCODE-Withholding"
+                  id="vcode-radio"
+                />
+                <label class="form-check-label transaction-modal-label" for="frozen-radio"> Seller refuses to share Voucher Code </label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer transaction-modal-footer">
+        
+          <div class="col">
+              <div class="d-flex mb-3">
+                <button style="white-space: nowrap;" type="button" class="btn btn-danger flex-fill fw-bold transaction-modal-btn" data-bs-dismiss="modal">
+                  <span class="tf-icons bx bx-x-circle"></span>&nbsp; Cancel
+                </button>
+              </div>
+            </div>
+            <div class="col">
+              <div class="d-flex mb-3">
+                <button style="white-space: nowrap;" type="button" class="btn btn-info flex-fill fw-bold transaction-modal-btn" onclick="reportIssueRequest()">
+                  Proceed <span class="tf-icons bx bx-caret-right"></span>&nbsp;
+                </button>
+              </div>
+            </div>
+        </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+`;
+
 document.getElementById("modalGroup").innerHTML        = modalGroup;
 document.getElementById("transactionInfo").innerHTML   = transactionInfo;
 document.getElementById("validityExtension").innerHTML = extendValidity;
 document.getElementById("cancellation").innerHTML      = cancelTransaction;
 document.getElementById("newPinModal").innerHTML       = newPin;
+document.getElementById("reportIssueModal").innerHTML  = report;
 
-function displayClickedReceivedTransaction(arrayObject) {
+function displayClickedReceivedTransaction() {
   const modal = new bootstrap.Modal('#tInfoModal2');
   modal.show();
 	$('#tInfoModal2').on('shown.bs.modal', function() {
-		transactionInfo = arrayObject;
+		transactionInfo = clickedRowData;// defined and set in transaction-content.js
 		
 		document.getElementById("rTfname").value  = transactionInfo.first_name + " " + transactionInfo.last_name;
 		document.getElementById("rTPhone").value  = transactionInfo.phone;
 		document.getElementById("rTAmount").value = Number(transactionInfo.amount).toFixed(2);
 		document.getElementById("rVoucherCode").value = transactionInfo.voucher_code;
-		document.getElementById("rRef").value = transactionInfo.reference;
+		document.getElementById("rRef").value  = transactionInfo.reference;
+    document.getElementById("rDate").value = transactionInfo.created_at;
 		
 		var now          = Date.now() / 1000;
 		var elapsed      = now - transactionInfo.duration_start;
 		var elapsedDays  = Math.round(elapsed / (1000 * 3600 *24));
-		var dayRemaining = transactionInfo.validity_period - elapsedDays
+		var dayRemaining = transactionInfo.validity_period - elapsedDays;
 
     document.getElementById("qrcode-gen").innerHTML = "";
 		new QRCode(document.getElementById("qrcode-gen"), {
@@ -389,7 +456,7 @@ function editTransactionPeriod() {
 
   req.fail(function(jqXHR, textStatus, errorThrown){
       console.log(jqXHR);
-      sessionTimedOut();
+      sessionTimedOut(jqXHR);
       showErrorMsgToast(textStatus.toString());
     });
 }
@@ -429,7 +496,7 @@ function makeCancelRequest(vCode, pCode) {
 
   req.fail(function(jqXHR, textStatus, errorThrown){
       console.log(jqXHR);
-      sessionTimedOut();
+      sessionTimedOut(jqXHR);
       showErrorMsgToast(textStatus.toString());
     });
 }
@@ -471,12 +538,72 @@ function makePinResetRequest() {
 
     req.fail(function(jqXHR, textStatus, errorThrown){
         console.log(jqXHR);
-        sessionTimedOut();
+        sessionTimedOut(jqXHR);
         showErrorMsgToast(textStatus.toString());
       });
 
   } else {
     showErrorMsgToast("Please check the confirm box first.");
   }
+}
 
+function reportIssueRequest() {
+  let raw   = "";
+  var pCode = document.getElementById("pin-radio").checked;
+  var vCode = document.getElementById("vcode-radio").checked;
+
+  if (clickedSenderPhone == LOGGED_IN_PHONE && pCode) {
+    showErrorMsgToast("You can not report PIN withholding issue in this transaction.");
+    return;
+  } else if (clickedRecepientPhone == LOGGED_IN_PHONE && vCode) {
+    showErrorMsgToast("You can not report Voucher Code withholding issue in this transaction.");
+    return;
+  }
+
+  if(pCode) {
+    raw = JSON.stringify({
+      "report-dispute":1,
+      "transaction_id": tempClickedID,
+      "transaction_number": clickedTransactionNumber,
+      "reported_by": LOGGED_IN_PHONE,
+      "reporter_role": "Recepient",
+      "report_type": "PIN-Withholding",
+    });
+  }
+  else if(vCode) {
+    raw = JSON.stringify({
+      "report-dispute":1,
+      "transaction_id": tempClickedID,
+      "transaction_number": clickedTransactionNumber,
+      "reported_by": LOGGED_IN_PHONE,
+      "reporter_role": "Sender",
+      "report_type": "VCODE-Withholding",
+    });
+  }
+
+  
+  var req = $.ajax({
+    "url": SERVER_URL + "transaction",
+    "method": "POST",
+    "data": raw,
+    "headers": {"Authorization": `Bearer ${TOKEN}`,
+                "Content-Type": "application/json"
+               }
+    });
+
+  req.done(function(data){
+      //if the call is successful
+    console.log(data);
+      $("#reportModal").modal("hide");
+      let title = "Reported";
+      let body  = "The issue has been reported, you will be notified about the next steps.";
+      let elem = taskStartedModal(title, body);
+
+    });
+
+  req.fail(function(jqXHR, textStatus, errorThrown){
+      console.log(jqXHR);
+      sessionTimedOut(jqXHR);
+      showErrorMsgToast(textStatus.toString());
+    });
 }

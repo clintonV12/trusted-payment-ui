@@ -361,7 +361,7 @@ function makeVerificationRequest(code, transactionNum) {
     });
 
   req.fail(function(jqXHR, textStatus, errorThrown){
-      sessionTimedOut();
+      sessionTimedOut(jqXHR);
       showErrorMsgToast(textStatus.toString());
     });
 }

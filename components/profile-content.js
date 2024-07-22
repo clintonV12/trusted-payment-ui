@@ -221,7 +221,7 @@ function getProfile(phone) {
     });
 
   req.fail(function(jqXHR, textStatus, errorThrown){
-      sessionTimedOut();
+      sessionTimedOut(jqXHR);
       showErrorMsgToast(textStatus.toString());
     });
 }
@@ -255,7 +255,7 @@ function deleteProfile() {
       });
 
     req.fail(function(jqXHR, textStatus, errorThrown){
-        sessionTimedOut();
+        sessionTimedOut(jqXHR);
         showErrorMsgToast(textStatus.toString());
       });
   } else {
