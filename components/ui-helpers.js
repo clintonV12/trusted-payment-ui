@@ -47,7 +47,6 @@ function changeContent(page) {
 function setCurrentPage(page){
 	currentPage = page;
 	changeContent(currentPage);
-	console.log("Current Page:" + currentPage);
 }
 	
 // Function to create the transaction button HTML
