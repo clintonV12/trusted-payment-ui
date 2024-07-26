@@ -26,8 +26,8 @@ let config = {
   }
 };
 
-//const SERVER_URL = "http://192.168.43.144/trusted-payment-api/index.php/";
-const SERVER_URL = "https://www.centurionbd.com/trusted-payment-api/index.php/";
+const SERVER_URL = "http://192.168.43.144/trusted-payment-api/index.php/";
+//const SERVER_URL = "https://www.centurionbd.com/trusted-payment-api/index.php/";
 //phone number of logged in user
 var LOGGED_IN_PHONE = 0;
 var TOKEN = '';

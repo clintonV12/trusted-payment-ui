@@ -21,7 +21,7 @@ appMenu = `
   	${createMenuItem("Verification", "#", "bx bx-badge-check", "verify")}
   	${createMenuItem("Notifications", "#", "bx bx-bell", "notifications")}
   	${createMenuItem("Profile", "#", "bx bx-user", "profile")}
-    ${createMenuItem("Log Out", "#", "bx bx-power-off", "login")}
+    ${createMenuItem("Log Out", "#", "bx bx-power-off", "logout")}
   </ul>
   <footer id="slider-footer" class="content-footer footer bg-footer-theme"></footer>
 `;

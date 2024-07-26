@@ -1,4 +1,7 @@
-otp = `
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js';
+import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from 'https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js';
+
+var otp = `
 <div class="container-xxl">
       <div class="authentication-wrapper authentication-basic container-p-y">
         <div class="authentication-inner">
@@ -19,7 +22,7 @@ otp = `
                 </div>
 				
 				      <br>
-                <a href="#" class="btn btn-primary d-grid w-100 fw-bold" onclick="getOTPInput()">Verify OTP</a>
+                <a href="#" id="verify-button" class="btn btn-primary d-grid w-100 fw-bold" >Verify OTP</a>
                 <br>
                 <div id="loader" class="mb-3" style="text-align:center"></div>
               </form>
@@ -39,15 +42,29 @@ otp = `
 `;
 
 document.getElementById("app").innerHTML = `${otp}${errorPopUp}`;
-var errorMsg = `<p>Your OTP is ${OTP}.</p>`;
-showErrorMsgToast(errorMsg);
+
+const verifyButton = document.getElementById('verify-button');
+verifyButton.addEventListener('click', (event) => {
+  event.preventDefault(); // Prevent default form submission behavior
+  getOTPInput();
+});
 
 function getOTPInput(){
 	let otp = document.getElementById("otp-code").value;
 
 	if (otp.length == 6){
 		//verify otp in server
-    verifyOTP(LOGGED_IN_PHONE, otp);
+    //verifyOTP(LOGGED_IN_PHONE, otp);
+    //firebase stuff
+    const code = otp;
+    confirmationResult.confirm(code).then((result) => {
+      // User signed in successfully.
+      const user = result.user;
+      firebaseLoginSuccess(LOGGED_IN_PHONE);
+    }).catch((error) => {
+      // User couldn't sign in (bad verification code?)
+      showErrorMsgToast("Sign in failed, please try again");
+    });
 		
 	} else {
         var errorMsg = '<p>Please enter a valid OTP.</p>';
@@ -55,9 +72,9 @@ function getOTPInput(){
 	}
 }
 
-function verifyOTP(phone, otp_code) {
+function firebaseLoginSuccess(phone) {
   const raw = JSON.stringify({
-    "phone_number": phone, "otp_code": otp_code
+    "firebase_login": phone
   });
   createLoginLoader();
 
@@ -86,3 +103,4 @@ function verifyOTP(phone, otp_code) {
       showErrorMsgToast(textStatus.toString());
     });
 }
+

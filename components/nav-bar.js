@@ -57,7 +57,7 @@ userDropdownHtml = `
             </li>
             <li><div class="dropdown-divider my-divider"></div></li>
             <li>
-				<a class="dropdown-item" href="#" onclick="setCurrentPage('login')">
+				<a class="dropdown-item" href="#" onclick="logout()">
 					<i class="bx bx-power-off me-2"></i>
 					<span class="align-middle">Log Out</span>
 				</a>

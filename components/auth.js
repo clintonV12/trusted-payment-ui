@@ -82,6 +82,7 @@ function changeAuthContent(page) {
 	const script = document.createElement("script");
 	script.src = scriptSrc;
 	script.async = true;
+	script.type = 'module';
 	script.id = "dynamic-auth-script";
 
 	// Append script element to the document body
