@@ -6,37 +6,77 @@
 
 var menu, animate;
 
+function loadScript(url, callback) {
+    let script = document.createElement('script');
+    script.type = 'text/javascript';
+    script.src = url;
+
+    script.onload = function() {
+      console.log(`Script ${url} loaded successfully.`);
+      if (callback) callback();
+    };
+
+    script.onerror = function() {
+      console.error(`Failed to load script ${url}.`);
+    };
+
+    document.head.appendChild(script);
+  };
+
+  // URL of the PerfectScrollbar library
+  var scrollbarLibraryUrl = 'https://cdnjs.cloudflare.com/ajax/libs/perfect-scrollbar/1.5.3/perfect-scrollbar.min.js';
+
+  // Function to initialize the layout menu
+  function initializeLayoutMenu() {
+    let layoutMenuEl = document.querySelectorAll('#layout-menu');
+
+    layoutMenuEl.forEach(element => {
+      try {
+        // Initialize the menu with the specified options
+        let menu = new Menu(element, {
+          orientation: 'vertical',
+          closeChildren: false
+        });
+
+        // Scroll to the active element without animation
+        window.Helpers.scrollToActive({ animate: false });
+        window.Helpers.mainMenu = menu;
+
+      } catch (error) {
+        // Handle specific error without relying on string comparison
+        if (error.message.includes('no element is specified to initialize PerfectScrollbar')) {
+          setCurrentPage(currentPage);
+        } else {
+          console.error('Unexpected error occurred during menu initialization:', error);
+        }
+      }
+    });
+  }
+
+function toggleExpanded() {
+  window.Helpers.toggleCollapsed();
+  document.querySelector('.layout-menu-toggle').classList.add('d-block');
+  console.log('menu-toggle');
+}
+
 (function () {
   // Initialize menu
-  //-----------------
+  //----------------
 
-  let layoutMenuEl = document.querySelectorAll('#layout-menu');
-  try {
-    layoutMenuEl.forEach(function (element) {
-      menu = new Menu(element, {
-        orientation: 'vertical',
-        closeChildren: false
-      });
-      // Change parameter to true if you want scroll animation
-      window.Helpers.scrollToActive((animate = false));
-      window.Helpers.mainMenu = menu;
-    });
+  // Lazy load the PerfectScrollbar library and then initialize the layout menu
+  loadScript(scrollbarLibraryUrl, initializeLayoutMenu);
 
-  } catch(error) {
-    if (error.toString() == 'Error: no element is specified to initialize PerfectScrollbar')
-    {
-      setCurrentPage(currentPage);
-    }
-  }
 
   // Initialize menu togglers and bind click on each
   let menuToggler = document.querySelectorAll('.layout-menu-toggle');
   menuToggler.forEach(item => {
     item.addEventListener('click', event => {
       event.preventDefault();
+      // Call the toggle function
       window.Helpers.toggleCollapsed();
     });
   });
+
 
   // Display menu toggle (layout-menu-toggle) on hover with delay
   let delay = function (elem, callback) {
