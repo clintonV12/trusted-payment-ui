@@ -60,11 +60,6 @@ transactionTab = `
 document.getElementById("content").innerHTML = `${transactionTab}${errorPopUp}`;
 var isInitialised            = false;
 var clickedRowData           = "";
-var clickedSenderPhone       = 0;
-var clickedRecepientPhone    = 0;
-var clickedTransactionNumber = 0;
-var tempClickedID            = 0; //temporally store id of clicked transaction for use in edit
-var currentValidityPeriod    = 0;//temporally store validity period of clicked transaction for use in edit
 
 getSentTransactions(LOGGED_IN_PHONE);
 
@@ -212,7 +207,7 @@ function getSentTransactions(phone) {
                       <a class="dropdown-item" href="javascript:void(0);" data-bs-target="#extendValidity" data-bs-toggle="modal" data-bs-dismiss="modal">Extend Validity Period</a>
                       <a class="dropdown-item" href="javascript:void(0);" data-bs-target="#newPin" data-bs-toggle="modal" data-bs-dismiss="modal">Request New PIN</a>
                       <a class="dropdown-item" href="javascript:void(0);" data-bs-target="#cancelTransaction" data-bs-toggle="modal" data-bs-dismiss="modal">Cancel Transaction</a>
-                      <a class="dropdown-item" href="javascript:void(0);" data-bs-target="#reportModal" data-bs-toggle="modal" data-bs-dismiss="modal">Report Dispute</a>
+                      <a class="dropdown-item" href="javascript:void(0);" data-bs-target="#reportModal" data-bs-toggle="modal" data-bs-dismiss="modal">Report Issue</a>
                     </div>
                 </div>`,
         targets: -1
@@ -229,12 +224,7 @@ function getSentTransactions(phone) {
 
   table.on("click", "button", function(e) {
     let data = table.row(e.target.closest('tr')).data();
-    console.log(data);
-    tempClickedID = data.id;
-    clickedSenderPhone = data.sender_phone;
-    clickedRecepientPhone = data.phone;
-    currentValidityPeriod = data.validity_period;
-    clickedTransactionNumber = data.transaction_number;
+    clickedRowData = data;
   });
 
   // Debugging: Check if DataTable initialization is successful
@@ -309,7 +299,7 @@ function getReceivedTransactions(phone) {
                     </button>
                     <div class="dropdown-menu">
                       <a class="dropdown-item" href="#" onclick="displayClickedReceivedTransaction()">Display Transaction</a>
-                      <a class="dropdown-item" href="#" data-bs-target="#reportModal" data-bs-toggle="modal" data-bs-dismiss="modal">Report Dispute</a>
+                      <a class="dropdown-item" href="#" data-bs-target="#reportModal" data-bs-toggle="modal" data-bs-dismiss="modal">Report Issue</a>
                     </div>
                 </div>`,
         targets: -1

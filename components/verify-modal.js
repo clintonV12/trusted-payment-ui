@@ -85,7 +85,7 @@ scanQR = `
                         <h5 class="modal-title transaction-modal-title">QR CODE VERIFICATION</h5>
                     </div><br>
                     
-					<div id="qr-reader" style="width:500px"></div>
+					<div id="qr-reader" style="width:140px; text-align: center;"></div>
 					<div id="qr-reader-results">
                         <div id="loader"></div>
                     </div>
@@ -240,13 +240,21 @@ function startScan() {
     const html5QrCode = new Html5Qrcode("qr-reader");
     const qrCodeSuccessCallback = (decodedText, decodedResult) => {
         /* handle success */
+        console.log(decodedText);
+        let tNum  = decodedText.slice(8, 18);
+        let vCode = decodedText.slice(25, 31);
+
+        createGenericLoader("loader");
+        makeVerificationRequest(vCode, tNum);
+
         html5QrCode.stop().then((ignore) => {
           // QR Code scanning is stopped.
         }).catch((err) => {
           // Stop failed, handle it.
+          console.log(`Error scanning file. Reason: ${err}`);
         });
     };
-    const config = { fps: 10, qrbox: { width: 250, height: 250 } };
+    const config = { fps: 10, qrbox: { width: 140, height: 140 } };
 
     // Select back camera or fail with `OverconstrainedError`.
     html5QrCode.start({ facingMode: { exact: "environment"} }, config, qrCodeSuccessCallback);
@@ -278,7 +286,7 @@ function startLocalScan() {
       })
       .catch(err => {
         // failure, handle it.
-        console.log(`Error scanning file. Reason: ${err}`)
+        console.log(`Error scanning file. Reason: ${err}`);
       });
     });
 

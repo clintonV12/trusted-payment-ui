@@ -202,6 +202,5 @@ function sessionTimedOut(jqXHR) {
 function logout() {
   TOKEN = '';
   LOGGED_IN_PHONE = 0;
-  currentPage = '';
   location.reload(true);
 }

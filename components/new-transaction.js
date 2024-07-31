@@ -13,7 +13,7 @@ numAccordion = `
         aria-controls="accordionOne"
         style="color:blue"
       >
-        Pay from a different phone number
+        Pay from a different phone number (Optional)
       </button>
     </h2>
 

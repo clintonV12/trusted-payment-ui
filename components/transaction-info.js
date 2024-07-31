@@ -55,7 +55,8 @@ transactionInfo = `
         <!-- QR Code -->
         <div class="row transaction-modal-row">
           <div class="col-12" style="text-align: center;">
-            <div id="qrcode-gen" class="img-fluid transaction-modal-qrcode" > </div>
+            <div id="qrcode-gen" class="img-fluid transaction-modal-qrcode" >
+            </div>
           </div>
         </div>
       </div>
@@ -338,7 +339,7 @@ function displayClickedReceivedTransaction() {
 		document.getElementById("rTAmount").value = Number(transactionInfo.amount).toFixed(2);
 		document.getElementById("rVoucherCode").value = transactionInfo.voucher_code;
 		document.getElementById("rRef").value  = transactionInfo.reference;
-    document.getElementById("rDate").value = transactionInfo.created_at;
+    document.getElementById("rDate").value = transactionInfo.created_at.slice(0, 10);
 		
 		var now          = Date.now() / 1000;
 		var elapsed      = now - transactionInfo.duration_start;
@@ -422,10 +423,10 @@ function startTransactionCancel() {
 
 function editTransactionPeriod() {
   let additionalDays = document.getElementById("add-validity").value;
-  let totalDays = Number(additionalDays) + Number(currentValidityPeriod);
+  let totalDays = Number(additionalDays) + Number(clickedRowData.validity_period);
 
   const raw = JSON.stringify({
-    "transaction_id": tempClickedID,
+    "transaction_id": clickedRowData.id,
     "validity_period": totalDays,
     "phone_number": LOGGED_IN_PHONE
   });
@@ -466,8 +467,8 @@ function makeCancelRequest(vCode, pCode) {
         "cancel": 1,
         "vCode": vCode,
         "pCode": pCode,
-        "transaction_id": tempClickedID,
-        "transaction_number": clickedTransactionNumber
+        "transaction_id": clickedRowData.id,
+        "transaction_number": clickedRowData.transaction_number
     });
   
   var req = $.ajax({
@@ -505,8 +506,8 @@ function makePinResetRequest() {
   const  raw = JSON.stringify({
         "reset_pin": 1,
         "phone_number": LOGGED_IN_PHONE,
-        "transaction_id": tempClickedID,
-        "transaction_number": clickedTransactionNumber
+        "transaction_id": clickedRowData.id,
+        "transaction_number": clickedRowData.transaction_number
     });
 
   var pinReset = document.getElementById("pinReset").checked;
@@ -552,10 +553,15 @@ function reportIssueRequest() {
   var pCode = document.getElementById("pin-radio").checked;
   var vCode = document.getElementById("vcode-radio").checked;
 
-  if (clickedSenderPhone == LOGGED_IN_PHONE && pCode) {
+  if (!pCode && !vCode) {
+    showErrorMsgToast("Nothing is selected, cannot send report.");
+    return;
+  }
+
+  if (clickedRowData.sender_phone == LOGGED_IN_PHONE && pCode) {
     showErrorMsgToast("You can not report PIN withholding issue in this transaction.");
     return;
-  } else if (clickedRecepientPhone == LOGGED_IN_PHONE && vCode) {
+  } else if (clickedRowData.phone == LOGGED_IN_PHONE && vCode) {
     showErrorMsgToast("You can not report Voucher Code withholding issue in this transaction.");
     return;
   }
@@ -563,8 +569,8 @@ function reportIssueRequest() {
   if(pCode) {
     raw = JSON.stringify({
       "report-dispute":1,
-      "transaction_id": tempClickedID,
-      "transaction_number": clickedTransactionNumber,
+      "transaction_id": clickedRowData.id,
+      "transaction_number": clickedRowData.transaction_number,
       "reported_by": LOGGED_IN_PHONE,
       "reporter_role": "Recepient",
       "report_type": "PIN-Withholding",
@@ -573,8 +579,8 @@ function reportIssueRequest() {
   else if(vCode) {
     raw = JSON.stringify({
       "report-dispute":1,
-      "transaction_id": tempClickedID,
-      "transaction_number": clickedTransactionNumber,
+      "transaction_id": clickedRowData.id,
+      "transaction_number": clickedRowData.transaction_number,
       "reported_by": LOGGED_IN_PHONE,
       "reporter_role": "Sender",
       "report_type": "VCODE-Withholding",
@@ -593,11 +599,15 @@ function reportIssueRequest() {
 
   req.done(function(data){
       //if the call is successful
-    console.log(data);
       $("#reportModal").modal("hide");
       let title = "Reported";
       let body  = "The issue has been reported, you will be notified about the next steps.";
       let elem = taskStartedModal(title, body);
+
+      elem.addEventListener('hidden.bs.modal', () => {
+        let msg = data.message != null ? data.message : data.error;
+        showErrorMsgToast(msg);
+      });
 
     });
 

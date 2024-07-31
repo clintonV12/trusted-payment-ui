@@ -73,6 +73,10 @@ window.recaptchaVerifier = new RecaptchaVerifier(auth, 'sign-in-button', {
     getLoginInput();
   },
 
+  'expired-callback': () => {
+    console.log('reCAPTCHA expired');
+  }
+
 });
 
 const signInButton = document.getElementById('sign-in-button');

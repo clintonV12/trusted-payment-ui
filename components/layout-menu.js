@@ -63,3 +63,7 @@ function setActivePage(){
 	document.querySelector('.active').classList.remove('active');
 	document.getElementById(currentPage).classList.add('active');
 }
+
+document.getElementById("logout").addEventListener('click', () => {
+  logout();
+});
