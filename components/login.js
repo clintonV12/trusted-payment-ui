@@ -66,13 +66,12 @@ var login = `
 document.getElementById("app").innerHTML = `${login}${errorPopUp}`;
 
 // Initialize the RecaptchaVerifier
-window.recaptchaVerifier = new RecaptchaVerifier(auth, 'sign-in-button', {
+window.recaptchaVerifier = new RecaptchaVerifier(auth, 'lllrecaptcha-container', {
   'size': 'invisible',
   'callback': (response) => {
+    console.log(response);
     // reCAPTCHA solved, allow signInWithPhoneNumber.
-    getLoginInput();
   },
-
   'expired-callback': () => {
     console.log('reCAPTCHA expired');
   }
@@ -91,7 +90,7 @@ function getLoginInput() {
   
   if (phone.length == 8) {
     LOGGED_IN_PHONE = phone;
-    document.cookie = 'myCookie=value; SameSite=None; Secure';
+    //document.cookie = 'myCookie=value; SameSite=None; Secure';
     const phoneNumber = `+268${phone}`;
     const appVerifier = window.recaptchaVerifier;
 
