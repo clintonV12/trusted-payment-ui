@@ -69,7 +69,6 @@ document.getElementById("app").innerHTML = `${login}${errorPopUp}`;
 window.recaptchaVerifier = new RecaptchaVerifier(auth, 'lllrecaptcha-container', {
   'size': 'invisible',
   'callback': (response) => {
-    console.log(response);
     // reCAPTCHA solved, allow signInWithPhoneNumber.
   },
   'expired-callback': () => {

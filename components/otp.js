@@ -1,4 +1,3 @@
-//import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js';
 import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from 'https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js';
 
 var otp = `
@@ -29,7 +28,7 @@ var otp = `
 
               <p class="text-center">
                 <span>Not getting OTP?</span>
-                <a href="#" onclick="setCurrentPage('login')" class="fw-bold">
+                <a href="#" id="back" class="fw-bold">
                   <span>Use another number</span>
                 </a>
               </p>
@@ -47,6 +46,12 @@ const verifyButton = document.getElementById('verify-button');
 verifyButton.addEventListener('click', (event) => {
   event.preventDefault(); // Prevent default form submission behavior
   getOTPInput();
+});
+
+const backButton = document.getElementById('back');
+backButton.addEventListener('click', (event) => {
+  event.preventDefault(); // Prevent default form submission behavior
+  setCurrentPage('login');
 });
 
 function getOTPInput(){
