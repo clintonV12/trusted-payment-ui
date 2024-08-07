@@ -21,7 +21,7 @@ appMenu = `
   	${createMenuItem("Verification", "#", "bx bx-badge-check", "verify")}
   	${createMenuItem("Notifications", "#", "bx bx-bell", "notifications")}
   	${createMenuItem("Profile", "#", "bx bx-user", "profile")}
-    ${createMenuItem("Log Out", "#", "bx bx-power-off", "logout")}
+    ${createMenuItem("Log Out", "#", "bx bx-power-off", "login")}
   </ul>
   <footer id="slider-footer" class="content-footer footer bg-footer-theme"></footer>
 `;
@@ -64,6 +64,6 @@ function setActivePage(){
 	document.getElementById(currentPage).classList.add('active');
 }
 
-document.getElementById("logout").addEventListener('click', () => {
+document.getElementById("login").addEventListener('click', () => {
   logout();
 });

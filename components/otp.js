@@ -108,4 +108,3 @@ function firebaseLoginSuccess(phone) {
       showErrorMsgToast(textStatus.toString());
     });
 }
-

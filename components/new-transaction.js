@@ -174,7 +174,7 @@ popUp4 = `
                 <input class="form-check-input" type="checkbox" id="terms-conditions"/>
                 <label class="form-check-label" for="terms-conditions">
 					I agree to
-                    <a href="javascript:void(0);">terms & conditions</a>
+                    <a href="#" data-bs-target="#termsModal" data-bs-toggle="modal"><u>terms & conditions</u></a>
                 </label>
             </div>
 			<div class="form-check">
@@ -206,6 +206,45 @@ popUp4 = `
     </div>
   </div>
 `;
+
+terms = `
+<div class="modal fade" id="termsModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-fullscreen transaction-modal-dialog" role="document">
+    <div class="modal-content transaction-modal-content">
+
+      <div class="modal-body transaction-modal-body">
+      	<div class="transaction-modal-header">
+            <h5 class="modal-title transaction-modal-title">TERMS & CONDITIONS</h5>
+        </div><br>
+
+        <p>
+          Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac
+          facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum
+          at eros.
+        </p>
+        <p>
+          Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis
+          lacus vel augue laoreet rutrum faucibus dolor auctor.
+        </p>
+        <p>
+          Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel
+          scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus
+          auctor fringilla.
+        </p>
+        <p>
+          Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac
+          facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum
+          at eros.
+        </p>
+      </div>
+      <div class="modal-footer transaction-modal-footer">
+        <button type="button" id="closeTerms" class="btn btn-danger flex-fill fw-bold transaction-modal-btn">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>`;
 
 // Function to generate input fields
 function generateInputField(id, label, placeholder, type) {
@@ -415,4 +454,9 @@ function createNewTransaction(userInput) {
 
 
 // Inject the modals into the DOM element with the ID 'newTransaction'
-document.getElementById("newTransaction").innerHTML = `${popUp1}${popUp2}${popUp3}${popUp4}${errorPopUp}${modalGroup}`;
+document.getElementById("newTransaction").innerHTML = `${popUp1}${popUp2}${popUp3}${popUp4}${errorPopUp}${modalGroup}${terms}`;
+
+document.getElementById("closeTerms").addEventListener('click', () => {
+	$("#termsModal").modal("hide");
+	$("#modalToggle4").modal("show");
+});
